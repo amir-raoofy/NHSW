@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -o /home/hpc/pr63so/ga59how2/output_slurm/nhsw.%j.out
-#SBATCH -D /home/hpc/pr63so/ga59how2/codes/nhsw/
+#SBATCH -D /home/hpc/pr63so/ga59how2/codes/NHSW/
 #SBATCH -J nhsw
 #SBATCH --get-user-env
 #SBATCH --partition=snb
