@@ -20,6 +20,8 @@ all: nhsw
 nhsw: $(obj)
 	$(CXX) $(CFLAGS) $(INC) $(LIB) -o $@ $+
 
+run:
+	./nhsw 10 10 10 3.5 0.1 10.0 10.0 10.0
 
 clean:
 	rm -f *.o core.*
