@@ -7,6 +7,13 @@ int main(int argc, const char *argv[])
 	parameters -> print_parameters();
 
 	flowField* flowfield = new flowField(parameters);
-
+	flowfield -> init_data();
+	flowfield -> init_vel_field();
+	flowfield -> init_dz();
+	flowfield -> init_h();
+	flowfield -> update_M();
+	flowfield -> init_m();
+	flowfield -> update_A();
+	flowfield -> print_data();
 	return 0;
 }

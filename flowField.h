@@ -5,7 +5,15 @@ class flowField
 public:
 	flowField(Parameters* parameters);
 	~flowField();
+	void init_data();
 	void init_vel_field();
+	void init_dz();
+	void init_h();
+	void init_m();
+	void update_A();
+	void update_M();
+	// for debug only
+	void print_data();
 private:
 	/* data */
 	float * _u	;	// velocity field data
@@ -20,6 +28,8 @@ private:
 	float * _dz	;	// data of delta_z of all cells
 	float * _q	;	// data for non-hydro-static pressure
 	float * _h	;	// height data
+	int   * _m	;	// discretized bathymetry
+	int   * _M	;	// discretized height of water
 
 	Parameters * _parameters;
 };

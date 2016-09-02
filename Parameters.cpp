@@ -25,7 +25,7 @@ Parameters::~Parameters(){}
 
 void Parameters::parse(int argc, const char *argv[])  {
 
-	if (argc!=9){
+	if (argc!=16){
 		std::cout << "Warning: The default values for parameters are used." << std::endl;
 	}else{
 		_N[0]  	= atoi(argv[1]);
@@ -33,25 +33,41 @@ void Parameters::parse(int argc, const char *argv[])  {
 		_N[2]  	= atoi(argv[3]);
 		_T	 	= atof(argv[4]);
 		_dt  	= atof(argv[5]);
-		_L[0]	= atof(argv[6]);
-		_L[1]	= atof(argv[7]);
-		_L[2] 	= atof(argv[8]);
+		_theta 	= atof(argv[6]);
+		_L[0]	= atof(argv[7]);
+		_L[1]	= atof(argv[8]);
+		_L[2] 	= atof(argv[9]);
+		_g	 	= atof(argv[10]);
+		_nu		= atof(argv[11]);
+		_gamma_t= atof(argv[12]);
+		_gamma_b= atof(argv[13]);
+		_u_a	= atof(argv[14]);
+		_v_a	= atof(argv[15]);
 	}
 }
 
-float Parameters::get_sim_time(){
+const float Parameters::get_sim_time(){
 	return this->_T;
 }
-float Parameters::get_time_step(){
+const float Parameters::get_time_step(){
 	return this->_dt;
 }
 
-int Parameters::get_num_cells(int dim){
+const int Parameters::get_num_cells(int dim){
 	return _N[dim];
 }
-float Parameters::get_dxdydz(int dim){
+const float Parameters::get_dxdydz(int dim){
 	return _dX[dim];
 
+}
+const float Parameters::get_vis(){
+	return _nu;
+}
+const float Parameters::get_gamma_b(){
+	return _gamma_b;
+}
+const float Parameters::get_gamma_t(){
+	return _gamma_t;
 }
 
 void Parameters::print_parameters(){
@@ -69,7 +85,14 @@ void Parameters::print_parameters(){
 				<< "Number of cells in z-direction	-> 	"<< _N[2]	<<	std::endl
 				<< "Simulation time 		-> 	"		<< _T		<<	std::endl
 				<< "Time step			-> 	"			<< _dt		<<	std::endl
+				<< "theta in numerical scheme	-> 	"	<< _theta	<<	std::endl
 				<< "Length in x-direction		-> 	"	<< _L[0]	<<	std::endl
 				<< "Length in y-direction		-> 	"	<< _L[1]	<<	std::endl
-				<< "Length in z-direction		-> 	"	<< _L[2]	<<	std::endl;
+				<< "Length in z-direction		-> 	"	<< _L[2]	<<	std::endl
+				<< "gravitational constant		-> 	"	<< _g		<<	std::endl
+				<< "kinematic viscosity		-> 	"	<< _nu		<<	std::endl
+				<< "Wind constant			-> 	"	<< _gamma_t	<<	std::endl
+				<< "friction constant		-> 	"	<< _gamma_b	<<	std::endl
+				<< "horizontal speed of wind	-> 	"	<< _u_a		<<	std::endl
+				<< "vertical speed of wind		-> 	"	<< _v_a		<<	std::endl;
 }

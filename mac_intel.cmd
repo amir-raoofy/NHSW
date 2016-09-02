@@ -15,4 +15,4 @@ source /etc/profile.d/modules.sh
 module load gcc
 
 # mpiexec.hydra -genv OMP_NUM_THREADS 2 -ppn 8 -n 16 deviceQuery
-./nhsw 10 10 10 3.5 0.1 10.0 10.0 10.0
+./nhsw 10 10 10 3.5 0.1 0.5 10.0 10.0 10.0 9.81 0.000001787 0 0 0 0
