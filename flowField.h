@@ -32,4 +32,10 @@ private:
 	int   * _M	;	// discretized height of water
 
 	Parameters * _parameters;
+
+	//methods
+	int map(int i, int j);
+	int map(int i, int j, int k);
+	int map(int i, int j, int k, int l);
+
 };
