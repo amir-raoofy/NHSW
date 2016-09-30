@@ -164,6 +164,51 @@ void flowField::update_A(){
 	}
 }
 
+void flowField::update_F(){
+	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
+		for (int j = 1; j < _parameters->get_num_cells(1)+1; j++) {
+			for (int k =  _m [ map(i,j) ]; k <= _M	[ map(i,j) ];	 k++) {
+				_F[ map(i,j,k) ]= _dz[map(i,j,k)] *
+								( _u [ map(i,j,k) ] * (_u[ map(i,j,k) ] - _u [ map(i-1,j,k) ]) / _parameters->get_dxdydz(0)
+								+ _v [ map(i,j,k) ] * (_u[ map(i,j,k) ] - _u [ map(i,j-1,k) ]) / _parameters->get_dxdydz(1)
+								+ _w [ map(i,j,k) ] * (_u[ map(i,j,k) ] - _u [ map(i,j,k-1) ]) / _parameters->get_dxdydz(2)
+
+								+ _parameters->get_viscosity()*(( _u [ map(i+1,j,k) ] - 2* _u[ map(i,j,k) ] + _u [map(i-1,j,k)])
+											   	/ _parameters->get_dxdydz(0) * _parameters->get_dxdydz(0))
+								+ _parameters->get_viscosity()*(( _u [ map(i,j+1,k) ] - 2* _u[ map(i,j,k) ] + _u [map(i,j-1,k)])
+											   	/ _parameters->get_dxdydz(1) * _parameters->get_dxdydz(1))
+								
+								- ( 1-_parameters->get_theta() ) * _parameters->get_time_step()/_parameters->get_dxdydz(0) * 
+								(_parameters->get_g()*(_h[map(i+1,j)]-_h[map(i,j)]) + _q[map(i+1,j,k)] - _q[map(i,j,k)]) );
+			}
+			int k =  _M	[ map(i,j) ];
+			_A [ map(i,j,k,k) ] +=  _parameters->get_gamma_t() * _parameters->get_sim_time() * _parameters->get_u_a() ;
+		}
+	}
+}
+
+void flowField::update_G(){
+	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
+		for (int j = 1; j < _parameters->get_num_cells(1)+1; j++) {
+			for (int k =  _m [ map(i,j) ]; k <= _M	[ map(i,j) ];	 k++) {
+				_G[ map(i,j,k) ]= _dz[map(i,j,k)] *
+								( _u [ map(i,j,k) ] * (_v[ map(i,j,k) ] - _v [ map(i-1,j,k) ]) / _parameters->get_dxdydz(0)
+								+ _v [ map(i,j,k) ] * (_v[ map(i,j,k) ] - _v [ map(i,j-1,k) ]) / _parameters->get_dxdydz(1)
+								+ _w [ map(i,j,k) ] * (_v[ map(i,j,k) ] - _v [ map(i,j,k-1) ]) / _parameters->get_dxdydz(2)
+
+								+ _parameters->get_viscosity()*(( _v [ map(i+1,j,k) ] - 2* _v[ map(i,j,k) ] + _v [map(i-1,j,k)])
+											   	/ _parameters->get_dxdydz(0) * _parameters->get_dxdydz(0))
+								+ _parameters->get_viscosity()*(( _v [ map(i,j+1,k) ] - 2* _v[ map(i,j,k) ] + _v [map(i,j-1,k)])
+											   	/ _parameters->get_dxdydz(1) * _parameters->get_dxdydz(1))
+								
+								- ( 1-_parameters->get_theta() ) * _parameters->get_time_step()/_parameters->get_dxdydz(1) * 
+								(_parameters->get_g()*(_h[map(i,j+1)]-_h[map(i,j)]) + _q[map(i,j+1,k)] - _q[map(i,j,k)]) );
+			}
+			int k =  _M	[ map(i,j) ];
+			_A [ map(i,j,k,k) ] +=  _parameters->get_gamma_t() * _parameters->get_sim_time() * _parameters->get_v_a() ;
+		}
+	}
+}
 void flowField::print_data(){
 /*
 	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {

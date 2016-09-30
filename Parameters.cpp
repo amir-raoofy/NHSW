@@ -56,20 +56,41 @@ const float Parameters::get_time_step(){
 const int Parameters::get_num_cells(int dim){
 	return _N[dim];
 }
+
 const float Parameters::get_dxdydz(int dim){
 	return _dX[dim];
-
 }
 const float Parameters::get_vis(){
 	return _nu;
 }
+
 const float Parameters::get_gamma_b(){
 	return _gamma_b;
 }
+
 const float Parameters::get_gamma_t(){
 	return _gamma_t;
 }
 
+const float Parameters::get_viscosity(){
+	return _nu;
+}
+
+const float Parameters::get_theta(){
+	return _theta;
+}
+
+
+const float Parameters::get_g(){
+	return _g;
+}
+
+const float Parameters::get_u_a(){
+	return _u_a;
+}
+const float Parameters::get_v_a(){
+	return _v_a;
+}
 void Parameters::print_parameters(){
 	
 	// print the header

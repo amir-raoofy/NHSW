@@ -12,6 +12,8 @@ public:
 	void init_m();
 	void update_A();
 	void update_M();
+	void update_F();
+	void update_G();
 	// for debug only
 	void print_data();
 private:

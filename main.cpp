@@ -14,6 +14,8 @@ int main(int argc, const char *argv[])
 	flowfield -> update_M();
 	flowfield -> init_m();
 	flowfield -> update_A();
+	flowfield -> update_F();
+	flowfield -> update_G();
 	flowfield -> print_data();
 	return 0;
 }
