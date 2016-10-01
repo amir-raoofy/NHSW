@@ -9,7 +9,7 @@ CXXFLAGS = -g Wall -std=c++11
 INC =-I.
 LIB =
 
-obj= main.o flowField.o Parameters.o
+obj= main.o flowField.o Parameters.o jacobiSolver.o
 
 
 all: nhsw

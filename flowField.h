@@ -1,5 +1,5 @@
 #include <Parameters.h>
-
+#include <Solver.h>
 class flowField
 {
 public:
@@ -16,6 +16,7 @@ public:
 	void update_G();
 	// for debug only
 	void print_data();
+	void test_solver();
 private:
 	/* data */
 	float * _u	;	// velocity field data

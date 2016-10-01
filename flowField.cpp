@@ -209,6 +209,7 @@ void flowField::update_G(){
 		}
 	}
 }
+
 void flowField::print_data(){
 /*
 	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
@@ -283,3 +284,43 @@ int flowField::map(int i, int j, int k, int l){
 				(_parameters->get_num_cells(1)+2) ;
 }
 
+void flowField::test_solver(){
+	float TOL = 0.0001;
+	int MAXIT = 1000000;
+	int N = 100;
+	float * A = new float [N*N];
+	float * b = new float [N];
+	float * x = new float [N];
+
+	std::cout << "\033[1;34mFLOWFIELD: TEST SOLVER\033[0m" << std::endl;
+
+	for (int i = 0; i < N*N; i++) {
+		A[i] = 0 ;
+	}
+
+	for (int i = 0; i < N; i++) {
+		A[i+i*N] = -2;
+	}
+
+	for (int i = 0; i < N-1; i++) {
+		A[i+i*N+1] = 1;
+	}
+
+	for (int i = 1; i < N; i++) {
+		A[i+i*N-1] = 1;
+	}
+
+	for (int i = 0; i < N; i++) {
+		b[i] = 1;
+	}
+
+	for (int i = 0; i < N; i++) {
+		x[i]=1;
+	}
+
+
+	Solver *solver = new Jacobi(A, b, x, N);
+	solver -> solve(TOL, MAXIT);
+
+	delete [] A, b, x; 
+}
