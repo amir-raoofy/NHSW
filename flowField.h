@@ -1,5 +1,7 @@
 #include <Parameters.h>
 #include <Solver.h>
+#include <helper.h>
+
 class flowField
 {
 public:
@@ -14,10 +16,12 @@ public:
 	void update_M();
 	void update_F();
 	void update_G();
-	// for debug only
+	void update_S();
+	void update_T();
+// for debug only
 	void print_data();
 	void test_solver();
-private:
+	private:
 	/* data */
 	float * _u	;	// velocity field data
 	float * _v	;
@@ -26,7 +30,9 @@ private:
 	float * _F	;	// intermediate clac. functions
 	float * _G 	;
 
-	float * _A 	;	// coeff. matrix for implicit solver for height for first step
+	float * _A 	;	// coeff. matrix for linear solver for height for first step
+	float * _S;   // coeff. matrix for implicit solver for height
+	float * _T;   // right hand_side for implicit solver for height
 
 	float * _dz	;	// data of delta_z of all cells
 	float * _q	;	// data for non-hydro-static pressure
@@ -38,6 +44,7 @@ private:
 
 	//methods
 	int map(int i, int j);
+	int map2d(int i, int j);
 	int map(int i, int j, int k);
 	int map(int i, int j, int k, int l);
 

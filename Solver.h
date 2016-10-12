@@ -27,5 +27,6 @@ private:
 public:
 	Jacobi(float* A, float*b, float*x, int N);
 	void solve(float TOL, int MaxIt);
+	void set_A_and_b(float* A, float* b);
 	~Jacobi();
 };

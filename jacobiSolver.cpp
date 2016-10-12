@@ -46,6 +46,11 @@ void Jacobi::update_residual(){
 		}
 		r[i]-=_b[i];
 	}
+
+	for (i = 0; i < _N; i++) {
+		std::cout << r[i] << "\t" << std::endl;
+	}
+
 	sum = 0;
 	for (i = 0; i < _N; i++) {
 		sum+=r[i]*r[i];
@@ -66,4 +71,9 @@ void Jacobi::solve(float TOL, int MaxIt){
 	else
 		std::cout << "Jacobi solver converged after " << i << " iterations, the value of residual is "<< _res << std::endl;
 
+}
+
+void Jacobi::set_A_and_b(float* A, float* b){
+		this->_A = A;
+		this->_b = b;
 }
