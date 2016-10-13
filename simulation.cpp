@@ -21,5 +21,6 @@ void Simulation::run(){
 //	_flowfield -> test_solver();
 	_flowfield -> update_S();
 	_flowfield -> update_T();
+	_flowfield -> update_h();
 	_flowfield -> print_data();
 }

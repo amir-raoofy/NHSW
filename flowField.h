@@ -18,6 +18,7 @@ public:
 	void update_G();
 	void update_S();
 	void update_T();
+	void update_h();
 // for debug only
 	void print_data();
 	void test_solver();

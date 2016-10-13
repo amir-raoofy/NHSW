@@ -250,12 +250,14 @@ void flowField::update_S(){
 	}
 
 	for (int j = 0; j <=(_parameters->get_num_cells(0)+2)*
-						(_parameters->get_num_cells(2)+2);
+						(_parameters->get_num_cells(1)+2);
 					j+= (_parameters->get_num_cells(0)+2)) {
 		_S	[map2d(j, j+1)] = -1;
 		_S	[map2d(j+_parameters->get_num_cells(0)+2 -1,
 				   j+_parameters->get_num_cells(0)+2 -2)] = -1;
 	}
+
+	delete solver, x;
 }
 
 void flowField::update_T(){
@@ -264,6 +266,29 @@ void flowField::update_T(){
 		_T [map(i,j)] = 1;
 		}
 	}
+
+	//set the boundary coeffs
+	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
+		_T [map(i,0)] = 0;
+		_T [map(i,_parameters->get_num_cells(1)+1)] = 0;
+	}
+
+	for (int j = 0; j <(_parameters->get_num_cells(1)+2); j++) {
+		_T [map(0,j)] = 0;
+		_T [map(_parameters->get_num_cells(0)+1,j)] = 0;
+	}
+
+
+}
+
+void flowField::update_h(){
+	float TOL = 0.0001;
+	int MAXIT = 1000000;
+
+	Jacobi *solver = new Jacobi(_S, _T, _h, 
+								(_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2));
+	solver->solve(TOL, MAXIT);
+	delete solver;
 }
 
 void flowField::update_F(){
@@ -372,6 +397,15 @@ void flowField::print_data(){
 		for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
 			std::cout << std::setw(20)<<
 			_T	[ map(i,j) ];
+		}	
+	std::cout << std::endl;
+	}
+	
+	std::cout << "matrix h" << std::endl;
+	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
+		for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
+			std::cout << std::setw(20)<<
+			_h	[ map(i,j) ];
 		}	
 	std::cout << std::endl;
 	}
