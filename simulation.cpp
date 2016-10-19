@@ -13,9 +13,10 @@ void Simulation::run(){
 	_flowfield -> init_vel_field();
 	_flowfield -> init_dz();
 	_flowfield -> init_h();
-	_flowfield -> update_M();
 	_flowfield -> init_m();
 	_flowfield -> print_data();
+	for (int i = 0; i < 100; i++) {
+	_flowfield -> update_M();
 	_flowfield -> update_A();
 	_flowfield -> update_F();
 	_flowfield -> update_G();
@@ -24,5 +25,6 @@ void Simulation::run(){
 	_flowfield -> update_T();
 	_flowfield -> update_h();
     _flowfield -> update_u_v();
+	}
 	_flowfield -> print_data();
 }
