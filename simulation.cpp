@@ -15,6 +15,7 @@ void Simulation::run(){
 	_flowfield -> init_h();
 	_flowfield -> update_M();
 	_flowfield -> init_m();
+	_flowfield -> print_data();
 	_flowfield -> update_A();
 	_flowfield -> update_F();
 	_flowfield -> update_G();
@@ -22,5 +23,6 @@ void Simulation::run(){
 	_flowfield -> update_S();
 	_flowfield -> update_T();
 	_flowfield -> update_h();
+    _flowfield -> update_u_v();
 	_flowfield -> print_data();
 }
