@@ -126,13 +126,16 @@ void flowField::init_dz(){
 void flowField::init_h(){
 	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
 		for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
-				_h	[ map(i,j) ] 	= _parameters->get_num_cells(2)
+/*				_h	[ map(i,j) ] 	= _parameters->get_num_cells(2)
 							  		* _parameters->get_dxdydz(2) 
 								  	/ 2.0
 							  		+ (i)
 							 		*	(_parameters->get_num_cells(0))
 							  		* _parameters->get_dxdydz(0) 
 							  		/ 40.0 ;
+*/
+//				_h	[ map(i,j) ] 	= (i < (_parameters->get_num_cells(0)+2)/2)? _parameters->get_num_cells(2)*_parameters->get_dxdydz(2)/2:_parameters->get_num_cells(2)*_parameters->get_dxdydz(2) ;
+				_h	[ map(i,j) ] 	= (i < (_parameters->get_num_cells(0)+2)/2)? _parameters->get_num_cells(2)*_parameters->get_dxdydz(2)/2:_parameters->get_num_cells(2)*_parameters->get_dxdydz(2)/2+2.0 ;
 		}
 	}
 }
@@ -454,6 +457,11 @@ void flowField::update_u_v(){
 	}
 }
 
+
+float* flowField::get_height() const{
+	return _h;
+}
+
 void flowField::print_data(){
 
 	int i=1;
@@ -533,20 +541,20 @@ void flowField::print_data(){
 	}
 }
 
-int flowField::map(int i, int j){ 
+int flowField::map(int i, int j) const{ 
 	return
 			j +
 			i * (_parameters->get_num_cells(1)+2) ;
 }
 
-int flowField::map2d(int i, int j){ 
+int flowField::map2d(int i, int j) const{ 
 	return
 			j +
 			i * (_parameters->get_num_cells(0)+2)
 			  * (_parameters->get_num_cells(1)+2)	;
 }
 
-int flowField::map(int i, int j, int k){ 
+int flowField::map(int i, int j, int k) const{ 
 	return 
 			k +
 			j * (_parameters->get_num_cells(2)+2) +
@@ -554,7 +562,7 @@ int flowField::map(int i, int j, int k){
 		  		(_parameters->get_num_cells(2)+2) ;
 }
 
-int flowField::map(int i, int j, int k, int l){ 
+int flowField::map(int i, int j, int k, int l) const{ 
 	return 
 			l +
 			k * (_parameters->get_num_cells(2)+2) +

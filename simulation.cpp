@@ -9,13 +9,17 @@ Simulation::Simulation(flowField *flowfield, Parameters *parameters){
 Simulation::~Simulation(){}
 
 void Simulation::run(){
+	
+	Output output(*_parameters, *_flowfield);
+		
 	_flowfield -> init_data();
 	_flowfield -> init_vel_field();
 	_flowfield -> init_dz();
 	_flowfield -> init_h();
 	_flowfield -> init_m();
 	_flowfield -> print_data();
-	for (int i = 0; i < 100; i++) {
+	output.write(*_flowfield, 0, "./output/");
+	for (int i = 1; i < 100; i++) {
 	_flowfield -> update_M();
 	_flowfield -> update_A();
 	_flowfield -> update_F();
@@ -25,6 +29,7 @@ void Simulation::run(){
 	_flowfield -> update_T();
 	_flowfield -> update_h();
     _flowfield -> update_u_v();
+	output.write(*_flowfield, i, "./output/");
 	}
 	_flowfield -> print_data();
 }

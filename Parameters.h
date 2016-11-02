@@ -25,16 +25,16 @@ public:
 	void parse(int argc, const char * argv[]); 	// method to parse inputs and set the parameters
 	void print_parameters(); 			// print parameters to the consule
 
-	const float get_sim_time();
-	const float get_time_step();
-	const int   get_num_cells(int dim);
-	const float get_dxdydz(int dim);
-	const float get_vis();
-	const float get_gamma_b();
-	const float get_gamma_t();
-	const float get_viscosity();
-	const float get_theta();
-	const float get_g();
-	const float get_u_a();
-	const float get_v_a();
+	float get_sim_time() const;
+	float get_time_step() const;
+	int   get_num_cells(int dim) const;
+	float get_dxdydz(int dim) const;
+	float get_vis() const;
+	float get_gamma_b() const;
+	float get_gamma_t() const;
+	float get_viscosity() const;
+	float get_theta() const;
+	float get_g() const;
+	float get_u_a() const;
+	float get_v_a() const;
 };

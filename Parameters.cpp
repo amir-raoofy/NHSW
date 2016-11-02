@@ -46,49 +46,49 @@ void Parameters::parse(int argc, const char *argv[])  {
 	}
 }
 
-const float Parameters::get_sim_time(){
+float Parameters::get_sim_time() const{
 	return this->_T;
 }
-const float Parameters::get_time_step(){
+float Parameters::get_time_step() const{
 	return this->_dt;
 }
 
-const int Parameters::get_num_cells(int dim){
+int Parameters::get_num_cells(int dim) const{
 	return _N[dim];
 }
 
-const float Parameters::get_dxdydz(int dim){
+float Parameters::get_dxdydz(int dim) const{
 	return _dX[dim];
 }
-const float Parameters::get_vis(){
+float Parameters::get_vis() const{
 	return _nu;
 }
 
-const float Parameters::get_gamma_b(){
+float Parameters::get_gamma_b() const{
 	return _gamma_b;
 }
 
-const float Parameters::get_gamma_t(){
+float Parameters::get_gamma_t() const{
 	return _gamma_t;
 }
 
-const float Parameters::get_viscosity(){
+float Parameters::get_viscosity() const{
 	return _nu;
 }
 
-const float Parameters::get_theta(){
+float Parameters::get_theta() const{
 	return _theta;
 }
 
 
-const float Parameters::get_g(){
+float Parameters::get_g() const{
 	return _g;
 }
 
-const float Parameters::get_u_a(){
+float Parameters::get_u_a() const{
 	return _u_a;
 }
-const float Parameters::get_v_a(){
+float Parameters::get_v_a() const{
 	return _v_a;
 }
 void Parameters::print_parameters(){

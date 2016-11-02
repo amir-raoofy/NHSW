@@ -23,6 +23,15 @@ public:
 // for debug only
 	void print_data();
 	void test_solver();
+
+	//methods
+	int map(int i, int j) const;
+	int map2d(int i, int j) const;
+	int map(int i, int j, int k) const;
+	int map(int i, int j, int k, int l) const;
+
+	float* get_height() const;
+
 	private:
 	/* data */
 	float * _u	;	// velocity field data
@@ -44,10 +53,5 @@ public:
 
 	Parameters * _parameters;
 
-	//methods
-	int map(int i, int j);
-	int map2d(int i, int j);
-	int map(int i, int j, int k);
-	int map(int i, int j, int k, int l);
 
 };
