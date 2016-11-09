@@ -17,9 +17,9 @@ void Simulation::run(){
 	_flowfield -> init_dz();
 	_flowfield -> init_h();
 	_flowfield -> init_m();
-	_flowfield -> print_data();
+//	_flowfield -> print_data();
 	output.write(*_flowfield, 0, "./output/");
-	for (int i = 1; i < 100; i++) {
+	for (int i = 1; i < 2; i++) {
 	_flowfield -> update_M();
 	_flowfield -> update_A();
 	_flowfield -> update_F();
@@ -29,6 +29,10 @@ void Simulation::run(){
 	_flowfield -> update_T();
 	_flowfield -> update_h();
     _flowfield -> update_u_v();
+	_flowfield -> solve_q();
+	_flowfield -> update_u_v_w();
+	_flowfield -> solve_h();
+
 	output.write(*_flowfield, i, "./output/");
 	}
 	_flowfield -> print_data();

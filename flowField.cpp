@@ -33,6 +33,15 @@ flowField::flowField(Parameters* parameters):
 	_dz= new float [(_parameters->get_num_cells(0)+2)*
 					(_parameters->get_num_cells(1)+2)*
 					(_parameters->get_num_cells(2)+2)];
+	_P = new float [(_parameters->get_num_cells(0)+2)*
+					(_parameters->get_num_cells(1)+2)*
+					(_parameters->get_num_cells(2)+2)*
+					(_parameters->get_num_cells(0)+2)*
+					(_parameters->get_num_cells(1)+2)*
+					(_parameters->get_num_cells(2)+2)];
+	_R = new float [(_parameters->get_num_cells(0)+2)*
+					(_parameters->get_num_cells(1)+2)*
+					(_parameters->get_num_cells(2)+2)];
 	_q = new float [(_parameters->get_num_cells(0)+2)*
 					(_parameters->get_num_cells(1)+2)*
 					(_parameters->get_num_cells(2)+2)];
@@ -72,6 +81,7 @@ void flowField::init_data(){
 		_G	[i] = 0.0;
 		_dz	[i] = 0.0;
 		_q	[i] = 0.0;
+		_R	[i] = 0.0;
 	}
 
 	for (int i = 0; i < (_parameters->get_num_cells(0)+2) *
@@ -98,6 +108,15 @@ void flowField::init_data(){
 					   	 (_parameters->get_num_cells(1)+2)
 	   					 ; i++	)
 		_S  [i] = 0.0;
+
+	for (int i = 0; i <  (_parameters->get_num_cells(0)+2) *
+						 (_parameters->get_num_cells(1)+2) *
+					  	 (_parameters->get_num_cells(2)+2) *
+					  	 (_parameters->get_num_cells(0)+2) *
+					  	 (_parameters->get_num_cells(1)+2) *
+					   	 (_parameters->get_num_cells(2)+2)
+	   					 ; i++	)
+		_P  [i] = 0.0;
 
 }
 
@@ -457,11 +476,154 @@ void flowField::update_u_v(){
 	}
 }
 
+void flowField::solve_q(){
+	this->update_P();
+}
+void flowField::update_u_v_w(){}
+void flowField::solve_h(){}
 
 float* flowField::get_height() const{
 	return _h;
 }
 
+void flowField::update_P(){
+	float alpha =
+	 _parameters->get_theta()
+	 *_parameters->get_time_step()
+	 / (_parameters->get_dxdydz(0) * _parameters->get_dxdydz(0));
+
+	float beta =
+	 _parameters->get_theta()
+	 *_parameters->get_time_step()
+	 / (_parameters->get_dxdydz(1) * _parameters->get_dxdydz(1));
+
+	float gama = 
+	 _parameters->get_theta()
+	 *_parameters->get_time_step();
+
+	//initialize the coeff matrix
+	for (int i = 0; i <  (_parameters->get_num_cells(0)+2) *
+					 (_parameters->get_num_cells(1)+2) *
+					 (_parameters->get_num_cells(2)+2) *
+					 (_parameters->get_num_cells(0)+2) *
+				  	 (_parameters->get_num_cells(1)+2) *
+				   	 (_parameters->get_num_cells(2)+2)
+   					 ; i++	)
+		_P  [i] = 0.0;
+
+	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
+		for (int j = 1; j < _parameters->get_num_cells(1)+1; j++) {
+			for (int k = 1; k < _parameters->get_num_cells(2)+1; k++) {
+				//std::cout << 	_dz	[ map(i,j,k) ]  << "  " << i  << "  " <<  "  " << j << "  "<< k << std::endl;
+				_P	[map3d(map(i,j,k) , map(i,j,k))] =
+														-alpha * _dz[map(i  ,j  ,k  )]
+														-alpha * _dz[map(i-1,j  ,k  )]
+														-beta  * _dz[map(i  ,j  ,k  )]
+														-beta  * _dz[map(i  ,j-1,k  )]
+														-gama  / _dz[map(i  ,j  ,k  )]
+														-gama  / _dz[map(i  ,j  ,k-1)];
+
+				_P	[map3d(map(i,j,k) , map(i+1,j,k))] = alpha * _dz[map(i  ,j  ,k  )];
+				_P	[map3d(map(i,j,k) , map(i-1,j,k))] = alpha * _dz[map(i-1,j  ,k  )];
+				_P	[map3d(map(i,j,k) , map(i,j+1,k))] = beta  * _dz[map(i  ,j  ,k  )];
+				_P	[map3d(map(i,j,k) , map(i,j-1,k))] = beta  * _dz[map(i  ,j-1,k  )];
+				_P	[map3d(map(i,j,k) , map(i,j,k+1))] = gama  / _dz[map(i  ,j  ,k  )];
+				_P	[map3d(map(i,j,k) , map(i,j,k-1))] = gama  / _dz[map(i  ,j  ,k-1)];
+			}
+		}
+	}
+/*	
+	//set the boundary coeffs
+	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
+		_S	[map2d(i, i+ _parameters->get_num_cells(0)+2)] = -1;
+		_S	[map2d(i+ (_parameters->get_num_cells(0)+2)*
+					  (_parameters->get_num_cells(1)+1)
+				  ,i+ (_parameters->get_num_cells(0)+2)*
+					  (_parameters->get_num_cells(1)+0))] = -1;
+	}
+
+	for (int j = 0; j <=(_parameters->get_num_cells(0)+2)*
+						(_parameters->get_num_cells(1)+2);
+					j+= (_parameters->get_num_cells(0)+2)) {
+		_S	[map2d(j, j+1)] = -1;
+		_S	[map2d(j+_parameters->get_num_cells(0)+2 -1,
+				   j+_parameters->get_num_cells(0)+2 -2)] = -1;
+	}
+	*/
+}
+
+void flowField::update_R(){
+/*
+	float TOL = 0.0001;
+	int MAXIT = 1000000;
+	float * x = new float [_parameters->get_num_cells(2)+2];
+	for (int i = 0; i < _parameters->get_num_cells(2)+2 ; i++) {
+		x[i]=1;
+	}
+
+	Jacobi *solver = new Jacobi(_A, _F, x, _parameters->get_num_cells(2)+2);
+
+	float kappa =
+		_parameters->get_theta()
+	 * ( _parameters->get_time_step() )
+	 / (_parameters->get_dxdydz(0) );
+
+	float lambda =
+		_parameters->get_theta()
+	 * ( _parameters->get_time_step() )
+	 / (_parameters->get_dxdydz(1) );
+
+	float zeta =
+	   ( 1 - _parameters->get_theta() )
+	 * ( _parameters->get_time_step() )
+	 / (_parameters->get_dxdydz(0) );
+ 
+	float eta  =
+	   ( 1 - _parameters->get_theta() )
+	 * ( _parameters->get_time_step() )
+	 / (_parameters->get_dxdydz(1) );
+
+
+
+	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
+		for (int j = 1; j < _parameters->get_num_cells(1)+1; j++) {
+			_T [map(i,j)] =	_h [map(i,j)]
+					  -	zeta * ( dot_product (_dz+map(i,j,0), _u+map(i,j,0), _parameters->get_num_cells(2)+2) 
+									  - dot_product (_dz+map(i-1,j,0), _u+map(i-1,j,0), _parameters->get_num_cells(2)+2) )
+					  -	eta  * ( dot_product (_dz+map(i,j,0), _v+map(i,j,0), _parameters->get_num_cells(2)+2) 
+									  - dot_product (_dz+map(i,j-1,0), _v+map(i,j-1,0), _parameters->get_num_cells(2)+2) );
+			solver->set_A_and_b(_A+map(i,j,0,0),_F+map(i,j,0));
+			solver->solve(TOL, MAXIT);
+			_T [map(i,j)] -= kappa * dot_product(_dz+map(i,j,0), x, _parameters->get_num_cells(2)+2);		// kappa _ i _ j
+
+			solver->set_A_and_b(_A+map(i-1,j,0,0),_F+map(i-1,j,0));
+			solver->solve(TOL, MAXIT);
+			_T [map(i,j)] += kappa * dot_product(_dz+map(i-1,j,0), x, _parameters->get_num_cells(2)+2);	// kappa _ i-1 _ j
+
+			solver->set_A_and_b(_A+map(i,j,0,0),_G+map(i,j,0));
+			solver->solve(TOL, MAXIT);
+			_T [map(i,j)] -= lambda * dot_product(_dz+map(i,j,0), x, _parameters->get_num_cells(2)+2);		// lambda _ i _ j
+
+			solver->set_A_and_b(_A+map(i,j-1,0,0),_G+map(i,j-1,0));
+			solver->solve(TOL, MAXIT);
+			_T [map(i,j)] += lambda * dot_product(_dz+map(i,j-1,0), x, _parameters->get_num_cells(2)+2);	// lambda _ i _ j-1
+		}
+	}
+
+	//set the boundary coeffs
+	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
+		_T [map(i,0)] = 0;
+		_T [map(i,_parameters->get_num_cells(1)+1)] = 0;
+	}
+
+	for (int j = 0; j <(_parameters->get_num_cells(1)+2); j++) {
+		_T [map(0,j)] = 0;
+		_T [map(_parameters->get_num_cells(0)+1,j)] = 0;
+	}
+
+	delete solver, x;
+	*/
+}
 void flowField::print_data(){
 
 	int i=1;
@@ -539,6 +701,16 @@ void flowField::print_data(){
 		}
 	std::cout << std::endl;
 	}
+
+	std::cout << "matrix P" << std::endl;
+	for (int i = 0; i < (_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2)*(_parameters->get_num_cells(2)+2); i++) {
+		for (int j = 0; j < (_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2)*(_parameters->get_num_cells(2)+2); j++) {
+			std::cout << std::setw(5)<<
+			_P	[ map3d(i,j) ];
+		}	
+	std::cout << std::endl;
+	}
+
 }
 
 int flowField::map(int i, int j) const{ 
@@ -562,6 +734,13 @@ int flowField::map(int i, int j, int k) const{
 		  		(_parameters->get_num_cells(2)+2) ;
 }
 
+int flowField::map3d(int i, int j) const{ 
+	return 
+			j +
+			i * (_parameters->get_num_cells(0)+2)
+			  * (_parameters->get_num_cells(1)+2)
+			  * (_parameters->get_num_cells(2)+2)	;
+}
 int flowField::map(int i, int j, int k, int l) const{ 
 	return 
 			l +

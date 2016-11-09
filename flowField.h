@@ -20,6 +20,11 @@ public:
 	void update_T();
 	void update_h();
 	void update_u_v();
+	void update_P();
+	void update_R();
+	void solve_q();
+	void update_u_v_w();
+	void solve_h();
 // for debug only
 	void print_data();
 	void test_solver();
@@ -28,6 +33,7 @@ public:
 	int map(int i, int j) const;
 	int map2d(int i, int j) const;
 	int map(int i, int j, int k) const;
+	int map3d(int i, int j) const;
 	int map(int i, int j, int k, int l) const;
 
 	float* get_height() const;
@@ -44,6 +50,8 @@ public:
 	float * _A 	;	// coeff. matrix for linear solver for height for first step
 	float * _S;   // coeff. matrix for implicit solver for height
 	float * _T;   // right hand_side for implicit solver for height
+	float * _P;   // coeff. matrix for implicit solver for hydrodynamic pressure
+	float * _R;   // right hand_side for implicit solver for hydrodynamic pressure
 
 	float * _dz	;	// data of delta_z of all cells
 	float * _q	;	// data for non-hydro-static pressure
