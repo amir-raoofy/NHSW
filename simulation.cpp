@@ -28,7 +28,7 @@ void Simulation::run(){
 	_flowfield -> update_S();
 	_flowfield -> update_T();
 	_flowfield -> update_h();
-    _flowfield -> update_u_v();
+	_flowfield -> update_u_v();
 	_flowfield -> solve_q();
 	_flowfield -> update_u_v_w();
 	_flowfield -> solve_h();

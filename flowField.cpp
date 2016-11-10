@@ -286,7 +286,8 @@ void flowField::update_S(){
 				   j+_parameters->get_num_cells(0)+2 -2)] = -1;
 	}
 
-	delete solver, x;
+	delete solver;
+	delete [] x;
 }
 
 void flowField::update_T(){
@@ -358,7 +359,8 @@ void flowField::update_T(){
 		_T [map(_parameters->get_num_cells(0)+1,j)] = 0;
 	}
 
-	delete solver, x;
+	delete solver;
+	delete [] x;
 }
 
 void flowField::update_h(){
@@ -477,7 +479,23 @@ void flowField::update_u_v(){
 }
 
 void flowField::solve_q(){
+	float TOL = 0.0001;
+	int MAXIT = 1000000;
+	float * x = new float [(_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2)*(_parameters->get_num_cells(2)+2)];
+
+	for (int i = 0; i <(_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2)*(_parameters->get_num_cells(2)+2); i++) {
+		x[i]=1;
+	}
+
 	this->update_P();
+	this->update_R();
+
+	Jacobi *solver = new Jacobi(_P, _R, x, (_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2)*(_parameters->get_num_cells(2)+2));
+	solver->solve(TOL, MAXIT);
+	
+	delete solver;
+	delete [] x;
+
 }
 void flowField::update_u_v_w(){}
 
@@ -519,15 +537,13 @@ void flowField::update_P(){
 	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
 		for (int j = 1; j < _parameters->get_num_cells(1)+1; j++) {
 			for (int k = 1; k < _parameters->get_num_cells(2)+1; k++) {
-				//std::cout << 	_dz	[ map(i,j,k) ]  << "  " << i  << "  " <<  "  " << j << "  "<< k << std::endl;
 				_P	[map3d(map(i,j,k) , map(i,j,k))] =
-														-alpha * _dz[map(i  ,j  ,k  )]
-														-alpha * _dz[map(i-1,j  ,k  )]
-														-beta  * _dz[map(i  ,j  ,k  )]
-														-beta  * _dz[map(i  ,j-1,k  )]
-														-gama  / _dz[map(i  ,j  ,k  )]
-														-gama  / _dz[map(i  ,j  ,k-1)];
-
+									-alpha * _dz[map(i  ,j  ,k  )]
+									-alpha * _dz[map(i-1,j  ,k  )]
+									-beta  * _dz[map(i  ,j  ,k  )]
+									-beta  * _dz[map(i  ,j-1,k  )]
+									-gama  / _dz[map(i  ,j  ,k  )]
+									-gama  / _dz[map(i  ,j  ,k-1)];
 				_P	[map3d(map(i,j,k) , map(i+1,j,k))] = alpha * _dz[map(i  ,j  ,k  )];
 				_P	[map3d(map(i,j,k) , map(i-1,j,k))] = alpha * _dz[map(i-1,j  ,k  )];
 				_P	[map3d(map(i,j,k) , map(i,j+1,k))] = beta  * _dz[map(i  ,j  ,k  )];
@@ -537,97 +553,82 @@ void flowField::update_P(){
 			}
 		}
 	}
-/*	
+	
 	//set the boundary coeffs
-	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
-		_S	[map2d(i, i+ _parameters->get_num_cells(0)+2)] = -1;
-		_S	[map2d(i+ (_parameters->get_num_cells(0)+2)*
-					  (_parameters->get_num_cells(1)+1)
-				  ,i+ (_parameters->get_num_cells(0)+2)*
-					  (_parameters->get_num_cells(1)+0))] = -1;
+	for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
+		for (int k = 0; k < _parameters->get_num_cells(2)+2; k++) {
+			_P	[map3d(map(0,j,k), map(0,j,k))] =  1;
+			_P	[map3d(map(0,j,k), map(1,j,k))] = -1;
+			
+			_P	[map3d(map(_parameters->get_num_cells(0)+1 ,j,k), map(_parameters->get_num_cells(0)+1 ,j,k))] =  1;
+			_P	[map3d(map(_parameters->get_num_cells(0)+1 ,j,k), map(_parameters->get_num_cells(0)   ,j,k))] = -1;
+		}
 	}
 
-	for (int j = 0; j <=(_parameters->get_num_cells(0)+2)*
-						(_parameters->get_num_cells(1)+2);
-					j+= (_parameters->get_num_cells(0)+2)) {
-		_S	[map2d(j, j+1)] = -1;
-		_S	[map2d(j+_parameters->get_num_cells(0)+2 -1,
-				   j+_parameters->get_num_cells(0)+2 -2)] = -1;
+	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
+		for (int k = 0; k < _parameters->get_num_cells(2)+2; k++) {
+			_P	[map3d(map(i,0,k), map(i,0,k))] =  1;
+			_P	[map3d(map(i,0,k), map(i,1,k))] = -1;
+			
+			_P	[map3d(map(i,_parameters->get_num_cells(1)+1,k), map(i,_parameters->get_num_cells(1)+1,k))] =  1;
+			_P	[map3d(map(i,_parameters->get_num_cells(1)+1,k), map(i,_parameters->get_num_cells(1)  ,k))] = -1;
+		}
 	}
-	*/
+	
+	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
+		for (int j = 1; j < _parameters->get_num_cells(1)+1; j++) {
+			_P	[map3d(map(i,j,0), map(i,j,0))] =  1;
+			_P	[map3d(map(i,j,0), map(i,j,1))] = -1;
+			
+			_P	[map3d(map(i,j,_parameters->get_num_cells(2)+1), map(i,j,_parameters->get_num_cells(2)+1))] =  1;
+			_P	[map3d(map(i,j,_parameters->get_num_cells(2)+1), map(i,j,_parameters->get_num_cells(2)  ))] = -1;
+		}
+	}
 }
 
 void flowField::update_R(){
-/*
-	float TOL = 0.0001;
-	int MAXIT = 1000000;
-	float * x = new float [_parameters->get_num_cells(2)+2];
-	for (int i = 0; i < _parameters->get_num_cells(2)+2 ; i++) {
-		x[i]=1;
-	}
 
-	Jacobi *solver = new Jacobi(_A, _F, x, _parameters->get_num_cells(2)+2);
-
-	float kappa =
-		_parameters->get_theta()
-	 * ( _parameters->get_time_step() )
-	 / (_parameters->get_dxdydz(0) );
-
-	float lambda =
-		_parameters->get_theta()
-	 * ( _parameters->get_time_step() )
-	 / (_parameters->get_dxdydz(1) );
-
-	float zeta =
-	   ( 1 - _parameters->get_theta() )
-	 * ( _parameters->get_time_step() )
-	 / (_parameters->get_dxdydz(0) );
- 
-	float eta  =
-	   ( 1 - _parameters->get_theta() )
-	 * ( _parameters->get_time_step() )
-	 / (_parameters->get_dxdydz(1) );
-
-
+	for (int i = 0; i <  (	(_parameters->get_num_cells(0)+2) *
+				(_parameters->get_num_cells(1)+2) *
+				(_parameters->get_num_cells(2)+2)  )
+   				; i++	)
+		_R  [i] = 0.0;
 
 	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
 		for (int j = 1; j < _parameters->get_num_cells(1)+1; j++) {
-			_T [map(i,j)] =	_h [map(i,j)]
-					  -	zeta * ( dot_product (_dz+map(i,j,0), _u+map(i,j,0), _parameters->get_num_cells(2)+2) 
-									  - dot_product (_dz+map(i-1,j,0), _u+map(i-1,j,0), _parameters->get_num_cells(2)+2) )
-					  -	eta  * ( dot_product (_dz+map(i,j,0), _v+map(i,j,0), _parameters->get_num_cells(2)+2) 
-									  - dot_product (_dz+map(i,j-1,0), _v+map(i,j-1,0), _parameters->get_num_cells(2)+2) );
-			solver->set_A_and_b(_A+map(i,j,0,0),_F+map(i,j,0));
-			solver->solve(TOL, MAXIT);
-			_T [map(i,j)] -= kappa * dot_product(_dz+map(i,j,0), x, _parameters->get_num_cells(2)+2);		// kappa _ i _ j
-
-			solver->set_A_and_b(_A+map(i-1,j,0,0),_F+map(i-1,j,0));
-			solver->solve(TOL, MAXIT);
-			_T [map(i,j)] += kappa * dot_product(_dz+map(i-1,j,0), x, _parameters->get_num_cells(2)+2);	// kappa _ i-1 _ j
-
-			solver->set_A_and_b(_A+map(i,j,0,0),_G+map(i,j,0));
-			solver->solve(TOL, MAXIT);
-			_T [map(i,j)] -= lambda * dot_product(_dz+map(i,j,0), x, _parameters->get_num_cells(2)+2);		// lambda _ i _ j
-
-			solver->set_A_and_b(_A+map(i,j-1,0,0),_G+map(i,j-1,0));
-			solver->solve(TOL, MAXIT);
-			_T [map(i,j)] += lambda * dot_product(_dz+map(i,j-1,0), x, _parameters->get_num_cells(2)+2);	// lambda _ i _ j-1
+			for (int k = 1; k < _parameters->get_num_cells(2)+1; k++) {
+				_R	[map(i,j,k)] =
+							(_u[map(i,j,k)] * _dz[map(i,j,k)] - _u[map(i-1,j,k)] * _dz[map(i-1,j,k)])/(_parameters->get_dxdydz(0)) +
+							(_v[map(i,j,k)] * _dz[map(i,j,k)] - _v[map(i,j-1,k)] * _dz[map(i,j-1,k)])/(_parameters->get_dxdydz(1)) +
+							 _w[map(i,j,k)]                   - _w[map(i,j,k-1)];
+			}
 		}
 	}
 
 	//set the boundary coeffs
+	for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
+		for (int k = 0; k < _parameters->get_num_cells(2)+2; k++) {
+			_R	[map(0,j,k)] =  0;
+			
+			_R	[map(_parameters->get_num_cells(0)+1 ,j,k)] =  0;
+		}
+	}
+
 	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
-		_T [map(i,0)] = 0;
-		_T [map(i,_parameters->get_num_cells(1)+1)] = 0;
+		for (int k = 0; k < _parameters->get_num_cells(2)+2; k++) {
+			_R	[map(i,0,k)] =  0;
+			
+			_R	[map(i,_parameters->get_num_cells(1)+1,k)] =  0;
+		}
 	}
-
-	for (int j = 0; j <(_parameters->get_num_cells(1)+2); j++) {
-		_T [map(0,j)] = 0;
-		_T [map(_parameters->get_num_cells(0)+1,j)] = 0;
+	
+	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
+		for (int j = 1; j < _parameters->get_num_cells(1)+1; j++) {
+			_R	[map(i,j,0)] =  0;
+			
+			_R	[map(i,j,_parameters->get_num_cells(2)+1)] =  0;
+		}
 	}
-
-	delete solver, x;
-	*/
 }
 
 void flowField::print_data(){
