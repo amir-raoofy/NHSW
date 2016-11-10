@@ -37,6 +37,7 @@ public:
 	int map(int i, int j, int k, int l) const;
 
 	float* get_height() const;
+	float* get_DZ() const;
 
 	private:
 	/* data */

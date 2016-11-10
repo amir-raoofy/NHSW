@@ -278,7 +278,7 @@ void flowField::update_S(){
 					  (_parameters->get_num_cells(1)+0))] = -1;
 	}
 
-	for (int j = 0; j <=(_parameters->get_num_cells(0)+2)*
+	for (int j = 0; j <(_parameters->get_num_cells(0)+2)*
 						(_parameters->get_num_cells(1)+2);
 					j+= (_parameters->get_num_cells(0)+2)) {
 		_S	[map2d(j, j+1)] = -1;
@@ -480,10 +480,15 @@ void flowField::solve_q(){
 	this->update_P();
 }
 void flowField::update_u_v_w(){}
+
 void flowField::solve_h(){}
 
 float* flowField::get_height() const{
 	return _h;
+}
+
+float* flowField::get_DZ() const{
+	return _dz;
 }
 
 void flowField::update_P(){
@@ -624,6 +629,7 @@ void flowField::update_R(){
 	delete solver, x;
 	*/
 }
+
 void flowField::print_data(){
 
 	int i=1;

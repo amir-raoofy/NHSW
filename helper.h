@@ -1,2 +1,2 @@
-float dot_product (float* a, float* b, int n);
+float dot_product (const float *a,const float *b, int n);
 
