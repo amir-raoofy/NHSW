@@ -38,6 +38,7 @@ public:
 
 	float* get_height() const;
 	float* get_DZ() const;
+	float* get_q() const;
 
 	private:
 	/* data */

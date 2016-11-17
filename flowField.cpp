@@ -483,31 +483,20 @@ void flowField::solve_q(){
 	int MAXIT = 1000000;
 	float * x = new float [(_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2)*(_parameters->get_num_cells(2)+2)];
 
-	for (int i = 0; i <(_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2)*(_parameters->get_num_cells(2)+2); i++) {
-		x[i]=1;
-	}
-
 	this->update_P();
 	this->update_R();
 
-	Jacobi *solver = new Jacobi(_P, _R, x, (_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2)*(_parameters->get_num_cells(2)+2));
+	Jacobi *solver = new Jacobi(_P, _R, _q, (_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2)*(_parameters->get_num_cells(2)+2));
 	solver->solve(TOL, MAXIT);
 	
 	delete solver;
 	delete [] x;
 
 }
+
 void flowField::update_u_v_w(){}
 
 void flowField::solve_h(){}
-
-float* flowField::get_height() const{
-	return _h;
-}
-
-float* flowField::get_DZ() const{
-	return _dz;
-}
 
 void flowField::update_P(){
 	float alpha =
@@ -558,7 +547,11 @@ void flowField::update_P(){
 	for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
 		for (int k = 0; k < _parameters->get_num_cells(2)+2; k++) {
 			_P	[map3d(map(0,j,k), map(0,j,k))] =  1;
-			_P	[map3d(map(0,j,k), map(1,j,k))] = -1;
+
+			/*
+			 * make the first boundary drichlet so that the matrix won't be singular
+			 *_P	[map3d(map(0,j,k), map(1,j,k))] = -1;
+			 */
 			
 			_P	[map3d(map(_parameters->get_num_cells(0)+1 ,j,k), map(_parameters->get_num_cells(0)+1 ,j,k))] =  1;
 			_P	[map3d(map(_parameters->get_num_cells(0)+1 ,j,k), map(_parameters->get_num_cells(0)   ,j,k))] = -1;
@@ -597,7 +590,7 @@ void flowField::update_R(){
 	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
 		for (int j = 1; j < _parameters->get_num_cells(1)+1; j++) {
 			for (int k = 1; k < _parameters->get_num_cells(2)+1; k++) {
-				_R	[map(i,j,k)] =
+				_R	[map(i,j,k)] = 
 							(_u[map(i,j,k)] * _dz[map(i,j,k)] - _u[map(i-1,j,k)] * _dz[map(i-1,j,k)])/(_parameters->get_dxdydz(0)) +
 							(_v[map(i,j,k)] * _dz[map(i,j,k)] - _v[map(i,j-1,k)] * _dz[map(i,j-1,k)])/(_parameters->get_dxdydz(1)) +
 							 _w[map(i,j,k)]                   - _w[map(i,j,k-1)];
@@ -631,6 +624,18 @@ void flowField::update_R(){
 	}
 }
 
+float* flowField::get_height() const{
+	return _h;
+}
+
+float* flowField::get_DZ() const{
+	return _dz;
+}
+
+float* flowField::get_q() const{
+	return _q;
+}
+
 void flowField::print_data(){
 
 	int i=1;
@@ -645,7 +650,7 @@ void flowField::print_data(){
 	std::cout << std::endl;
 	}
 
-	int k=3;
+	int k=1;
 	std::cout << "matrix F" << std::endl;
 	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
 		for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
@@ -714,8 +719,10 @@ void flowField::print_data(){
 		for (int j = 0; j < (_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2)*(_parameters->get_num_cells(2)+2); j++) {
 			std::cout << std::setw(5)<<
 			_P	[ map3d(i,j) ];
-		}	
-	std::cout << std::endl;
+		}
+		std::cout << "		"<<std::setw(5)<<
+		_R	[ i];
+		std::cout << std::endl;
 	}
 
 }

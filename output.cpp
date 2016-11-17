@@ -25,6 +25,7 @@ void Output::write ( flowField & flowfield, int timeStep, std::string foldername
 	this->writeVelocity();
 	this->writeHeight();
 	this->writeDZ();
+  this->writeQ();
 	
 	// Close the file
 	this->_outputFile->close();
@@ -91,10 +92,7 @@ void Output::clearStringStreams() {
 
 
 void Output::writeDZ(){
-	*this->_outputFile << "CELL_DATA " 	<< _parameters.get_num_cells(0)
-										*  _parameters.get_num_cells(1)
-										*  _parameters.get_num_cells(2) << std::endl;
-	*this->_outputFile << "SCALARS height float 1" << std::endl;
+	*this->_outputFile << "SCALARS dz float 1" << std::endl;
 	*this->_outputFile << "LOOKUP_TABLE default" << std::endl;
 	for (int k = 1; k < _parameters.get_num_cells(2)+1; k++) {
 		for (int j = 1; j < _parameters.get_num_cells(1)+1; j++) {
@@ -106,3 +104,17 @@ void Output::writeDZ(){
 
 	*this->_outputFile << std::endl;
 }
+
+void Output::writeQ(){
+	*this->_outputFile << "SCALARS NonHydPressure float 1" << std::endl;
+	*this->_outputFile << "LOOKUP_TABLE default" << std::endl;
+	for (int k = 1; k < _parameters.get_num_cells(2)+1; k++) {
+		for (int j = 1; j < _parameters.get_num_cells(1)+1; j++) {
+			for (int i = 1; i < _parameters.get_num_cells(0)+1; i++) {
+				*this->_outputFile << (this->_flowfield).get_q()[(this->_flowfield).map(i,j,k) ] << std::endl;
+			}
+		}
+	}
+
+	*this->_outputFile << std::endl;
+} 

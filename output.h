@@ -24,6 +24,7 @@ class Output {
         void writePressure();
         void writeVelocity();
         void writeHeight();
+        void writeQ();
         void clearStringStreams();
         //@ Debug
 	void writeDZ();
