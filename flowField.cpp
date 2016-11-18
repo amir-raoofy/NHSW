@@ -494,9 +494,32 @@ void flowField::solve_q(){
 
 }
 
-void flowField::update_u_v_w(){}
+void flowField::update_u_v_w(){
+	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
+		for (int j = 1; j < _parameters->get_num_cells(1)+1; j++) {
+			for (int k = 0; k < _parameters->get_num_cells(2)+2; k++) {
+				_u[map(i,j,k)] -= (_parameters->get_theta() * _parameters->get_sim_time() / _parameters->get_dxdydz(0) )
+													* (_q[map(i+1,j,k)] - _q[map(i,j,k)]);
+				_v[map(i,j,k)] -= (_parameters->get_theta() * _parameters->get_sim_time() / _parameters->get_dxdydz(1) )
+													* (_q[map(i,j+1,k)] - _q[map(i,j,k)]);
+				/*
+				 *TODO update the w to fulfill the continuity condition
+				 */
+				_w[map(i,j,k)] -= (_parameters->get_theta() * _parameters->get_sim_time() / _dz[map(i,j,k)] )
+													* (_q[map(i,j,k+1)] - _q[map(i,j,k)]);
+			}
+		}
+	}
+}
 
-void flowField::solve_h(){}
+void flowField::solve_h(){
+	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
+		for (int j = 1; j < _parameters->get_num_cells(1)+1; j++) {
+			_h[map(i,j)] += _q[map(i,j,_M[map(i,j)])]/_parameters->get_g();
+		}
+	}
+
+}
 
 void flowField::update_P(){
 	float alpha =
