@@ -22,8 +22,8 @@ void Output::write ( flowField & flowfield, int timeStep, std::string foldername
 	this->writeFileHeader();
 	this->writeGrid();
 	this->writePressure();
-	this->writeVelocity();
 	this->writeHeight();
+	this->writeVelocity();
 	this->writeDZ();
   this->writeQ();
 	
@@ -61,7 +61,20 @@ void Output::writeGrid (){
 }
 
 void Output::writePressure (){}
-void Output::writeVelocity (){}
+void Output::writeVelocity (){
+	*this->_outputFile <<"VECTORS velocity float" << std::endl;
+	for (int k = 0; k < _parameters.get_num_cells(2); k++) {
+		for (int j = 0; j < _parameters.get_num_cells(1); j++) {
+			for (int i = 0; i < _parameters.get_num_cells(0); i++) {
+				*this->_outputFile << ( _flowfield.get_u()[_flowfield.map(i,j,k) ] + _flowfield.get_u()[_flowfield.map(i+1,j,k)] ) /2 << " " <<
+															( _flowfield.get_v()[_flowfield.map(i,j,k) ] + _flowfield.get_v()[_flowfield.map(i,j+1,k)] ) /2 << " " <<
+															( _flowfield.get_w()[_flowfield.map(i,j,k) ] + _flowfield.get_w()[_flowfield.map(i,j,k+1)] ) /2 << std::endl;
+			}
+		}
+	}
+	std::cout <<  std::endl;
+}
+
 void Output::writeHeight (){
 	*this->_outputFile << "CELL_DATA " 	<< _parameters.get_num_cells(0) 
 		   								*  _parameters.get_num_cells(1)

@@ -1,11 +1,11 @@
-#include <Solver.h>
+#include "Solver.h"
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
 #include <math.h>
 
 // constructor
-Jacobi::Jacobi(float* A, float*b, float*x, int N) : Solver(A, b, x, N){
+Jacobi::Jacobi(float* A, float*b, float*x, int N) : matrixSolver(A, b, x, N){
 	x_old= new float [_N];
 	r= new float [_N];
 	std::cout << "\033[1;31m====Jacobi solver is invoked====\033[0m"	<< std::endl;
@@ -13,7 +13,8 @@ Jacobi::Jacobi(float* A, float*b, float*x, int N) : Solver(A, b, x, N){
 
 // destructor
 Jacobi::~Jacobi(){
-	delete [] x_old, r;
+	delete [] x_old;
+	delete [] r;
 }
 
 // main loop of the iterative solve; one iteration of Jacobi

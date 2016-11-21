@@ -7,14 +7,24 @@ protected:
 	float* _A;	// Matrix A
 	float* _b;	// Right hand-side b
 	float* _x;	// solution of the equation
-	int  _N;	// size of the linear system
 
 public:
-	Solver(float* A, float*b, float*x, int N) : _A(A), _b(b), _x(x), _N(N){};
+	Solver(float* A, float*b, float*x) : _A(A), _b(b), _x(x){};
 	virtual void solve(float TOL, int MaxIt)=0;
 };
 
-class Jacobi : public Solver
+class matrixSolver : public Solver
+{
+protected:
+	int  _N;	// size of the linear system
+
+public:
+	matrixSolver (float* A, float*b, float*x, int N) : Solver(A, b, x), _N(N){};
+	virtual void solve(float TOL, int MaxIt)=0;
+};
+
+
+class Jacobi : public matrixSolver
 {
 private:
 	float* x_old;	// buffer to store the solution after each iteration

@@ -36,6 +36,9 @@ public:
 	int map3d(int i, int j) const;
 	int map(int i, int j, int k, int l) const;
 
+	float* get_u() const;
+	float* get_v() const;
+	float* get_w() const;
 	float* get_height() const;
 	float* get_DZ() const;
 	float* get_q() const;

@@ -19,9 +19,15 @@ all: nhsw
 
 nhsw: $(obj)
 	$(CXX) $(CFLAGS) $(INC) $(LIB) -o $@ $+
+	mkdir -p output
 
 run:
-	./nhsw 10 10 5 3.5 0.1 0.5 10.0 10.0 5.0 9.81 0.000001787 0 0 0 0
+	rm -f output/*
+	./nhsw 10 10 10 3.5 0.1 0.5 10.0 10.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
+struct:
+	rm -f output/*
+	./nhsw 2 2 2 3.5 0.1 0.5 2.0 2.0 2.0 9.81 0.000001787 0 0 0 0 > output/log
 clean:
 	rm -f *.o core.*
 	rm -f nhsw
+	rm -rf output
