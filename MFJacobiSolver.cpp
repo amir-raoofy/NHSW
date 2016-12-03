@@ -5,21 +5,20 @@
 #include <math.h>
 
 // constructor
-Jacobi::Jacobi(float* A, float*b, float*x, int N) : matrixSolver(A, b, x, N){
-	x_old= new float [_N];
-	r= new float [_N];
+MFJacobi::MFJacobi(float* A, float*b, float*x, int Nx, int Ny = 1, int Nz = 1) : matrixFreeSolver(A, b, x), _Nx(Nx), _Ny(Ny), _Nz(Nz) {
+	x_old= new float [_Nx*_Ny*_Nz];
+	r= new float [_Nx*_Ny*_Nz];
 	std::cout << "\033[1;31m====Jacobi solver is invoked====\033[0m"	<< std::endl;
 }
 
 // destructor
-Jacobi::~Jacobi(){
+MFJacobi::~MFJacobi(){
 	delete [] x_old;
 	delete [] r;
 }
-
 // main loop of the iterative solve; one iteration of Jacobi
-void Jacobi::iterate(){
-	int i, j;
+void MFJacobi::iterate(){
+/*	int i, j;
 	float sum = 0;
 	for (i = 0; i < _N; i++) {
 		sum = 0;
@@ -33,10 +32,12 @@ void Jacobi::iterate(){
 	}
 	memcpy(x_old, _x, _N * sizeof(float));
 	update_residual();
+	*/
 }
 
 // calculation of the residual
-void Jacobi::update_residual(){
+void MFJacobi::update_residual(){
+				/*
 	int i, j;
 	float sum = 0;
 	memcpy(x_old, _x, _N * sizeof(float));
@@ -48,21 +49,20 @@ void Jacobi::update_residual(){
 		r[i]-=_b[i];
 	}
 
-	/*
-	 *for (i = 0; i < _N; i++) {
-	 *  std::cout << r[i] << "\t" << std::endl;
-	 *}
-	 */
+	for (i = 0; i < _N; i++) {
+		std::cout << r[i] << "\t" << std::endl;
+	}
 
 	sum = 0;
 	for (i = 0; i < _N; i++) {
 		sum+=r[i]*r[i];
 	}
 	_res = sqrt (sum)/_N;
+	*/
 }
 
 // solve method
-void Jacobi::solve(float TOL, int MaxIt){
+void MFJacobi::solve(float TOL, int MaxIt){
 	int i=0;
 	update_residual();
 	while (_res>TOL && i<MaxIt){
@@ -76,7 +76,7 @@ void Jacobi::solve(float TOL, int MaxIt){
 
 }
 
-void Jacobi::set_A_and_b(float* A, float* b){
+void MFJacobi::set_A_and_b(float* A, float* b){
 		this->_A = A;
 		this->_b = b;
 }

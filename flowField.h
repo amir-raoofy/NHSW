@@ -15,7 +15,9 @@ public:
 	void update_A();
 	void update_M();
 	void update_F();
+	void update_F_boundary();
 	void update_G();
+	void update_G_boundary();
 	void update_S();
 	void update_T();
 	void update_h();
@@ -26,7 +28,7 @@ public:
 	void update_u_v_w();
 	void solve_h();
 // for debug only
-	void print_data();
+	void print_data(int it);
 	void test_solver();
 
 	//methods
@@ -40,6 +42,7 @@ public:
 	float* get_v() const;
 	float* get_w() const;
 	float* get_height() const;
+	int* get_m() const;
 	float* get_DZ() const;
 	float* get_q() const;
 

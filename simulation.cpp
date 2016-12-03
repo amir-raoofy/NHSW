@@ -17,23 +17,26 @@ void Simulation::run(){
 	_flowfield -> init_dz();
 	_flowfield -> init_h();
 	_flowfield -> init_m();
-//	_flowfield -> print_data();
+	_flowfield -> print_data(0);
 	output.write(*_flowfield, 0, "./output/");
-	for (int i = 1; i < 100; i++) {
+	for (int i = 1; i < 200; i++) {
 	_flowfield -> update_M();
 	_flowfield -> update_A();
 	_flowfield -> update_F();
+	_flowfield -> update_F_boundary();
 	_flowfield -> update_G();
+	_flowfield -> update_G_boundary();
 //	_flowfield -> test_solver();
 	_flowfield -> update_S();
 	_flowfield -> update_T();
 	_flowfield -> update_h();
-	_flowfield -> update_u_v();
+//	_flowfield -> update_u_v();
+	_flowfield -> print_data(i);
 //	_flowfield -> solve_q();
 //	_flowfield -> update_u_v_w();
 //	_flowfield -> solve_h();
 
 	output.write(*_flowfield, i, "./output/");
 	}
-	_flowfield -> print_data();
+//	_flowfield -> print_data();
 }

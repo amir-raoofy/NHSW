@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <cstdlib>
 #include <math.h>
@@ -16,6 +17,7 @@ private:
 	float _gamma_b;		// friction constant
 	float _u_a;			// wind speed in x direction
 	float _v_a;			// wind speed in y direction
+	float _height;  // free surface water height
 protected:
 	int _N[3]	;				// Number of cells in xyz directions
 public:
@@ -26,6 +28,7 @@ public:
 	void print_parameters(); 			// print parameters to the consule
 
 	float get_sim_time() const;
+	float GetCubeLength(int dim) const;
 	float get_time_step() const;
 	int   get_num_cells(int dim) const;
 	float get_dxdydz(int dim) const;
@@ -37,4 +40,5 @@ public:
 	float get_g() const;
 	float get_u_a() const;
 	float get_v_a() const;
+	float GetHeight() const;
 };

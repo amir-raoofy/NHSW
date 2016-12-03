@@ -25,30 +25,36 @@ Parameters::~Parameters(){}
 
 void Parameters::parse(int argc, const char *argv[])  {
 
-	if (argc!=16){
+	if (argc!=17){
 		std::cout << "Warning: The default values for parameters are used." << std::endl;
 	}else{
 		_N[0]  	= atoi(argv[1]);
 		_N[1]  	= atoi(argv[2]);
 		_N[2]  	= atoi(argv[3]);
-		_T	 	= atof(argv[4]);
-		_dt  	= atof(argv[5]);
+		_T	 		= atof(argv[4]);
+		_dt  		= atof(argv[5]);
 		_theta 	= atof(argv[6]);
-		_L[0]	= atof(argv[7]);
-		_L[1]	= atof(argv[8]);
+		_L[0]		= atof(argv[7]);
+		_L[1]		= atof(argv[8]);
 		_L[2] 	= atof(argv[9]);
-		_g	 	= atof(argv[10]);
-		_nu		= atof(argv[11]);
-		_gamma_t= atof(argv[12]);
-		_gamma_b= atof(argv[13]);
-		_u_a	= atof(argv[14]);
-		_v_a	= atof(argv[15]);
+		_height =	atof(argv[10]);
+		_g	 		= atof(argv[11]);
+		_nu			= atof(argv[12]);
+		_gamma_t= atof(argv[13]);
+		_gamma_b= atof(argv[14]);
+		_u_a		= atof(argv[15]);
+		_v_a		= atof(argv[16]);
 	}
 }
 
 float Parameters::get_sim_time() const{
 	return this->_T;
 }
+
+float Parameters::GetCubeLength(int dim) const{
+	return this->_L[dim];
+}
+
 float Parameters::get_time_step() const{
 	return this->_dt;
 }
@@ -91,6 +97,11 @@ float Parameters::get_u_a() const{
 float Parameters::get_v_a() const{
 	return _v_a;
 }
+
+float Parameters::GetHeight() const{
+	return _height;
+}
+
 void Parameters::print_parameters(){
 	
 	// print the header

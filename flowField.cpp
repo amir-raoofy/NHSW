@@ -154,7 +154,14 @@ void flowField::init_h(){
 							  		/ 40.0 ;
 */
 //				_h	[ map(i,j) ] 	= (i < (_parameters->get_num_cells(0)+2)/2)? _parameters->get_num_cells(2)*_parameters->get_dxdydz(2)/2:_parameters->get_num_cells(2)*_parameters->get_dxdydz(2) ;
-				_h	[ map(i,j) ] 	= (i < (_parameters->get_num_cells(0)+2)/2)? _parameters->get_num_cells(2)*_parameters->get_dxdydz(2)/2:_parameters->get_num_cells(2)*_parameters->get_dxdydz(2)/2+2.0 ;
+				
+						/*
+						 *_h	[ map(i,j) ] 	= (i < (_parameters->get_num_cells(0)+2)/2)? _parameters->get_num_cells(2)*_parameters->get_dxdydz(2)/2:_parameters->get_num_cells(2)*_parameters->get_dxdydz(2)/2+2.0 ;
+						 */
+			_h	[ map(i,j) ] 	= 0.02 *i * _parameters->get_dxdydz(0) - 0.03;
+			/*
+			 *_h	[ map(i,j) ] 	= 0.02 *i * _parameters->get_dxdydz(0) - 0.1;
+			 */
 		}
 	}
 }
@@ -164,7 +171,7 @@ void flowField::init_m(){
 	for (int i = 0; i < (_parameters->get_num_cells(0)+2) *
 				   		(_parameters->get_num_cells(1)+2)
 						; i++){
-		_m	[i] = 1;
+		_m	[i] = 0;
 	}
 
 }
@@ -174,7 +181,10 @@ void flowField::update_M(){
 	for (int i = 0; i < (_parameters->get_num_cells(0)+2)*
 						(_parameters->get_num_cells(1)+2)
 					; i++) {
-		_M[i] = ceil(_h[i]/ _parameters->get_dxdydz(2));
+		/*
+		 *_M[i] = ceil((_h[i]+9.0)/ _parameters->get_dxdydz(2));
+		 */
+				_M[i]=_parameters->get_num_cells(2)+2;
 	}
 }
 
@@ -376,8 +386,8 @@ void flowField::update_h(){
 void flowField::update_F(){
 	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
 		for (int j = 1; j < _parameters->get_num_cells(1)+1; j++) {
-			for (int k =  _m [ map(i,j) ] +1; k <= _M	[ map(i,j) ];	 k++) {
-				_F[ map(i,j,k) ]= _dz[map(i,j,k)] *
+			for (int k =  _m [ map(i,j) ]; k < _M	[ map(i,j) ];	 k++) {
+				_F[ map(i,j,k) ]=  _dz[map(i,j,k)] *
 								( _u [ map(i,j,k) ] * (_u[ map(i,j,k) ] - _u [ map(i-1,j,k) ]) / _parameters->get_dxdydz(0)
 								+ _v [ map(i,j,k) ] * (_u[ map(i,j,k) ] - _u [ map(i,j-1,k) ]) / _parameters->get_dxdydz(1)
 								+ _w [ map(i,j,k) ] * (_u[ map(i,j,k) ] - _u [ map(i,j,k-1) ]) / _parameters->get_dxdydz(2)
@@ -396,10 +406,36 @@ void flowField::update_F(){
 	}
 }
 
+void flowField::update_F_boundary(){
+	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
+		for (int k =  _m [ map(i,1) ] ; k <= _M	[ map(i,1) ];	 k++) {
+			_F [map(i,0,k)] = _u [map(i,0,k)];
+		}
+	}
+
+	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
+		for (int k =  _m [ map(i,_parameters->get_num_cells(1)) ] ; k <= _M	[ map(i,_parameters->get_num_cells(1)) ];	 k++) {
+			_F [map(i,_parameters->get_num_cells(1)+1,k)] = _u [map(i,_parameters->get_num_cells(1)+1,k)];
+		}
+	}
+
+	for (int j = 0; j <(_parameters->get_num_cells(1)+2); j++) {
+		for (int k =  _m [ map(1,j) ] ; k <= _M	[ map(1,j) ];	 k++) {
+			_F [map(0,j,k)] = _u [map(0,j,k)];
+		}
+	}
+	
+	for (int j = 0; j <(_parameters->get_num_cells(1)+2); j++) {
+		for (int k =  _m [ map(_parameters->get_num_cells(0),j) ] ; k <= _M	[ map(_parameters->get_num_cells(0),j) ];	 k++) {
+			_F [map(_parameters->get_num_cells(0)+1,j,k)] =_u [map(_parameters->get_num_cells(0)+1,j,k)];
+		}
+	}
+}
+
 void flowField::update_G(){
 	for (int i = 1; i < _parameters->get_num_cells(0)+1; i++) {
 		for (int j = 1; j < _parameters->get_num_cells(1)+1; j++) {
-			for (int k =  _m [ map(i,j) ]+1; k <= _M	[ map(i,j) ];	 k++) {
+			for (int k =  _m [ map(i,j) ]; k <= _M	[ map(i,j) ];	 k++) {
 				_G[ map(i,j,k) ]= _dz[map(i,j,k)] *
 								( _u [ map(i,j,k) ] * (_v[ map(i,j,k) ] - _v [ map(i-1,j,k) ]) / _parameters->get_dxdydz(0)
 								+ _v [ map(i,j,k) ] * (_v[ map(i,j,k) ] - _v [ map(i,j-1,k) ]) / _parameters->get_dxdydz(1)
@@ -415,6 +451,32 @@ void flowField::update_G(){
 			}
 			int k =  _M	[ map(i,j) ];
 			_G [ map(i,j,k) ] +=  _parameters->get_gamma_t() * _parameters->get_sim_time() * _parameters->get_v_a() ;
+		}
+	}
+}
+
+void flowField::update_G_boundary(){
+	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
+		for (int k =  _m [ map(i,1) ] ; k <= _M	[ map(i,1) ];	 k++) {
+			_G [map(i,0,k)] = _v [map(i,0,k)];
+		}
+	}
+
+	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
+		for (int k =  _m [ map(i,_parameters->get_num_cells(1)) ] ; k <= _M	[ map(i,_parameters->get_num_cells(1)) ];	 k++) {
+			_G [map(i,_parameters->get_num_cells(1)+1,k)] = _v [map(i,_parameters->get_num_cells(1)+1,k)];
+		}
+	}
+
+	for (int j = 0; j <(_parameters->get_num_cells(1)+2); j++) {
+		for (int k =  _m [ map(1,j) ] ; k <= _M	[ map(1,j) ];	 k++) {
+			_G [map(0,j,k)] = _v [map(0,j,k)];
+		}
+	}
+	
+	for (int j = 0; j <(_parameters->get_num_cells(1)+2); j++) {
+		for (int k =  _m [ map(_parameters->get_num_cells(0),j) ] ; k <= _M	[ map(_parameters->get_num_cells(0),j) ];	 k++) {
+			_G [map(_parameters->get_num_cells(0)+1,j,k)] =_v [map(_parameters->get_num_cells(0)+1,j,k)];
 		}
 	}
 }
@@ -461,35 +523,34 @@ void flowField::update_u_v(){
 
 		}
 	}
-/*
+
 	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
-		for (int k =  _m [ map(i,1) ] +1; k <= _M	[ map(i,1) ];	 k++) {
+		for (int k =  _m [ map(i,1) ] ; k <= _M	[ map(i,1) ];	 k++) {
 			_u [map(i,0,k)] = -_u [map(i,1,k)];
 			_v [map(i,0,k)] = _v [map(i,1,k)];
 		}
 	}
 
 	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
-		for (int k =  _m [ map(i,_parameters->get_num_cells(1)) ] +1; k <= _M	[ map(i,_parameters->get_num_cells(1)) ];	 k++) {
+		for (int k =  _m [ map(i,_parameters->get_num_cells(1)) ] ; k <= _M	[ map(i,_parameters->get_num_cells(1)) ];	 k++) {
 			_u [map(i,_parameters->get_num_cells(1)+1,k)] = -_u [map(i,_parameters->get_num_cells(1),k)];
 			_v [map(i,_parameters->get_num_cells(1)+1,k)] = _v [map(i,_parameters->get_num_cells(1),k)];
 		}
 	}
 
 	for (int j = 0; j <(_parameters->get_num_cells(1)+2); j++) {
-		for (int k =  _m [ map(1,j) ] +1; k <= _M	[ map(1,j) ];	 k++) {
+		for (int k =  _m [ map(1,j) ] ; k <= _M	[ map(1,j) ];	 k++) {
 			_u [map(0,j,k)] = _u [map(1,j,k)];
 			_v [map(0,j,k)] = -_v [map(1,j,k)];
 		}
 	}
 	
 	for (int j = 0; j <(_parameters->get_num_cells(1)+2); j++) {
-		for (int k =  _m [ map(_parameters->get_num_cells(0),j) ] +1; k <= _M	[ map(_parameters->get_num_cells(0),j) ];	 k++) {
+		for (int k =  _m [ map(_parameters->get_num_cells(0),j) ] ; k <= _M	[ map(_parameters->get_num_cells(0),j) ];	 k++) {
 			_u [map(_parameters->get_num_cells(0)+1,j,k)] =_u [map(_parameters->get_num_cells(0),j,k)];
 			_v [map(_parameters->get_num_cells(0)+1,j,k)] =-_v [map(_parameters->get_num_cells(0),j,k)];
 		}
 	}
-*/
 }
 
 void flowField::solve_q(){
@@ -677,6 +738,9 @@ float* flowField::get_height() const{
 	return _h;
 }
 
+int* flowField::get_m() const{
+	return _m;
+}
 float* flowField::get_DZ() const{
 	return _dz;
 }
@@ -685,11 +749,12 @@ float* flowField::get_q() const{
 	return _q;
 }
 
-void flowField::print_data(){
+void flowField::print_data(int it){
 
+	std::cout << std::endl << "\033[1;31mPRINT DATA FOR ITERATION: \033[0m"	<< it << std::endl;
 	int i=1;
 	int j=1;
-
+/*
 	std::cout << "matrix A at position i=" << i << " and j=" << j << std::endl;
 	for (int k = 0; k < _parameters->get_num_cells(2)+2; k++) {
 		for (int l = 0; l < _parameters->get_num_cells(2)+2; l++) {
@@ -698,35 +763,79 @@ void flowField::print_data(){
 		}	
 	std::cout << std::endl;
 	}
+*/
 
-	int k=1;
-	std::cout << "matrix F" << std::endl;
+	std::cout << "matrix m" << std::endl;
 	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
 		for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
 			std::cout << std::setw(20)<<
-			_F	[ map(i,j,k) ];
-		}
+			_m	[ map(i,j) ];
+		}	
+	std::cout << std::endl;
+	}
+	
+	std::cout << "matrix M" << std::endl;
+	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
+		for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
+			std::cout << std::setw(20)<<
+			_M	[ map(i,j) ];
+		}	
 	std::cout << std::endl;
 	}
 
-	std::cout << "matrix G" << std::endl;
-	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
-		for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
-			std::cout << std::setw(20)<<
-			_G	[ map(i,j,k) ];
+	for (int k = 0; k < _parameters->get_num_cells(2) + 2; k++) {
+		std::cout << "matrix u at k= " << k << std::endl;
+		for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
+			for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
+				std::cout << std::setw(20)<<
+				_u	[ map(i,j,k) ];
+			}
+		std::cout << std::endl;
 		}
-	std::cout << std::endl;
+	}
+
+	for (int k = 0; k < _parameters->get_num_cells(2) + 2; k++) {
+		std::cout << "matrix v at k = " << k << std::endl;
+		for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
+			for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
+				std::cout << std::setw(20)<<
+				_v	[ map(i,j,k) ];
+			}
+		std::cout << std::endl;
+		}
+	}
+
+	for (int k = 0; k < _parameters->get_num_cells(2) +2; k++) {
+		std::cout << "matrix F at k= " << k << std::endl;
+		for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
+			for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
+				std::cout << std::setw(20)<<
+				_F	[ map(i,j,k) ];
+			}
+		std::cout << std::endl;
+		}
+	}
+	
+	for (int k = 0; k < _parameters->get_num_cells(2) +2; k++) {
+		std::cout << "matrix G at k= "<< k << std::endl;
+		for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
+			for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
+				std::cout << std::setw(20)<<
+				_G	[ map(i,j,k) ];
+			}
+		std::cout << std::endl;
+		}
 	}
 
 	std::cout << "matrix S" <<  std::endl;
 	for (int i = 0; i < (_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2); i++) {
 		for (int j = 0; j < (_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2); j++) {
-			std::cout << std::setw(20)<<
+			std::cout << std::setw(10)<<
 			_S	[ map2d(i,j) ];
 		}	
 	std::cout << std::endl;
 	}
-
+	
 	std::cout << "matrix T" << std::endl;
 	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
 		for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
@@ -745,24 +854,7 @@ void flowField::print_data(){
 	std::cout << std::endl;
 	}
 
-	std::cout << "matrix u" << std::endl;
-	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
-		for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
-			std::cout << std::setw(20)<<
-			_u	[ map(i,j,k) ];
-		}
-	std::cout << std::endl;
-	}
-
-	std::cout << "matrix v" << std::endl;
-	for (int i = 0; i < _parameters->get_num_cells(0)+2; i++) {
-		for (int j = 0; j < _parameters->get_num_cells(1)+2; j++) {
-			std::cout << std::setw(20)<<
-			_v	[ map(i,j,k) ];
-		}
-	std::cout << std::endl;
-	}
-
+/*
 	std::cout << "matrix P" << std::endl;
 	for (int i = 0; i < (_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2)*(_parameters->get_num_cells(2)+2); i++) {
 		for (int j = 0; j < (_parameters->get_num_cells(0)+2)*(_parameters->get_num_cells(1)+2)*(_parameters->get_num_cells(2)+2); j++) {
@@ -773,7 +865,7 @@ void flowField::print_data(){
 		_R	[ i];
 		std::cout << std::endl;
 	}
-
+*/
 }
 
 int flowField::map(int i, int j) const{ 
