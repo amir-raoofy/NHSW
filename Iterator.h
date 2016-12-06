@@ -53,3 +53,45 @@ public:
 	BoundaryIterator3D(const Parameters& parameters, const FlowField& flowField, BoundaryStencil3D& stencil);
 	void iterate() = 0;
 };
+
+class DomainIteratorZ: public DomainIterator1D
+{
+public:
+	DomainIteratorZ(const Parameters& parameters, const FlowField& flowField, Stencil1D& stencil);
+	void iterate();
+};
+
+class DomainIteratorXY: public DomainIterator2D
+{
+public:
+	DomainIteratorXY(const Parameters& parameters, const FlowField& flowField, Stencil2D& stencil);
+	void iterate();
+}; 
+
+class DomainIteratorXYZ: public DomainIterator3D
+{
+public:
+	DomainIteratorXYZ(const Parameters& parameters, const FlowField& flowField, Stencil3D& stencil);
+	void iterate();
+};
+
+class BoundaryIteratorZ: public BoundaryIterator1D
+{
+public:
+	BoundaryIteratorZ(const Parameters& parameters, const FlowField& flowField, BoundaryStencil1D& stencil);
+	void iterate();
+};
+
+class BoundaryIteratorXY: public BoundaryIterator2D
+{
+public:
+	BoundaryIteratorXY(const Parameters& parameters, const FlowField& flowField, BoundaryStencil2D& stencil);
+	void iterate();
+};
+
+class BoundaryIteratorXYZ: public BoundaryIterator3D
+{
+public:
+	BoundaryIteratorXYZ(const Parameters& parameters, const FlowField& flowField, BoundaryStencil3D& stencil);
+	void iterate();
+};
