@@ -1,5 +1,5 @@
 #include <Parameters.h>
-#include <Solver.h>
+#include <solver.h>
 #include <helper.h>
 
 class flowField
