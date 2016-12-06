@@ -5,17 +5,16 @@
 class Stencil
 {
 public:
-	Stencil(const Parameters& parameters,const FlowField& flowField, int NumBuffers);
+	Stencil(const Parameters& parameters,const FlowField& flowField);
 	virtual void Operate() = 0;
 	virtual void Operate(int i) = 0;
 	virtual void Operate(int i, int j) = 0;
 	virtual void Operate(int i, int j, int k) = 0;
 protected:
-	DiscreteLine Stencil_;
 	const Parameters& parameters_;
 	const FlowField& flowField_;
 };
-
+/*
 class Stencil1D: public	Stencil
 {
 public:
@@ -89,3 +88,4 @@ private:
 	DiscreteCube field_;
 	DiscreteCube& boundaries_;
 };
+*/
