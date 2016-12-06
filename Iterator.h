@@ -5,10 +5,9 @@ class Iterator
 public:
 	Iterator(const Parameters& parameters, const FlowField& flowField, Stencil& stencil);
 	virtual void iterate() = 0;
-private:
+protected:
 	const Parameters& parameters_;
 	const FlowField& flowField_;
-protected:
 	Stencil& Stencil_;
 };
 
@@ -53,13 +52,14 @@ public:
 	BoundaryIterator3D(const Parameters& parameters, const FlowField& flowField, BoundaryStencil3D& stencil);
 	void iterate() = 0;
 };
-
+/*
 class DomainIteratorZ: public DomainIterator1D
 {
 public:
 	DomainIteratorZ(const Parameters& parameters, const FlowField& flowField, Stencil1D& stencil);
 	void iterate();
 };
+*/
 
 class DomainIteratorXY: public DomainIterator2D
 {
@@ -75,10 +75,17 @@ public:
 	void iterate();
 };
 
-class BoundaryIteratorZ: public BoundaryIterator1D
+class BoundaryIteratorX: public BoundaryIterator1D
 {
 public:
-	BoundaryIteratorZ(const Parameters& parameters, const FlowField& flowField, BoundaryStencil1D& stencil);
+	BoundaryIteratorX(const Parameters& parameters, const FlowField& flowField, BoundaryStencil1D& stencil);
+	void iterate();
+};
+
+class BoundaryIteratorY: public BoundaryIterator1D
+{
+public:
+	BoundaryIteratorY(const Parameters& parameters, const FlowField& flowField, BoundaryStencil1D& stencil);
 	void iterate();
 };
 
@@ -89,9 +96,36 @@ public:
 	void iterate();
 };
 
-class BoundaryIteratorXYZ: public BoundaryIterator3D
+class BoundaryIteratorLeft: public BoundaryIterator2D
 {
 public:
+	BoundaryIteratorLeft(const Parameters& parameters, const FlowField& flowField, BoundaryStencil2D& stencil);
+	void iterate();
+};
+
+class BoundaryIteratorRight: public BoundaryIterator2D
+{
+public:
+	BoundaryIteratorRight(const Parameters& parameters, const FlowField& flowField, BoundaryStencil2D& stencil);
+	void iterate();
+};
+
+class BoundaryIteratorBack: public BoundaryIterator2D
+{
+public:
+	BoundaryIteratorBack(const Parameters& parameters, const FlowField& flowField, BoundaryStencil2D& stencil);
+	void iterate();
+};
+
+class BoundaryIteratorFront: public BoundaryIterator2D
+{
+public:
+	BoundaryIteratorFront(const Parameters& parameters, const FlowField& flowField, BoundaryStencil2D& stencil);
+	void iterate();
+};
+
+class BoundaryIteratorXYZ: public BoundaryIterator3D
+{public:
 	BoundaryIteratorXYZ(const Parameters& parameters, const FlowField& flowField, BoundaryStencil3D& stencil);
 	void iterate();
 };
