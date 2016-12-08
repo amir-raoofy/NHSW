@@ -6,7 +6,9 @@ JacobiSolverAI::JacobiSolverAI(const Parameters& parameters, FlowField& flowFiel
 	IterativeSolver(parameters, flowField),
 	x_(x),
 	x_old_(x),
-	error_(){}
+	error_(){
+		std::cout << "\033[1;31m====Jacobi solver for inv [A(i,j)] * dz[i,j] is invoked====\033[0m"	<< std::endl;
+	}
 
 void JacobiSolverAI::updateDomain(){
 	const	DiscreteLine& DzI=flowField_.GetDzI()[i_][j_];
@@ -63,6 +65,5 @@ void JacobiSolverAI::solve(){
 		std::cout << "Jacobi solver converged after " << i << " iterations, the value of error is "<< err_ << std::endl;
 }
 
-void JacobiSolverAI::SetParameters(float TOL, int MaxIt){TOL_=TOL; MaxIt_=MaxIt;}
 void JacobiSolverAI::SetIndices(int i, int j){i_=i; j_=j;}
 void JacobiSolverAI::SetBuffer(DiscreteLine& x){x_=x, x_old_=x;}
