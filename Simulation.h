@@ -14,6 +14,7 @@ public:
 	void InitM();
 	void InitDzI();
 	void InitDzJ();
+	void InitzAz();
 	void UpdateU();
 	void UpdateV();
 	void UpdateW();

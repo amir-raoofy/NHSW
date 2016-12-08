@@ -1,3 +1,4 @@
+#pragma once
 #include "Parameters.h"
 #include "data_structure.h"
 
@@ -22,6 +23,8 @@ public:
 	const DiscreteCube& GetW() const;
 	const DiscreteRectangle& GetEtta() const;
 	const DiscreteRectangle& GetDelta() const;
+	const DiscreteRectangle& GetZazI() const;
+	const DiscreteRectangle& GetZazJ() const;
 	const DiscreteRectangle& GetWaterSurface() const;
 	const RectangleFlagField& Getm() const;
 	const RectangleFlagField& GetM() const;
@@ -70,6 +73,8 @@ public:
 	DiscreteCube& SetW();
 	DiscreteRectangle& SetEtta();
 	DiscreteRectangle& SetDelta();
+	DiscreteRectangle& SetZazI();
+	DiscreteRectangle& SetZazJ();
 	RectangleFlagField& Setm();
 	RectangleFlagField& SetM();
 	DiscreteCube& SetGI();
@@ -114,6 +119,8 @@ private:
 
 	// intermediate buffer for elevation
 	DiscreteRectangle delta_;													// intermediate buffer
+	DiscreteRectangle zaz_i_;													// intermediate buffer
+	DiscreteRectangle zaz_j_;													// intermediate buffer
 
 	// higher and lower indices for 3rd dimension iteration
 	RectangleFlagField m_	;														// discretized bathymetry

@@ -7,4 +7,5 @@ void Simulation::Run(){
 	InitM();
 	InitDzI();
 	InitDzJ();
+	InitzAz();
 }

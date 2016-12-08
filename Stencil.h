@@ -1,3 +1,4 @@
+#pragma once
 #include "Parameters.h"
 #include "FlowField.h"
 #include "data_structure.h"
@@ -6,10 +7,7 @@ class Stencil
 {
 public:
 	Stencil(const Parameters& parameters,const FlowField& flowField);
-	virtual void Operate() = 0;
-	virtual void Operate(int i) = 0;
-	virtual void Operate(int i, int j) = 0;
-	virtual void Operate(int i, int j, int k) = 0;
+	virtual void Operate(int i=0, int j=0, int k=0) = 0;
 protected:
 	const Parameters& parameters_;
 	const FlowField& flowField_;

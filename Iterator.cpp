@@ -35,7 +35,7 @@ void DomainIteratorXY::iterate(){
 void DomainIteratorXYZ::iterate(){
 	for (int i = 0; i < parameters_.get_num_cells(0); i++) {
 		for (int j = 0; j < parameters_.get_num_cells(1); j++) {
-			for (int k = flowField_.Getm()[i][j]; k < flowField_.GetM()[i][j]; k++) {
+			for (int k = flowField_.Getm()[i][j]+1; k < flowField_.GetM()[i][j]; k++) {
 				Stencil_.Operate(i,j,k);
 			}
 		}
@@ -64,7 +64,7 @@ void BoundaryIteratorXY::iterate(){
 
 void BoundaryIteratorBack::iterate(){
 	for (int i = 0; i < parameters_.get_num_cells(0); i++) {
-		for (int k = flowField_.Getm()[i][0]; k < flowField_.GetM()[i][0]; k++) {
+		for (int k = flowField_.Getm()[i][0]+1; k < flowField_.GetM()[i][0]; k++) {
 			Stencil_.Operate(i,k);
 		}
 	}
@@ -72,14 +72,14 @@ void BoundaryIteratorBack::iterate(){
 
 void BoundaryIteratorFront::iterate(){
 	for (int i = 0; i < parameters_.get_num_cells(0); i++) {
-		for (int k = flowField_.Getm()[i][parameters_.get_num_cells(1)-1]; k < flowField_.GetM()[i][parameters_.get_num_cells(1)-1]; k++) {
+		for (int k = flowField_.Getm()[i][parameters_.get_num_cells(1)-1]+1; k < flowField_.GetM()[i][parameters_.get_num_cells(1)-1]; k++) {
 			Stencil_.Operate(i,k);
 		}
 	}
 }
 void BoundaryIteratorLeft::iterate(){
 	for (int j = 0; j < parameters_.get_num_cells(1); j++) {
-		for (int k = flowField_.Getm()[0][j]; k < flowField_.GetM()[0][j]; k++) {
+		for (int k = flowField_.Getm()[0][j]+1; k < flowField_.GetM()[0][j]; k++) {
 			Stencil_.Operate(j,k);
 		}
 	}
@@ -87,7 +87,7 @@ void BoundaryIteratorLeft::iterate(){
 
 void BoundaryIteratorRight::iterate(){
 	for (int j = 0; j < parameters_.get_num_cells(1); j++) {
-		for (int k = flowField_.Getm()[parameters_.get_num_cells(0)-1][j]; k < flowField_.GetM()[parameters_.get_num_cells(0)-1][j]; k++) {
+		for (int k = flowField_.Getm()[parameters_.get_num_cells(0)-1][j]+1; k < flowField_.GetM()[parameters_.get_num_cells(0)-1][j]; k++) {
 			Stencil_.Operate(j,k);
 		}
 	}
