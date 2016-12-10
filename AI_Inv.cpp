@@ -15,7 +15,7 @@ void JacobiSolverAI::updateDomain(){
 	FLOAT coeff = parameters_.get_vis() * parameters_.get_sim_time();
 	
 	for (int k = 1; k <flowField_.GetM()[i_][j_] - flowField_.Getm()[i_][j_]; k++) {
-			x_old_[k] = (		(	 coeff / ( (DzI[k] + DzI[k-1])/2 )  )	*	x_[k-1] +
+			x_old_[k] = (	(coeff / ( (DzI[k] + DzI[k-1])/2 )  )	*	x_[k-1] +
 									(	 coeff / ( (DzI[k] + DzI[k+1])/2 )  )	*	x_[k+1] + DzI[k]		) /
 									(	 coeff / ( (DzI[k] + DzI[k-1])/2 )    					+
 									 	 coeff / ( (DzI[k] + DzI[k+1])/2 ) 							+ DzI[k] );
@@ -29,19 +29,18 @@ void JacobiSolverAI::updateBoundary(){
 
 	int k;
 	k=flowField_.GetM()[i_][j_] - flowField_.Getm()[i_][j_];
-	x_old_[k] = 	(   (	 coeff / ( (DzI[k] + DzI[k-1])/2 )  )	*	x_[k-1] + DzI[k]	) /
-						( 		 coeff / ( (DzI[k] + DzI[k-1])/2 ) 							+ DzI[k] + 
+	x_old_[k] =	( (	 coeff / ( (DzI[k] + DzI[k-1])/2 )  )	*	x_[k-1] + DzI[k]	) /
+								(	 coeff / ( (DzI[k] + DzI[k-1])/2 ) 							+ DzI[k] + 
 									 parameters_.get_gamma_t() * parameters_.get_sim_time()   );
  	k=0;
-	x_old_[k] = 	(   (	 coeff / ( (DzI[k] + DzI[k+1])/2 )  )	*	x_[k+1] + DzI[k]	) /
-						( 		 coeff / ( (DzI[k] + DzI[k+1])/2 ) 							+ DzI[k] + 
+	x_old_[k] = ( (	 coeff / ( (DzI[k] + DzI[k+1])/2 )  )	*	x_[k+1] + DzI[k]	) /
+								(	 coeff / ( (DzI[k] + DzI[k+1])/2 ) 							+ DzI[k] + 
 									 parameters_.get_gamma_b() * parameters_.get_sim_time()   );									 
 }
 
 void JacobiSolverAI::updateError(){
 	error_.clear();
 	std::transform(x_.begin(),x_.end(),x_old_.begin(),std::back_inserter(error_),std::minus<FLOAT>());
-	//err_=0;
 	err_= sqrt (std::inner_product(error_.begin(), error_.end(), error_.begin(), 0.0) );
 	//std::cout << err_ << std::endl;
 }

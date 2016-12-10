@@ -12,12 +12,15 @@ public:
 	void InitEttaBoundaries();
 	void Initm();
 	void InitM();
+	void InitU();
+	void InitV();
+	void InitW();
+	void InitQ();
 	void InitDzI();
 	void InitDzJ();
 	void InitzAz();
-	void UpdateU();
-	void UpdateV();
-	void UpdateW();
+	void InitGI();
+	void InitGJ();
 	
 	void Run();
 private:

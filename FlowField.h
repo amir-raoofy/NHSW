@@ -34,10 +34,10 @@ public:
 	const DiscreteCube& GetDzJ() const;
 	const DiscreteCube& GetQ() const;
 
-	const DiscreteCube& GetU_boundaries() const;
-	const DiscreteCube& GetV_boundaries() const;
-	const DiscreteCube& GetW_boundaries() const;
-	const DiscreteRectangle& GetEttaBoundaries() const;
+	const DiscreteCube& GetBoundariesU() const;
+	const DiscreteCube& GetBoundariesV() const;
+	const DiscreteCube& GetBoundariesW() const;
+	const DiscreteRectangle& GetBoundariesEtta() const;
 	const DiscreteCube& GetBoundariesGI() const;
 	const DiscreteCube& GetBoundariesGJ() const;
 	const DiscreteCube& GetBoundariesDzI() const;
@@ -58,10 +58,10 @@ public:
 	void SetDzJ(DiscreteCube& dz_j);
 	void SetQ(DiscreteCube& q);
 
-	void SetU_boundaries(DiscreteCube u_boundaries);
-	void SetV_boundaries(DiscreteCube v_boundaries);
-	void SetW_boundaries(DiscreteCube w_boundaries);
-	void SetEttaBoundaries(DiscreteRectangle etta_boundaries);
+	void SetBoundariesU(DiscreteCube u_boundaries);
+	void SetBoundariesV(DiscreteCube v_boundaries);
+	void SetBoundariesW(DiscreteCube w_boundaries);
+	void SetBoundariesEtta(DiscreteRectangle etta_boundaries);
 	void SetBoundariesGI(DiscreteCube g_i_boundaries);
 	void SetBoundariesGJ(DiscreteCube g_j_boundaries);
 	void SetBoundariesDzI(DiscreteCube dz_i_boundaries);
@@ -83,10 +83,10 @@ public:
 	DiscreteCube& SetDzJ();
 	DiscreteCube& SetQ();
 
-	DiscreteCube& SetU_boundaries();
-	DiscreteCube& SetV_boundaries();
-	DiscreteCube& SetW_boundaries();
-	DiscreteRectangle& SetEttaBoundaries();
+	DiscreteCube& SetBoundariesU();
+	DiscreteCube& SetBoundariesV();
+	DiscreteCube& SetBoundariesW();
+	DiscreteRectangle& SetBoundariesEtta();
 	DiscreteCube& SetBoundariesGI();
 	DiscreteCube& SetBoundariesGJ();
 	DiscreteCube& SetBoundariesDzI();

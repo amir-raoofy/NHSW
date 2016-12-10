@@ -2,10 +2,16 @@
 
 void Simulation::Run(){
 	InitEtta();
-	InitEttaBoundaries();
+//	InitEttaBoundaries();
 	Initm();
 	InitM();
+	InitU();
+	InitV();
+	InitW();
+	InitQ();
 	InitDzI();
 	InitDzJ();
 	InitzAz();
+	InitGI();
+	InitGJ();
 }

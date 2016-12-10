@@ -9,7 +9,7 @@ CXXFLAGS = -g -Wall -std=c++11
 INC =-I.
 LIB =
 
-obj= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o zAz.o Run.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o Solver.o jacobiSolver.o helper.o simulation.o output.o
+obj= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o zAz.o Run.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o Solver.o jacobiSolver.o helper.o simulation.o GI.o GJ.o U.o V.o W.o Q.o output.o
 
 all: nhsw
 
