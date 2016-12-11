@@ -56,7 +56,7 @@ const DiscreteCube& FlowField::GetU() const {return u_;}
 const DiscreteCube& FlowField::GetV() const {return v_;}
 const DiscreteCube& FlowField::GetW() const {return w_;}
 const DiscreteRectangle& FlowField::GetEtta() const { return etta_;}
-const DiscreteRectangle& FlowField::GetDelta() const { return etta_;}
+const DiscreteRectangle& FlowField::GetDelta() const { return delta_;}
 const DiscreteRectangle& FlowField::GetZazI() const { return zaz_i_;}
 const DiscreteRectangle& FlowField::GetZazJ() const { return zaz_j_;}
 //const DiscreteRectangle& FlowField::GetWaterSurface() const {return etta_;} //TODO later on add the value of h to get the total height
@@ -104,7 +104,7 @@ DiscreteCube& FlowField::SetU() {return u_;}
 DiscreteCube& FlowField::SetV() {return v_;}
 DiscreteCube& FlowField::SetW() {return w_;}
 DiscreteRectangle& FlowField::SetEtta() { return etta_;}
-DiscreteRectangle& FlowField::SetDelta() { return etta_;}
+DiscreteRectangle& FlowField::SetDelta() { return delta_;}
 DiscreteRectangle& FlowField::SetZazI() {return zaz_i_;}
 DiscreteRectangle& FlowField::SetZazJ() {return zaz_j_;}
 RectangleFlagField& FlowField::Setm() {return m_;}

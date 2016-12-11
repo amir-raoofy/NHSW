@@ -21,7 +21,8 @@ public:
 	void InitzAz();
 	void InitGI();
 	void InitGJ();
-	
+	void InitDelta();	
+
 	void Run();
 private:
 	const Parameters& parameters_;

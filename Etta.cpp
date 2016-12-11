@@ -12,12 +12,10 @@ void Simulation::InitEtta(){
 		}
 	}
 	//test the initialization of initial water elevation
-	/*
-	 *for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-	 *  for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-	 *    std::cout << flowField_.GetEtta()[i][j] << "\t";
-	 *  }
-	 *  std::cout << std::endl;
-	 *}
-	 */
+	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+			std::cout << flowField_.GetEtta()[i][j] << "\t";
+		}
+		std::cout << std::endl;
+	}
  }

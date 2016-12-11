@@ -14,4 +14,5 @@ void Simulation::Run(){
 	InitzAz();
 	InitGI();
 	InitGJ();
+	InitDelta();
 }
