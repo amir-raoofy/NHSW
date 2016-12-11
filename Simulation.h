@@ -22,6 +22,8 @@ public:
 	void InitGI();
 	void InitGJ();
 	void InitDelta();	
+	void InitzAGI();
+	void InitzAGJ();
 
 	void Run();
 private:

@@ -2,12 +2,13 @@
 #include <algorithm>    // std::transform
 #include <functional>   // std::plus
 
-JacobiSolverAI::JacobiSolverAI(const Parameters& parameters, FlowField& flowField, DiscreteLine& x):
+JacobiSolverAI::JacobiSolverAI(const Parameters& parameters, FlowField& flowField, DiscreteLine& x, DiscreteLine& rhs):
 	IterativeSolver(parameters, flowField),
+	rhs_(rhs),
 	x_(x),
 	x_old_(x),
 	error_(){
-		std::cout << "\033[1;31m====Jacobi solver for inv [A(i,j)] * dz[i,j] is invoked====\033[0m"	<< std::endl;
+		std::cout << "\033[1;31m====Jacobi solver for inv [A(i,j)] is invoked====\033[0m"	<< std::endl;
 	}
 
 void JacobiSolverAI::updateDomain(){
@@ -18,7 +19,7 @@ void JacobiSolverAI::updateDomain(){
 			x_old_[k] = (	(coeff / ( (DzI[k] + DzI[k-1])/2 )  )	*	x_[k-1] +
 									(	 coeff / ( (DzI[k] + DzI[k+1])/2 )  )	*	x_[k+1] + DzI[k]		) /
 									(	 coeff / ( (DzI[k] + DzI[k-1])/2 )    					+
-									 	 coeff / ( (DzI[k] + DzI[k+1])/2 ) 							+ DzI[k] );
+									 	 coeff / ( (DzI[k] + DzI[k+1])/2 ) 							+ rhs_[k] );
 	}
 	
 }
@@ -30,11 +31,11 @@ void JacobiSolverAI::updateBoundary(){
 	int k;
 	k=flowField_.GetM()[i_][j_] - flowField_.Getm()[i_][j_];
 	x_old_[k] =	( (	 coeff / ( (DzI[k] + DzI[k-1])/2 )  )	*	x_[k-1] + DzI[k]	) /
-								(	 coeff / ( (DzI[k] + DzI[k-1])/2 ) 							+ DzI[k] + 
+								(	 coeff / ( (DzI[k] + DzI[k-1])/2 ) 							+ rhs_[k] + 
 									 parameters_.get_gamma_t() * parameters_.get_sim_time()   );
  	k=0;
 	x_old_[k] = ( (	 coeff / ( (DzI[k] + DzI[k+1])/2 )  )	*	x_[k+1] + DzI[k]	) /
-								(	 coeff / ( (DzI[k] + DzI[k+1])/2 ) 							+ DzI[k] + 
+								(	 coeff / ( (DzI[k] + DzI[k+1])/2 ) 							+ rhs_[k] + 
 									 parameters_.get_gamma_b() * parameters_.get_sim_time()   );									 
 }
 
@@ -65,4 +66,5 @@ void JacobiSolverAI::solve(){
 }
 
 void JacobiSolverAI::SetIndices(int i, int j){i_=i; j_=j;}
+void JacobiSolverAI::SetRhs(DiscreteLine& rhs){rhs_=rhs;}
 void JacobiSolverAI::SetBuffer(DiscreteLine& x){x_=x, x_old_=x;}

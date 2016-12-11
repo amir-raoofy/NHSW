@@ -25,6 +25,8 @@ void Simulation::InitGI(){
 			flowField_.SetGI()[i][j][k] += parameters_.get_gamma_t() * parameters_.get_time_step() * parameters_.get_u_a();
 		}
 	}
+	//TODO fix the lower boundary condition k=0 we have k-1 which is problematic
+
 	// Boundary
 	//left
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {

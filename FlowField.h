@@ -23,9 +23,11 @@ public:
 	const DiscreteCube& GetW() const;
 	const DiscreteRectangle& GetEtta() const;
 	const DiscreteRectangle& GetDelta() const;
-	const DiscreteRectangle& GetZazI() const;
-	const DiscreteRectangle& GetZazJ() const;
-	const DiscreteRectangle& GetWaterSurface() const;
+	const DiscreteRectangle& GetZAZI() const;
+	const DiscreteRectangle& GetZAZJ() const;
+	const DiscreteRectangle& GetZAGI() const;
+	const DiscreteRectangle& GetZAGJ() const;
+const DiscreteRectangle& GetWaterSurface() const;
 	const RectangleFlagField& Getm() const;
 	const RectangleFlagField& GetM() const;
 	const DiscreteCube& GetGI() const;
@@ -73,8 +75,10 @@ public:
 	DiscreteCube& SetW();
 	DiscreteRectangle& SetEtta();
 	DiscreteRectangle& SetDelta();
-	DiscreteRectangle& SetZazI();
-	DiscreteRectangle& SetZazJ();
+	DiscreteRectangle& SetZAZI();
+	DiscreteRectangle& SetZAZJ();
+	DiscreteRectangle& SetZAGI();
+	DiscreteRectangle& SetZAGJ();
 	RectangleFlagField& Setm();
 	RectangleFlagField& SetM();
 	DiscreteCube& SetGI();
@@ -121,6 +125,8 @@ private:
 	DiscreteRectangle delta_;													// intermediate buffer
 	DiscreteRectangle zaz_i_;													// intermediate buffer
 	DiscreteRectangle zaz_j_;													// intermediate buffer
+	DiscreteRectangle zag_i_;													// intermediate buffer
+	DiscreteRectangle zag_j_;													// intermediate buffer
 
 	// higher and lower indices for 3rd dimension iteration
 	RectangleFlagField m_	;														// discretized bathymetry

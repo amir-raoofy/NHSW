@@ -28,13 +28,15 @@ private:
 class JacobiSolverAI: public IterativeSolver
 {
 public:
-	JacobiSolverAI(const Parameters& Parameters, FlowField& flowField, DiscreteLine& x);
+	JacobiSolverAI(const Parameters& Parameters, FlowField& flowField, DiscreteLine& x, DiscreteLine& rhs);
 	void solve();
 	void SetBuffer(DiscreteLine& x);
+	void SetRhs(DiscreteLine& rhs);
 	void SetIndices(int i, int j);
 protected:
 	int i_;
 	int j_;
+	DiscreteLine& rhs_;
 	DiscreteLine& x_;
 	DiscreteLine x_old_;
 	DiscreteLine error_;
@@ -47,7 +49,7 @@ protected:
 
 class JacobiSolverAJ: public JacobiSolverAI{
 public:
-	JacobiSolverAJ(const Parameters& Parameters, FlowField& flowField, DiscreteLine& x);
+	JacobiSolverAJ(const Parameters& Parameters, FlowField& flowField, DiscreteLine& x, DiscreteLine& rhs);
 protected:
 	void updateDomain();
 	void updateBoundary();
