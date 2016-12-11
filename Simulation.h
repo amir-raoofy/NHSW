@@ -23,7 +23,7 @@ public:
 	void InitGJ();
 	void InitDelta();	
 	void InitzAGI();
-	void InitzAGJ();
+	void InitzAGJ();		//TODO check the congergence of the solver
 
 	void Run();
 private:

@@ -18,4 +18,4 @@ void Simulation::InitEtta(){
 		}
 		std::cout << std::endl;
 	}
- }
+}
