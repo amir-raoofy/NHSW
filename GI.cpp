@@ -52,13 +52,18 @@ void Simulation::InitGI(){
 			flowField_.SetGI()[i][parameters_.get_num_cells(0)+1].push_back(0.0);
 		}
 	}
-	//@test
-	std::cout << "print GI" << std::endl;
-	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+	//@test the initializattion:
+	std::cout << "test initialization of GI" << std::endl;
+	for(int k = 0; k < parameters_.get_num_cells(2); k++){
+		std::cout << "layer: " << k << std::endl;
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-			std::cout << "i= " << i << "j= " << j << ":\t";
-			for (int k = 0; k <= flowField_.GetM()[i][j] - flowField_.Getm()[i][j]; k++) {
+			for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+				if (k <= flowField_.GetM()[i][j]-flowField_.Getm()[i][j] ) {
 				std::cout << flowField_.GetGI()[i][j][k] << "\t";
+				}
+				else{
+				std::cout << "x" << "\t";
+				}
 			}
 			std::cout << std::endl;
 		}

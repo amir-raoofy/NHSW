@@ -21,6 +21,14 @@ void Simulation::InitzAGI(){
 			flowField_.SetZAGI()[i][j]=std::inner_product(buffer.begin(), buffer.end(), flowField_.GetDzI()[i][j].begin(), 0.0);
 		}
 	}
+	//@test the initialization of Zt * inv A * GI
+	std::cout << "test initialization of  Zt * inv A * GI" << std::endl;
+	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+			std::cout << flowField_.GetZAGI()[i][j] << "\t";
+		}
+		std::cout << std::endl;
+	}
 }
 
 void Simulation::InitzAGJ(){
@@ -41,4 +49,13 @@ void Simulation::InitzAGJ(){
 			flowField_.SetZAGJ()[i][j]=std::inner_product(buffer.begin(), buffer.end(), flowField_.GetDzJ()[i][j].begin(), 0.0);
 		}
 	}
+	//@test the initialization of Zt * inv A * GJ
+	std::cout << "test initialization of  Zt * inv A * GJ" << std::endl;
+	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+			std::cout << flowField_.GetZAGJ()[i][j] << "\t";
+		}
+		std::cout << std::endl;
+	}
+
 }

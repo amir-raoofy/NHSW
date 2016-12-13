@@ -1,6 +1,8 @@
 #include "Simulation.h" 
 #include "Solver.h"
 
+// TODO check the implementation of each function -> are the results correct?
+//
 void Simulation::Run(){
 	InitEtta();
 //	InitEttaBoundaries();
@@ -17,7 +19,7 @@ void Simulation::Run(){
 	InitGJ();
 	InitDelta();
 	InitzAGI();
-	InitzAGJ();
+	InitzAGJ();	//TODO debug the solver to converge
 
 	JacobiSolverEtta etta_solver(parameters_, flowField_);	//TODO implement the 2d solver
 	etta_solver.solve();

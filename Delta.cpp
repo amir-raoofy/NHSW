@@ -15,6 +15,8 @@ void Simulation::InitDelta(){
 
 		}
 	}
+	//test the initialization of delta
+	std::cout << "test the initialization Delta" << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			std::cout << flowField_.GetDelta()[i][j] << "\t";
