@@ -5,8 +5,8 @@ void Simulation::InitM(){
 	// D
 	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
 		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-			flowField_.SetM()[i][j] = ceil( ( parameters_.GetHeight() + (flowField_.GetEtta()[i][j]+ flowField_.GetEtta()[i+1][j])/2 )
-										 									 / parameters_.get_dxdydz(2) );
+			flowField_.SetM()[i][j] =ceil( ( parameters_.GetHeight() + (flowField_.GetEtta()[i][j]+ flowField_.GetEtta()[i+1][j])/2 )
+										 									 / parameters_.get_dxdydz(2) ) -1;
 		}
 	}
 	// B
