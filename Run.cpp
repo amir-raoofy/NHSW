@@ -22,6 +22,7 @@ void Simulation::Run(){
 	InitzAGJ();	//TODO debug the solver to converge
 
 	JacobiSolverEtta etta_solver(parameters_, flowField_);	//TODO implement the 2d solver
+	etta_solver.SetParameters (0.00001,1000);
 	etta_solver.solve();
 }
 
