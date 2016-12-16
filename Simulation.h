@@ -25,6 +25,9 @@ public:
 	void InitzAGI();
 	void InitzAGJ();		//TODO check the congergence of the solver
 
+	void FirstStepUpdateU();
+	void FirstStepUpdateV();
+
 	void Run();
 private:
 	const Parameters& parameters_;

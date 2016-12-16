@@ -24,6 +24,9 @@ void Simulation::Run(){
 	JacobiSolverEtta etta_solver(parameters_, flowField_);	//TODO implement the 2d solver
 	etta_solver.SetParameters (0.00001,1000);
 	etta_solver.solve();
+
+	FirstStepUpdateU();
+	FirstStepUpdateV();
 }
 
 //TODO make all the solvers members of Simulation
