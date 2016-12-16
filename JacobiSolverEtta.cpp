@@ -1,4 +1,5 @@
 #include "Solver.h"
+#include <algorithm>
 
 JacobiSolverEtta::JacobiSolverEtta(const Parameters& parameters, FlowField& flowField):
 	IterativeSolver(parameters, flowField),
@@ -26,27 +27,22 @@ void JacobiSolverEtta::updateDomain(){
 	 * (parameters_.get_time_step() )
 	 / (parameters_.get_dxdydz(1) );
 
-
-
 	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
 		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-			flowField_.SetEtta()[i][j]=  	 (   alpha * flowField_.GetZAZI()[i  ][j] * etta_old_[i+1][j]
-																				+alpha * flowField_.GetZAZI()[i-1][j] * etta_old_[i-1][j]
-																				+beta  * flowField_.GetZAZJ()[i][j  ] * etta_old_[i][j+1]
-																				+beta  * flowField_.GetZAZJ()[i][j-1] * etta_old_[i][j-1]
-
-																				       + flowField_.GetDelta()[i ][j]
-																				-kappa * flowField_.GetZAGI()[i  ][j]
-																				+kappa * flowField_.GetZAGI()[i-1][j]
-																				-lambda* flowField_.GetZAGJ()[i][j  ]
-																				+lambda* flowField_.GetZAGJ()[i][j-1]
-																				) /
-
-																 		 (1 +alpha * flowField_.GetZAZI()[i  ][j]
-																			  +alpha * flowField_.GetZAZI()[i-1][j]
-																			  +beta  * flowField_.GetZAZJ()[i][j  ]
-																			  +beta  * flowField_.GetZAZJ()[i][j-1]); 
-
+			flowField_.SetEtta()[i][j] =
+			(  alpha * flowField_.GetZAZI()[i  ][j] * etta_old_[i+1][j]		//old values
+				+alpha * flowField_.GetZAZI()[i-1][j] * etta_old_[i-1][j]
+				+beta  * flowField_.GetZAZJ()[i][j  ] * etta_old_[i][j+1]
+				+beta  * flowField_.GetZAZJ()[i][j-1] * etta_old_[i][j-1]
+				+ flowField_.GetDelta()[i][j]																//rhs terms
+				-kappa * flowField_.GetZAGI()[i  ][j]
+				+kappa * flowField_.GetZAGI()[i-1][j]
+				-lambda* flowField_.GetZAGJ()[i][j  ]
+				+lambda* flowField_.GetZAGJ()[i][j-1]	) /
+			(1+alpha * flowField_.GetZAZI()[i  ][j]												// coeff of unknown
+			  +alpha * flowField_.GetZAZI()[i-1][j]
+			  +beta  * flowField_.GetZAZJ()[i][j  ]
+				+beta  * flowField_.GetZAZJ()[i][j-1]); 
 		}
 	}	
 }
@@ -61,9 +57,19 @@ void JacobiSolverEtta::updateBoundary(){
 		flowField_.SetEtta()[i][0]=flowField_.GetEtta()[i][1];								//bottom
 		flowField_.SetEtta()[i][parameters_.get_num_cells(1)+1]=flowField_.GetEtta()[i][parameters_.get_num_cells(1)];	//top
 	}
-
 }
-void JacobiSolverEtta::updateError(){}
+
+void JacobiSolverEtta::updateError(){
+	error_.clear();
+	std::transform(etta_old_.begin(), etta_old_.end(), flowField_.GetEtta().begin(), std::back_inserter(error_), 
+		[&](const DiscreteLine& a, const DiscreteLine& b) -> DiscreteLine
+		{DiscreteLine c; std::transform(a.begin(), a.end(), b.begin(), std::back_inserter(c), std::minus<FLOAT>()); return c;});
+	err_= sqrt ( std::inner_product(error_.begin(), error_.end(), error_.begin(), 0.0,
+		std::plus<FLOAT>(), [&](const DiscreteLine& a, const DiscreteLine& b) -> FLOAT
+		{return std::inner_product(a.begin(), a.end(), b.begin(), 0.0);}) );
+	//TODO check the implementation of 2d the difference and innerproduct for performance and memory val vs ref
+}
+
 void JacobiSolverEtta::iterate(){
 	updateDomain();
 	updateBoundary();
@@ -90,6 +96,4 @@ void JacobiSolverEtta::solve(){
 		}
 		std::cout << std::endl;
 	}
-
 }
-
