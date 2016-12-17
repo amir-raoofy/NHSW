@@ -18,16 +18,23 @@ public:
 	void InitQ();
 	void InitDzI();
 	void InitDzJ();
-	void InitzAz();
+	void CalculateZAZI();
+	void CalculateZAZJ();
 	void InitGI();
 	void InitGJ();
-	void InitDelta();	
-	void InitzAGI();
-	void InitzAGJ();		//TODO check the congergence of the solver
+	void CalculateDelta();	
+	void CalculateZAGI();
+	void CalculateZAGJ();		//TODO check the congergence of the solver
 
+	void Updatem();
+	void UpdateM();
+	void UpdateDzI();
+	void UpdateDzJ();
+	void UpdateGI();
+	void UpdateGJ();
+	void FirstStepUpdateEtta();
 	void FirstStepUpdateU();
 	void FirstStepUpdateV();
-
 	void Run();
 private:
 	const Parameters& parameters_;

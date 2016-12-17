@@ -70,4 +70,4 @@ void Simulation::InitGI(){
 	}
 }
 
-
+void Simulation::UpdateGI(){}

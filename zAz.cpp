@@ -2,8 +2,7 @@
 #include "Solver.h"
 #include <algorithm>
 
-void Simulation::InitzAz(){	
-	{
+void Simulation::CalculateZAZI(){
 	// (dz invA dz)	i+0.5
 	DiscreteLine buffer;
 	JacobiSolverAI solver(parameters_, flowField_, buffer, flowField_.SetDzI()[0][0]);
@@ -21,7 +20,6 @@ void Simulation::InitzAz(){
 			flowField_.SetZAZI()[i][j]=std::inner_product(buffer.begin(), buffer.end(), flowField_.GetDzI()[i][j].begin(), 0.0);
 		}
 	}
-	}// clear the stack
 	//@test the initialization of Zt * inv A * ZI
 	std::cout << "test initialization of  Zt * inv A * ZI" << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
@@ -30,8 +28,9 @@ void Simulation::InitzAz(){
 		}
 		std::cout << std::endl;
 	}
+}
+void Simulation::CalculateZAZJ(){
 	// (dz invA dz)	j+0.5
-	{
 	DiscreteLine buffer;
 	JacobiSolverAJ solver(parameters_, flowField_, buffer, flowField_.SetDzJ()[0][0]);
 	solver.SetParameters (0.00001,1000);
@@ -47,7 +46,6 @@ void Simulation::InitzAz(){
 			flowField_.SetZAZJ()[i][j]=std::inner_product(buffer.begin(), buffer.end(), flowField_.GetDzJ()[i][j].begin(), 0.0);
 		}
 	}
-	}// clear the stack
 	//@test the initialization of Zt * inv A * ZJ
 	std::cout << "test initialization of  Zt * inv A * ZJ" << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {

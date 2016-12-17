@@ -64,6 +64,8 @@ void Simulation::InitDzI(){
 	}
 }
 
+void Simulation::UpdateDzI(){}
+
 void Simulation::InitDzJ(){
 	// dz(i,j+0.5,k) = dz (1 - ( ceil ( ( height - b ) / dz ) - ( height - b ) / dz ) )
 	// dz(i,j+0.5,k) = dz 
@@ -127,3 +129,5 @@ void Simulation::InitDzJ(){
 		}
 	}
 }
+
+void Simulation::UpdateDzJ(){}

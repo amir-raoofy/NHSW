@@ -18,3 +18,5 @@ void Simulation::Initm(){
 		std::cout << std::endl;
 	}
 }
+
+void Simulation::Updatem(){Initm();}

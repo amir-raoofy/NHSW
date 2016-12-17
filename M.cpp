@@ -27,3 +27,5 @@ void Simulation::InitM(){
 		std::cout << std::endl;
 	}
 }
+
+void Simulation::UpdateM(){InitM();}

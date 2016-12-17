@@ -1,7 +1,7 @@
 #include "Simulation.h"
 #include <numeric>
 
-void Simulation::InitDelta(){
+void Simulation::CalculateDelta(){
 	// Domain
 	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
 		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
@@ -15,6 +15,7 @@ void Simulation::InitDelta(){
 
 		}
 	}
+	//TODO decide on the boundary; since Delta is not initialized and directly calcualated, the boundaries at least once should be set to at least zero to be on the safe side
 	//test the initialization of delta
 	std::cout << "test the initialization Delta" << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {

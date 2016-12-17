@@ -2,7 +2,7 @@
 #include "Solver.h"
 #include <algorithm>
 
-void Simulation::InitzAGI(){
+void Simulation::CalculateZAGI(){
 	// (dz invA GI)	i+0.5
 	// Domain
 	DiscreteLine buffer;
@@ -21,6 +21,7 @@ void Simulation::InitzAGI(){
 			flowField_.SetZAGI()[i][j]=std::inner_product(buffer.begin(), buffer.end(), flowField_.GetDzI()[i][j].begin(), 0.0);
 		}
 	}
+	//TODO decide on the boundary; since GI is not initialized and directly calcualated, the boundaries at least once should be set to at least zero to be on the safe side
 	//@test the initialization of Zt * inv A * GI
 	std::cout << "test initialization of  Zt * inv A * GI" << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
@@ -31,7 +32,7 @@ void Simulation::InitzAGI(){
 	}
 }
 
-void Simulation::InitzAGJ(){
+void Simulation::CalculateZAGJ(){
 	// (dz invA GJ)	j+0.5
 	// Domain
 	DiscreteLine buffer;
@@ -49,6 +50,7 @@ void Simulation::InitzAGJ(){
 			flowField_.SetZAGJ()[i][j]=std::inner_product(buffer.begin(), buffer.end(), flowField_.GetDzJ()[i][j].begin(), 0.0);
 		}
 	}
+	//TODO decide on the boundary; since GJ is not initialized and directly calcualated, the boundaries at least once should be set to at least zero to be on the safe side
 	//@test the initialization of Zt * inv A * GJ
 	std::cout << "test initialization of  Zt * inv A * GJ" << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
@@ -57,5 +59,4 @@ void Simulation::InitzAGJ(){
 		}
 		std::cout << std::endl;
 	}
-
 }

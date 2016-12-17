@@ -14,17 +14,22 @@ void Simulation::Run(){
 	InitQ();
 	InitDzI();
 	InitDzJ();
-	InitzAz();
 	InitGI();
 	InitGJ();
-	InitDelta();
-	InitzAGI();
-	InitzAGJ();	//TODO debug the solver to converge
-
-	JacobiSolverEtta etta_solver(parameters_, flowField_);	//TODO implement the 2d solver
-	etta_solver.SetParameters (0.00001,1000);
-	etta_solver.solve();
-
+	//initialization is finished
+	//first time step
+	Updatem();					//redundant for the very first time step
+	UpdateM();					//redundant for the very first time step
+	UpdateDzI();
+	UpdateDzJ();
+	UpdateGI();
+	UpdateGJ();
+	CalculateZAZI();
+	CalculateZAZJ();
+	CalculateZAGI();
+	CalculateZAGJ();
+	CalculateDelta();
+	FirstStepUpdateEtta();
 	FirstStepUpdateU();
 	FirstStepUpdateV();
 }
