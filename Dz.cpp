@@ -73,10 +73,18 @@ void Simulation::UpdateCellNumberDzI(){
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
 			while (flowField_.GetDzI()[i][j].size() < (unsigned)(flowField_.GetM()[i][j] - flowField_.Getm()[i][j] + 1)) {
-				flowField_.SetDzI()[i][j].push_back(0.0);
+				flowField_.SetDzI()[i][j].back()=parameters_.get_dxdydz(2);
+				flowField_.SetDzI()[i][j].push_back(  	parameters_.get_dxdydz(2) *
+				(  1-  ceil( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i+1][j])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
+				  				 ( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i+1][j])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
+			 	)   );
 			}
 			while (flowField_.GetDzI()[i][j].size() > (unsigned)(flowField_.GetM()[i][j] - flowField_.Getm()[i][j] + 1)) {
 				flowField_.SetDzI()[i][j].pop_back();
+				flowField_.SetDzI()[i][j].back()=parameters_.get_dxdydz(2) *
+				(  1-  ceil( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i+1][j])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
+				  				 ( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i+1][j])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
+			 	);
 			}
 		}
 	}
@@ -155,10 +163,18 @@ void Simulation::UpdateCellNumberDzJ(){
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
 			while (flowField_.GetDzJ()[i][j].size() < (unsigned)(flowField_.GetM()[i][j] - flowField_.Getm()[i][j] + 1)) {
-				flowField_.SetDzJ()[i][j].push_back(0.0);
+				flowField_.SetDzJ()[i][j].back()=parameters_.get_dxdydz(2);
+				flowField_.SetDzJ()[i][j].push_back(  	parameters_.get_dxdydz(2) *
+				(  1-  ceil( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i+1][j])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
+				  				 ( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i+1][j])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
+			 	)   );
 			}
 			while (flowField_.GetDzJ()[i][j].size() > (unsigned)(flowField_.GetM()[i][j] - flowField_.Getm()[i][j] + 1)) {
 				flowField_.SetDzJ()[i][j].pop_back();
+				flowField_.SetDzJ()[i][j].back()=parameters_.get_dxdydz(2) *
+				(  1-  ceil( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i+1][j])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
+				  				 ( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i+1][j])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
+			 	);
 			}
 		}
 	}
