@@ -64,7 +64,23 @@ void Simulation::InitDzI(){
 	}
 }
 
-void Simulation::UpdateDzI(){}
+void Simulation::UpdateDzI(){
+}
+
+void Simulation::UpdateCellNumberDzI(){
+	//Adjust the cell numbers
+	//Domain and boundary
+	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+			while (flowField_.GetDzI()[i][j].size() < (unsigned)(flowField_.GetM()[i][j] - flowField_.Getm()[i][j] + 1)) {
+				flowField_.SetDzI()[i][j].push_back(0.0);
+			}
+			while (flowField_.GetDzI()[i][j].size() > (unsigned)(flowField_.GetM()[i][j] - flowField_.Getm()[i][j] + 1)) {
+				flowField_.SetDzI()[i][j].pop_back();
+			}
+		}
+	}
+}
 
 void Simulation::InitDzJ(){
 	// dz(i,j+0.5,k) = dz (1 - ( ceil ( ( height - b ) / dz ) - ( height - b ) / dz ) )
@@ -130,4 +146,20 @@ void Simulation::InitDzJ(){
 	}
 }
 
-void Simulation::UpdateDzJ(){}
+void Simulation::UpdateDzJ(){
+}
+
+void Simulation::UpdateCellNumberDzJ(){
+	//Adjust the cell numbers
+	//Domain and boundary
+	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+			while (flowField_.GetDzJ()[i][j].size() < (unsigned)(flowField_.GetM()[i][j] - flowField_.Getm()[i][j] + 1)) {
+				flowField_.SetDzJ()[i][j].push_back(0.0);
+			}
+			while (flowField_.GetDzJ()[i][j].size() > (unsigned)(flowField_.GetM()[i][j] - flowField_.Getm()[i][j] + 1)) {
+				flowField_.SetDzJ()[i][j].pop_back();
+			}
+		}
+	}
+}

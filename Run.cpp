@@ -8,22 +8,31 @@ void Simulation::Run(){
 //	InitEttaBoundaries();
 	Initm();
 	InitM();
+	InitDzI();
+	InitDzJ();
 	InitU();
 	InitV();
 	InitW();
 	InitQ();
-	InitDzI();
-	InitDzJ();
 	InitGI();
 	InitGJ();
 	//initialization is finished
 	//first time step
 	Updatem();					//redundant for the very first time step
 	UpdateM();					//redundant for the very first time step
+
+	UpdateCellNumberDzI();
+	UpdateCellNumberDzJ();
+	UpdateCellNumberU();
+	UpdateCellNumberV();
+	UpdateCellNumberGI();
+	UpdateCellNumberGJ();
+	
 	UpdateDzI();
 	UpdateDzJ();
 	UpdateGI();
 	UpdateGJ();
+
 	CalculateZAZI();
 	CalculateZAZJ();
 	CalculateZAGI();

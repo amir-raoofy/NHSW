@@ -28,6 +28,13 @@ public:
 
 	void Updatem();
 	void UpdateM();
+	void UpdateCellNumberDzI();
+	void UpdateCellNumberDzJ();
+	void UpdateCellNumberGI();
+	void UpdateCellNumberGJ();
+	void UpdateCellNumberU();
+	void UpdateCellNumberV();
+
 	void UpdateDzI();
 	void UpdateDzJ();
 	void UpdateGI();

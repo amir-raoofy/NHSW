@@ -25,6 +25,4 @@ void Simulation::InitQ(){
 			std::cout << std::endl;
 		}
 	}
-
-
 }

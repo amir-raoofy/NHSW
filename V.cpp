@@ -30,7 +30,23 @@ void Simulation::InitV(){
 	}
 }
 
+void Simulation::UpdateCellNumberV(){
+	//Adjust the cell numbers
+	//Domain and boundary
+	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+			while (flowField_.GetV()[i][j].size() < (unsigned)(flowField_.GetM()[i][j] - flowField_.Getm()[i][j] + 1)) {
+				flowField_.SetV()[i][j].push_back(0.0);
+			}
+			while (flowField_.GetV()[i][j].size() > (unsigned)(flowField_.GetM()[i][j] - flowField_.Getm()[i][j] + 1)) {
+				flowField_.SetV()[i][j].pop_back();
+			}
+		}
+	}
+}
+
 void Simulation::FirstStepUpdateV(){
+	//calculation
 	DiscreteLine rhs;
 	DiscreteLine buffer;
 	JacobiSolverAJ solver(parameters_, flowField_, buffer, rhs);
