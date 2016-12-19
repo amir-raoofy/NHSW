@@ -24,7 +24,7 @@ public:
 	void InitGJ();
 	void CalculateDelta();	
 	void CalculateZAGI();
-	void CalculateZAGJ();		//TODO check the congergence of the solver
+	void CalculateZAGJ();
 
 	void Updatem();
 	void UpdateM();
