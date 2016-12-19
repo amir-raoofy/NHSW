@@ -18,6 +18,7 @@ public:
 	void InitQ();
 	void InitDzI();
 	void InitDzJ();
+	void InitDzK();
 	void CalculateZAZI();
 	void CalculateZAZJ();
 	void InitGI();
@@ -30,6 +31,7 @@ public:
 	void UpdateM();
 	void UpdateCellNumberDzI();
 	void UpdateCellNumberDzJ();
+	void UpdateCellNumberDzK();
 	void UpdateCellNumberGI();
 	void UpdateCellNumberGJ();
 	void UpdateCellNumberU();
@@ -37,6 +39,7 @@ public:
 
 	void UpdateDzI();
 	void UpdateDzJ();
+	void UpdateDzK();
 	void UpdateGI();
 	void UpdateGJ();
 	void FirstStepUpdateEtta();

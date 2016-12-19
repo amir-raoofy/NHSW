@@ -34,6 +34,7 @@ const DiscreteRectangle& GetWaterSurface() const;
 	const DiscreteCube& GetGJ() const;
 	const DiscreteCube& GetDzI() const;
 	const DiscreteCube& GetDzJ() const;
+	const DiscreteCube& GetDzK() const;
 	const DiscreteCube& GetQ() const;
 
 	const DiscreteCube& GetBoundariesU() const;
@@ -85,6 +86,7 @@ const DiscreteRectangle& GetWaterSurface() const;
 	DiscreteCube& SetGJ();
 	DiscreteCube& SetDzI();
 	DiscreteCube& SetDzJ();
+	DiscreteCube& SetDzK();
 	DiscreteCube& SetQ();
 
 	DiscreteCube& SetBoundariesU();
@@ -114,6 +116,7 @@ private:
 	// dz
 	DiscreteCube dz_i_;																// data of delta_z of all cells
 	DiscreteCube dz_j_;
+	DiscreteCube dz_k_;
 
 	// non hydrostatic pressure
 	DiscreteCube q_;																	// data for non-hydro-static pressure

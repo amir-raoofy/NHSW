@@ -17,6 +17,8 @@ FlowField::FlowField(const Parameters& parameters):
 						DiscreteRectangle( parameters_.get_num_cells(1)+2)	),
 	dz_j_	(		parameters_.get_num_cells(0)+2,
 						DiscreteRectangle( parameters_.get_num_cells(1)+2)	),
+	dz_k_	(		parameters_.get_num_cells(0)+2,
+						DiscreteRectangle( parameters_.get_num_cells(1)+2)	),
 	q_	(			parameters_.get_num_cells(0)+2,
 						DiscreteRectangle( parameters_.get_num_cells(1)+2)	),
 	etta_	( 	parameters_.get_num_cells(0)+2,
@@ -72,6 +74,7 @@ const DiscreteCube& FlowField::GetGI() const {return g_i_;}
 const DiscreteCube& FlowField::GetGJ() const {return g_j_;}
 const DiscreteCube& FlowField::GetDzI() const {return dz_i_;}
 const DiscreteCube& FlowField::GetDzJ() const {return dz_j_;}
+const DiscreteCube& FlowField::GetDzK() const {return dz_k_;}
 const DiscreteCube& FlowField::GetQ() const {return q_;}
 const DiscreteCube& FlowField::GetBoundariesU() const{return u_boundaries_;}
 const DiscreteCube& FlowField::GetBoundariesV() const{return v_boundaries_;}
@@ -121,6 +124,7 @@ DiscreteCube& FlowField::SetGI() {return g_i_;}
 DiscreteCube& FlowField::SetGJ() {return g_j_;}
 DiscreteCube& FlowField::SetDzI() {return dz_i_;}
 DiscreteCube& FlowField::SetDzJ() {return dz_j_;}
+DiscreteCube& FlowField::SetDzK() {return dz_k_;}
 DiscreteCube& FlowField::SetQ() {return q_;}
 DiscreteCube& FlowField::SetBoundariesU() {return u_boundaries_;}
 DiscreteCube& FlowField::SetBoundariesV() {return v_boundaries_;}

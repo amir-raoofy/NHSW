@@ -10,29 +10,36 @@ void Simulation::Run(){
 	InitM();									//DONE TESTED
 	InitDzI();								//DONE TESTED
 	InitDzJ();								//DONE TESTED
+	InitDzK();								//TODO test
 	InitU();									//DONE TESTED
 	InitV();									//DONE TESTED
 	InitW();									//DONE TESTED
 	InitQ();									//DONE TESTED
 	InitGI();									//DONE TESTED
 	InitGJ();									//DONE TESTED
+//	InitGK();									//TODO implement
 	//initialization is finished
 	//time step
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 1; i++) {
 		Updatem();					//redundant for the very first time step
 		UpdateM();					//redundant for the very first time step
 
 		UpdateCellNumberDzI();	//TODO test
 		UpdateCellNumberDzJ();	//TODO test
+		UpdateCellNumberDzK();	//TODO test
 		UpdateCellNumberU();		//TODO test
 		UpdateCellNumberV();		//TODO test
+//		UpdateCellNumberW();		//TODO implement
 		UpdateCellNumberGI();		//TODO test
 		UpdateCellNumberGJ();		//TODO test
+//		UpdateCellNumberGJ();		//TODO implement
 	
 		UpdateDzI();						//TODO test
 		UpdateDzJ();						//TODO test
+		UpdateDzK();						//TODO test
 		UpdateGI();							//TODO test
 		UpdateGJ();							//TODO test
+//		UpdateGK();							//TODO implement
 
 		CalculateZAZI();
 		CalculateZAZJ();
@@ -42,6 +49,7 @@ void Simulation::Run(){
 		FirstStepUpdateEtta();
 		FirstStepUpdateU();
 		FirstStepUpdateV();
+//		FirstStepUpdateW();		//TODO implement
 	}
 }
 
