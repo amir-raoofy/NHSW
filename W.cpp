@@ -27,3 +27,22 @@ void Simulation::InitW(){
 		}
 	}
 }
+
+void Simulation::UpdateCellNumberW(){
+	//Adjust the cell numbers
+	//Domain and boundary
+	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+			while (flowField_.GetW()[i][j].size() < (unsigned)(flowField_.GetM()[i][j] - flowField_.Getm()[i][j] + 1)) {
+				flowField_.SetW()[i][j].push_back(0.0);
+			}
+			while (flowField_.GetW()[i][j].size() > (unsigned)(flowField_.GetM()[i][j] - flowField_.Getm()[i][j] + 1)) {
+				flowField_.SetW()[i][j].pop_back();
+			}
+		}
+	}
+}
+
+void Simulation::FirstStepUpdateW(){
+	//TODO
+}

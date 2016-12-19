@@ -32,6 +32,7 @@ const DiscreteRectangle& GetWaterSurface() const;
 	const RectangleFlagField& GetM() const;
 	const DiscreteCube& GetGI() const;
 	const DiscreteCube& GetGJ() const;
+	const DiscreteCube& GetGK() const;
 	const DiscreteCube& GetDzI() const;
 	const DiscreteCube& GetDzJ() const;
 	const DiscreteCube& GetDzK() const;
@@ -84,6 +85,7 @@ const DiscreteRectangle& GetWaterSurface() const;
 	RectangleFlagField& SetM();
 	DiscreteCube& SetGI();
 	DiscreteCube& SetGJ();
+	DiscreteCube& SetGK();
 	DiscreteCube& SetDzI();
 	DiscreteCube& SetDzJ();
 	DiscreteCube& SetDzK();
@@ -112,6 +114,7 @@ private:
 	// g_ij
 	DiscreteCube g_i_;																// intermediate clac. functions
 	DiscreteCube g_j_;
+	DiscreteCube g_k_;
 	
 	// dz
 	DiscreteCube dz_i_;																// data of delta_z of all cells

@@ -23,6 +23,7 @@ public:
 	void CalculateZAZJ();
 	void InitGI();
 	void InitGJ();
+	void InitGK();
 	void CalculateDelta();	
 	void CalculateZAGI();
 	void CalculateZAGJ();
@@ -34,17 +35,22 @@ public:
 	void UpdateCellNumberDzK();
 	void UpdateCellNumberGI();
 	void UpdateCellNumberGJ();
+	void UpdateCellNumberGK();
 	void UpdateCellNumberU();
 	void UpdateCellNumberV();
+	void UpdateCellNumberW();
+	void UpdateCellNumberQ();
 
 	void UpdateDzI();
 	void UpdateDzJ();
 	void UpdateDzK();
 	void UpdateGI();
 	void UpdateGJ();
+	void UpdateGK();
 	void FirstStepUpdateEtta();
 	void FirstStepUpdateU();
 	void FirstStepUpdateV();
+	void FirstStepUpdateW();		//TODO implement
 	void Run();
 private:
 	const Parameters& parameters_;

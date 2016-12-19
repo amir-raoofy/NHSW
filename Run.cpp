@@ -17,7 +17,7 @@ void Simulation::Run(){
 	InitQ();									//DONE TESTED
 	InitGI();									//DONE TESTED
 	InitGJ();									//DONE TESTED
-//	InitGK();									//TODO implement
+	InitGK();									//TODO test
 	//initialization is finished
 	//time step
 	for (int i = 0; i < 1; i++) {
@@ -29,17 +29,18 @@ void Simulation::Run(){
 		UpdateCellNumberDzK();	//TODO test
 		UpdateCellNumberU();		//TODO test
 		UpdateCellNumberV();		//TODO test
-//		UpdateCellNumberW();		//TODO implement
+		UpdateCellNumberW();		//TODO test
+		UpdateCellNumberQ();		//TODO test
 		UpdateCellNumberGI();		//TODO test
 		UpdateCellNumberGJ();		//TODO test
-//		UpdateCellNumberGJ();		//TODO implement
+		UpdateCellNumberGK();		//TODO test
 	
 		UpdateDzI();						//TODO test
 		UpdateDzJ();						//TODO test
 		UpdateDzK();						//TODO test
 		UpdateGI();							//TODO test
 		UpdateGJ();							//TODO test
-//		UpdateGK();							//TODO implement
+		UpdateGK();							//TODO test
 
 		CalculateZAZI();
 		CalculateZAZJ();
@@ -49,7 +50,7 @@ void Simulation::Run(){
 		FirstStepUpdateEtta();
 		FirstStepUpdateU();
 		FirstStepUpdateV();
-//		FirstStepUpdateW();		//TODO implement
+		FirstStepUpdateW();		//TODO implement
 	}
 }
 

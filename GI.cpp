@@ -11,7 +11,7 @@ void Simulation::InitGI(){
 					//convection terms
 					 flowField_.GetU() [i][j][k] * (flowField_.GetU()[i][j][k] - flowField_.GetU()[i-1][j][k]) / parameters_.get_dxdydz(0)
 					+flowField_.GetV() [i][j][k] * (flowField_.GetU()[i][j][k] - flowField_.GetU()[i][j-1][k]) / parameters_.get_dxdydz(1)
-					+flowField_.GetV() [i][j][k] * (flowField_.GetU()[i][j][k] - flowField_.GetU()[i][j][k-1]) / ( (flowField_.GetDzI()[i][j][k]+flowField_.GetDzI()[i][j][k-1])/2 )
+					+flowField_.GetW() [i][j][k] * (flowField_.GetU()[i][j][k] - flowField_.GetU()[i][j][k-1]) / ( (flowField_.GetDzI()[i][j][k]+flowField_.GetDzI()[i][j][k-1])/2 )
 					//horizontal diffusion terms
 					+parameters_.get_viscosity() * (flowField_.GetU()[i+1][j][k] - 2 * flowField_.GetU()[i][j][k] + flowField_.GetU()[i-1][j][k]) / (parameters_.get_dxdydz(0) * parameters_.get_dxdydz(0))
 					+parameters_.get_viscosity() * (flowField_.GetU()[i][j+1][k] - 2 * flowField_.GetU()[i][j][k] + flowField_.GetU()[i][j-1][k]) / (parameters_.get_dxdydz(1) * parameters_.get_dxdydz(1))
@@ -95,7 +95,7 @@ void Simulation::UpdateGI(){
 					//convection terms
 					 flowField_.GetU() [i][j][k] * (flowField_.GetU()[i][j][k] - flowField_.GetU()[i-1][j][k]) / parameters_.get_dxdydz(0)
 					+flowField_.GetV() [i][j][k] * (flowField_.GetU()[i][j][k] - flowField_.GetU()[i][j-1][k]) / parameters_.get_dxdydz(1)
-					+flowField_.GetV() [i][j][k] * (flowField_.GetU()[i][j][k] - flowField_.GetU()[i][j][k-1]) / ( (flowField_.GetDzI()[i][j][k]+flowField_.GetDzI()[i][j][k-1])/2 )
+					+flowField_.GetW() [i][j][k] * (flowField_.GetU()[i][j][k] - flowField_.GetU()[i][j][k-1]) / ( (flowField_.GetDzI()[i][j][k]+flowField_.GetDzI()[i][j][k-1])/2 )
 					//horizontal diffusion terms
 					+parameters_.get_viscosity() * (flowField_.GetU()[i+1][j][k] - 2 * flowField_.GetU()[i][j][k] + flowField_.GetU()[i-1][j][k]) / (parameters_.get_dxdydz(0) * parameters_.get_dxdydz(0))
 					+parameters_.get_viscosity() * (flowField_.GetU()[i][j+1][k] - 2 * flowField_.GetU()[i][j][k] + flowField_.GetU()[i][j-1][k]) / (parameters_.get_dxdydz(1) * parameters_.get_dxdydz(1))
