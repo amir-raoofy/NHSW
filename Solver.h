@@ -57,6 +57,14 @@ protected:
 	void updateBoundary();
 };
 
+class JacobiSolverAK: public JacobiSolverAI{
+public:
+	JacobiSolverAK(const Parameters& parameters, FlowField& flowField, DiscreteLine& x, DiscreteLine& rhs);
+protected:
+	void updateDomain();
+	void updateBoundary();
+};
+
 class JacobiSolverEtta: public IterativeSolver
 {
 public:

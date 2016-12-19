@@ -20,7 +20,7 @@ void Simulation::Run(){
 	InitGK();									//TODO test
 	//initialization is finished
 	//time step
-	for (int i = 0; i < 1; i++) {
+	for (int i = 0; i < 100; i++) {
 		Updatem();					//redundant for the very first time step
 		UpdateM();					//redundant for the very first time step
 
@@ -50,7 +50,7 @@ void Simulation::Run(){
 		FirstStepUpdateEtta();
 		FirstStepUpdateU();
 		FirstStepUpdateV();
-		FirstStepUpdateW();		//TODO implement
+		FirstStepUpdateW();		//TODO test
 	}
 }
 
