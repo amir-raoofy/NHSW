@@ -17,30 +17,32 @@ void Simulation::Run(){
 	InitGI();
 	InitGJ();
 	//initialization is finished
-	//first time step
-	Updatem();					//redundant for the very first time step
-	UpdateM();					//redundant for the very first time step
+	//time step
+	for (int i = 0; i < 100; i++) {
+		Updatem();					//redundant for the very first time step
+		UpdateM();					//redundant for the very first time step
 
-	UpdateCellNumberDzI();
-	UpdateCellNumberDzJ();
-	UpdateCellNumberU();
-	UpdateCellNumberV();
-	UpdateCellNumberGI();
-	UpdateCellNumberGJ();
+		UpdateCellNumberDzI();
+		UpdateCellNumberDzJ();
+		UpdateCellNumberU();
+		UpdateCellNumberV();
+		UpdateCellNumberGI();
+		UpdateCellNumberGJ();
 	
-	UpdateDzI();
-	UpdateDzJ();
-	UpdateGI();
-	UpdateGJ();
+		UpdateDzI();
+		UpdateDzJ();
+		UpdateGI();
+		UpdateGJ();
 
-	CalculateZAZI();
-	CalculateZAZJ();
-	CalculateZAGI();
-	CalculateZAGJ();
-	CalculateDelta();
-	FirstStepUpdateEtta();
-	FirstStepUpdateU();
-	FirstStepUpdateV();
+		CalculateZAZI();
+		CalculateZAZJ();
+		CalculateZAGI();
+		CalculateZAGJ();
+		CalculateDelta();
+		FirstStepUpdateEtta();
+		FirstStepUpdateU();
+		FirstStepUpdateV();
+	}
 }
 
 //TODO make all the solvers members of Simulation
