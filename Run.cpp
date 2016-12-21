@@ -34,7 +34,6 @@ void Simulation::Run(){
 		UpdateCellNumberGI();		//TODO test
 		UpdateCellNumberGJ();		//TODO test
 		UpdateCellNumberGK();		//TODO test
-	
 		UpdateDzI();						//TODO test
 		UpdateDzJ();						//TODO test
 		UpdateDzK();						//TODO test

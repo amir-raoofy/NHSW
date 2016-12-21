@@ -58,10 +58,14 @@ void Simulation::FirstStepUpdateW(){
 					flowField_.SetW()[i][j][k]=10.0;
 				}
 				*/
-			rhs.clear();
+/*			rhs.clear();
 			std::transform(		flowField_.GetDzK()[i][j].begin(),flowField_.GetDzK()[i][j].end(), std::back_inserter(rhs), std::bind1st(std::multiplies<FLOAT>(),
 			(flowField_.GetEtta()[i+1][j]-flowField_.GetEtta()[i][j]) * parameters_.get_theta() * parameters_.get_g() * parameters_.get_time_step() / parameters_.get_dxdydz(0)		));
 			std::transform(flowField_.GetGK()[i][j].begin(), flowField_.GetGK()[i][j].end(), rhs.begin(), rhs.begin(), std::minus<FLOAT>());
+			*/
+
+			/*
+			rhs=flowField_.GetGK()[i][j];
 			buffer = flowField_.SetW()[i][j];
 			solver.SetRhs(rhs);
 			solver.SetBuffer(buffer);
@@ -69,6 +73,39 @@ void Simulation::FirstStepUpdateW(){
 			solver.solve();
 
 			flowField_.SetW()[i][j] = buffer;
+			*/
+
+			//divegence free w
+			flowField_.SetW()[i][j][0]=0.0;
+			for(int k = 1; k <= flowField_.GetM()[i][j] - flowField_.Getm()[i][j]; k++){
+					flowField_.SetW()[i][j][k]=flowField_.GetW()[i][j][k] - (flowField_.GetU()[i][j][k]*flowField_.GetDzI()[i][j][k]-flowField_.GetU()[i-1][j][k]*flowField_.GetDzI()[i-1][j][k])/parameters_.get_dxdydz(0)
+																																- (flowField_.GetV()[i][j][k]*flowField_.GetDzJ()[i][j][k]-flowField_.GetV()[i][j-1][k]*flowField_.GetDzJ()[i][j-1][k])/parameters_.get_dxdydz(1);
+			}
+		}
+	}
+	// Boundary
+	//left
+	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+		for (int k = 0; k < flowField_.GetM()[0][j] - flowField_.Getm()[0][j]+1; k++) {
+			flowField_.SetW()[0][j][k]=flowField_.GetW()[1][j][k];
+		}
+	}
+	//right
+	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+		for (int k = 0; k < flowField_.GetM()[parameters_.get_num_cells(0)+1][j] - flowField_.Getm()[parameters_.get_num_cells(0)+1][j]+1; k++) {
+			flowField_.SetW()[parameters_.get_num_cells(0)+1][j][k]=flowField_.GetW()[parameters_.get_num_cells(0)][j][k];
+		}
+	}
+	//bottom
+	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+		for (int k = 0; k < flowField_.GetM()[i][0] - flowField_.Getm()[i][0]+1; k++) {
+			flowField_.SetW()[i][0][k]=flowField_.GetW()[i][1][k];
+		}
+	}
+	//top
+	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+		for (int k = 0; k < flowField_.GetM()[i][parameters_.get_num_cells(0)+1] - flowField_.Getm()[i][parameters_.get_num_cells(0)+1]+1; k++) {
+			flowField_.SetW()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetW()[i][parameters_.get_num_cells(0)][k];
 		}
 	}
 	//@test
