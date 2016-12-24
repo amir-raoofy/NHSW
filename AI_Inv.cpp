@@ -61,8 +61,8 @@ void JacobiSolverAI::solve(){
 	}
 	if (i==MaxIt_)
 		std::cout << "\033[1;31mWARNING\033[0m: solver did not converge; maximum number of iterations was reached." << std::endl;
-	else
-		std::cout << "Jacobi solver converged after " << i << " iterations, the value of error is "<< err_ << std::endl;
+//	else
+//		std::cout << "Jacobi solver converged after " << i << " iterations, the value of error is "<< err_ << std::endl;
 }
 
 void JacobiSolverAI::SetIndices(int i, int j){i_=i; j_=j;}

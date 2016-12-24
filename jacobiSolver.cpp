@@ -71,8 +71,8 @@ void Jacobi::solve(float TOL, int MaxIt){
 	}
 	if (i==MaxIt)
 		std::cout << "\033[1;31mWARNING\033[0m: solver did not converge; maximum number of iterations was reached." << std::endl;
-	else
-		std::cout << "Jacobi solver converged after " << i << " iterations, the value of residual is "<< _res << std::endl;
+//	else
+//		std::cout << "Jacobi solver converged after " << i << " iterations, the value of residual is "<< _res << std::endl;
 
 }
 

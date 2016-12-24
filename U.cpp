@@ -75,13 +75,13 @@ void Simulation::FirstStepUpdateU(){
 	//left
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
 		for (int k = 0; k < flowField_.GetM()[0][j] - flowField_.Getm()[0][j]+1; k++) {
-			flowField_.SetU()[0][j][k]=flowField_.GetU()[1][j][k];
+			flowField_.SetU()[0][j][k]=0;
 		}
 	}
 	//right
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
 		for (int k = 0; k < flowField_.GetM()[parameters_.get_num_cells(0)+1][j] - flowField_.Getm()[parameters_.get_num_cells(0)+1][j]+1; k++) {
-			flowField_.SetU()[parameters_.get_num_cells(0)+1][j][k]=flowField_.GetU()[parameters_.get_num_cells(0)][j][k];
+			flowField_.SetU()[parameters_.get_num_cells(0)+1][j][k]=0;
 		}
 	}
 	//bottom

@@ -87,13 +87,13 @@ void Simulation::FirstStepUpdateV(){
 	//bottom
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for (int k = 0; k < flowField_.GetM()[i][0] - flowField_.Getm()[i][0]+1; k++) {
-			flowField_.SetV()[i][0][k]=flowField_.GetV()[i][1][k];
+			flowField_.SetV()[i][0][k]=0;
 		}
 	}
 	//top
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for (int k = 0; k < flowField_.GetM()[i][parameters_.get_num_cells(0)+1] - flowField_.Getm()[i][parameters_.get_num_cells(0)+1]+1; k++) {
-			flowField_.SetV()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetV()[i][parameters_.get_num_cells(0)][k];
+			flowField_.SetV()[i][parameters_.get_num_cells(0)+1][k]=0;
 		}
 	}	//@test
 	std::cout << "first step velocity update; V:" << std::endl;
