@@ -20,7 +20,8 @@ void Simulation::InitGK(){
 					+parameters_.get_time_step()*parameters_.get_viscosity() * (flowField_.GetW()[i+1][j][k] - 2 * flowField_.GetW()[i][j][k] + flowField_.GetW()[i-1][j][k]) / (parameters_.get_dxdydz(0) * parameters_.get_dxdydz(0))
 					+parameters_.get_time_step()*parameters_.get_viscosity() * (flowField_.GetW()[i][j+1][k] - 2 * flowField_.GetW()[i][j][k] + flowField_.GetW()[i][j-1][k]) / (parameters_.get_dxdydz(1) * parameters_.get_dxdydz(1))
 					//hydrostatic pressure
-					-(1-parameters_.get_theta()) * (parameters_.get_time_step() / parameters_.get_dxdydz(1)) * (flowField_.GetQ()[i][j][k+1]-flowField_.GetQ()[i][j][k])
+					-(1-parameters_.get_theta()) * (parameters_.get_time_step() / parameters_.get_dxdydz(2)) * (flowField_.GetQ()[i][j][k+1]-flowField_.GetQ()[i][j][k])
+					-parameters_.get_g()*parameters_.get_sim_time()
 					) * flowField_.GetDzK()[i][j][k]
 				);
 			}
