@@ -1,22 +1,21 @@
-#include <output.h>
+#include "output.h"
 
-Output::Output(const Parameters& parameters, const flowField& flowfield):_parameters(parameters), _flowfield(flowfield){
-	this->_outputFile = new std::ofstream;
-	this->_velocityStringStream << std::fixed << std::setprecision(6);
-	this->_pressureStringStream << std::fixed << std::setprecision(6);
+Output::Output(const Parameters& parameters, FlowField& flowfield): outputFile_ (*new std::ofstream), parameters_(parameters), flowField_(flowfield){
+	velocityStringStream_ << std::fixed << std::setprecision(6);
+	pressureStringStream_ << std::fixed << std::setprecision(6);
 }
 
 Output::~Output () {
-	delete this->_outputFile;
+	delete &outputFile_;
 }
 
-void Output::write ( flowField & flowfield, int timeStep, std::string foldername ) {
+void Output::write (int timeStep, std::string foldername ) {
 
 	std::cout << "=== Writing VTK Output ===" << std::endl;
 	
 	// Open the file and set precision
-	this->_outputFile->open(this->getFilename(timeStep, foldername).c_str());
-	*this->_outputFile << std::fixed << std::setprecision(6);
+	outputFile_.open(this->getFilename(timeStep, foldername).c_str());
+	outputFile_ << std::fixed << std::setprecision(6);
 	
 	// Output the different sections of the file
 	this->writeFileHeader();
@@ -29,47 +28,48 @@ void Output::write ( flowField & flowfield, int timeStep, std::string foldername
   this->writeQ();
 	
 	// Close the file
-	this->_outputFile->close();
+	outputFile_.close();
 	
 	this->clearStringStreams();
 	
 }
 
 void Output::writeFileHeader(){
-	*this->_outputFile << "# vtk DataFile Version 2.0" << std::endl;
-	*this->_outputFile << "Output file for NHSW written by Amir Raoofy" << std::endl;
-	*this->_outputFile << "ASCII" << std::endl << std::endl;
+	outputFile_ << "# vtk DataFile Version 2.0" << std::endl;
+	outputFile_ << "Output file for NHSW written by Amir Raoofy" << std::endl;
+	outputFile_ << "ASCII" << std::endl << std::endl;
 }
 
 void Output::writeGrid (){
-	*this->_outputFile << "DATASET STRUCTURED_GRID" << std::endl;
-	*this->_outputFile << "DIMENSIONS " <<  _parameters.get_num_cells(0)+1 << " "
-						   			    <<  _parameters.get_num_cells(1)+1 << " " 
-										<<  _parameters.get_num_cells(2)+1 << std::endl;
-	*this->_outputFile << "POINTS " 	<< (_parameters.get_num_cells(0)+1)
-		  								  *(_parameters.get_num_cells(1)+1)
-										  *(_parameters.get_num_cells(2)+1) << " float" << std::endl;
+	outputFile_ << "DATASET STRUCTURED_GRID" << std::endl;
+	outputFile_ << "DIMENSIONS " <<  parameters_.get_num_cells(0)+1 << " "
+						   			    <<  parameters_.get_num_cells(1)+1 << " " 
+										<<  parameters_.get_num_cells(2)+1 << std::endl;
+	outputFile_ << "POINTS " 	<< (parameters_.get_num_cells(0)+1)
+		  								  *(parameters_.get_num_cells(1)+1)
+										  *(parameters_.get_num_cells(2)+1) << " float" << std::endl;
 	
-	for (int k = 0; k < _parameters.get_num_cells(2)+1; k++) {
-		for (int j = 0; j < _parameters.get_num_cells(1)+1; j++) {
-			for (int i = 0; i < _parameters.get_num_cells(0)+1; i++) {
-				*this->_outputFile <<  _parameters.get_dxdydz(0) *i << " "
-   								   <<  _parameters.get_dxdydz(1) *j << " " 
-   								   <<  _parameters.get_dxdydz(2) *k << std::endl;
+	for (int k = 0; k < parameters_.get_num_cells(2)+1; k++) {
+		for (int j = 0; j < parameters_.get_num_cells(1)+1; j++) {
+			for (int i = 0; i < parameters_.get_num_cells(0)+1; i++) {
+				outputFile_ << parameters_.get_dxdydz(0) *i << " "
+   								   <<  parameters_.get_dxdydz(1) *j << " " 
+   								   <<  parameters_.get_dxdydz(2) *k << std::endl;
 			}
 		}	
 	}
 }
 
 void Output::writePressure (){}
+
 void Output::writeVelocity (){
-	*this->_outputFile <<"VECTORS velocity float" << std::endl;
-	for (int k = 0; k < _parameters.get_num_cells(2); k++) {
-		for (int j = 0; j < _parameters.get_num_cells(1); j++) {
-			for (int i = 0; i < _parameters.get_num_cells(0); i++) {
-				*this->_outputFile << ( _flowfield.get_u()[_flowfield.map(i,j,k) ] + _flowfield.get_u()[_flowfield.map(i+1,j,k)] ) /2 << " " <<
-															( _flowfield.get_v()[_flowfield.map(i,j,k) ] + _flowfield.get_v()[_flowfield.map(i,j+1,k)] ) /2 << " " <<
-															( _flowfield.get_w()[_flowfield.map(i,j,k) ] + _flowfield.get_w()[_flowfield.map(i,j,k+1)] ) /2 << std::endl;
+	outputFile_ <<"VECTORS velocity float" << std::endl;
+	for (int k = 0; k < parameters_.get_num_cells(2); k++) {
+		for (int j = 0; j < parameters_.get_num_cells(1); j++) {
+			for (int i = 0; i < parameters_.get_num_cells(0); i++) {
+				outputFile_ << ( flowField_.GetU()[i][j][k] + flowField_.GetU()[i+1][j][k] ) /2 << " " <<
+											 ( flowField_.GetV()[i][j][k] + flowField_.GetV()[i][j+1][k] ) /2 << " " <<
+											 ( flowField_.GetW()[i][j][k] + flowField_.GetW()[i][j][k+1] ) /2 << std::endl;
 			}
 		}
 	}
@@ -77,35 +77,36 @@ void Output::writeVelocity (){
 }
 
 void Output::writeHeight (){
-	*this->_outputFile << "CELL_DATA " 	<< _parameters.get_num_cells(0) 
-                                      *  _parameters.get_num_cells(1)
-                                      *  _parameters.get_num_cells(2) << std::endl;
-	*this->_outputFile << "SCALARS height float 1" << std::endl;
-	*this->_outputFile << "LOOKUP_TABLE default" << std::endl;		
-	for (int k = 1; k < _parameters.get_num_cells(2)+1; k++) {
-		for (int j = 1; j < _parameters.get_num_cells(1)+1; j++) {
-			for (int i = 1; i < _parameters.get_num_cells(0)+1; i++) {
-				*this->_outputFile << (this->_flowfield).get_height()[(this->_flowfield).map(i,j) ] << std::endl;
+	outputFile_ << "CELL_DATA " 	<< parameters_.get_num_cells(0) 
+                                      *  parameters_.get_num_cells(1)
+                                      *  parameters_.get_num_cells(2) << std::endl;
+	outputFile_ << "SCALARS height float 1" << std::endl;
+	outputFile_ << "LOOKUP_TABLE default" << std::endl;		
+	for (int k = 1; k < parameters_.get_num_cells(2)+1; k++) {
+		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+			for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+				outputFile_ << flowField_.GetEtta()[i][j] << std::endl;
 			}
 		}	
 	}
 
-	*this->_outputFile << std::endl;
+	outputFile_ << std::endl;
 }
 
-void Output::writebathymetry (){
-	*this->_outputFile << "CELL_DATA " 	<< _parameters.get_num_cells(0) 
-		   								*  _parameters.get_num_cells(1)	<< std::endl;
-	*this->_outputFile << "SCALARS bathymetry float 1" << std::endl;
-	*this->_outputFile << "LOOKUP_TABLE default" << std::endl;		
-	for (int j = 1; j < _parameters.get_num_cells(1)+1; j++) {
-		for (int i = 1; i < _parameters.get_num_cells(0)+1; i++) {
-			*this->_outputFile << (this->_flowfield).get_m()[(this->_flowfield).map(i,j) ] << std::endl;
+void Output::writeBathymetry (){
+	outputFile_ << "CELL_DATA " 	<< parameters_.get_num_cells(0) 
+		   								*  parameters_.get_num_cells(1)	<< std::endl;
+	outputFile_ << "SCALARS bathymetry float 1" << std::endl;
+	outputFile_ << "LOOKUP_TABLE default" << std::endl;		
+	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+		for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+			outputFile_ << flowField_.Getm()[i][j] << std::endl;	
 		}
 	}	
 
-	*this->_outputFile << std::endl;
+	outputFile_ << std::endl;
 }
+
 std::string Output::getFilename( int timeStep, std::string foldername ) {	
 	std::stringstream filename;
 	filename << foldername << "/" << "output." << timeStep << ".vtk";
@@ -113,35 +114,34 @@ std::string Output::getFilename( int timeStep, std::string foldername ) {
 }
 
 void Output::clearStringStreams() {
-	_pressureStringStream.str("");
-	_velocityStringStream.str("");
+	pressureStringStream_.str("");
+	velocityStringStream_.str("");
 }
 
-
 void Output::writeDZ(){
-	*this->_outputFile << "SCALARS dz float 1" << std::endl;
-	*this->_outputFile << "LOOKUP_TABLE default" << std::endl;
-	for (int k = 1; k < _parameters.get_num_cells(2)+1; k++) {
-		for (int j = 1; j < _parameters.get_num_cells(1)+1; j++) {
-			for (int i = 1; i < _parameters.get_num_cells(0)+1; i++) {
-				*this->_outputFile << (this->_flowfield).get_DZ()[(this->_flowfield).map(i,j,k) ] << std::endl;
+	outputFile_ << "SCALARS dz float 1" << std::endl;
+	outputFile_ << "LOOKUP_TABLE default" << std::endl;
+	for (int k = 1; k < parameters_.get_num_cells(2)+1; k++) {
+		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+			for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+				outputFile_ << flowField_.GetDzI()[i][j][k] << std::endl;
 			}
 		}
 	}
 
-	*this->_outputFile << std::endl;
+	outputFile_ << std::endl;
 }
 
 void Output::writeQ(){
-	*this->_outputFile << "SCALARS NonHydPressure float 1" << std::endl;
-	*this->_outputFile << "LOOKUP_TABLE default" << std::endl;
-	for (int k = 1; k < _parameters.get_num_cells(2)+1; k++) {
-		for (int j = 1; j < _parameters.get_num_cells(1)+1; j++) {
-			for (int i = 1; i < _parameters.get_num_cells(0)+1; i++) {
-				*this->_outputFile << (this->_flowfield).get_q()[(this->_flowfield).map(i,j,k) ] << std::endl;
+	outputFile_ << "SCALARS NonHydPressure float 1" << std::endl;
+	outputFile_ << "LOOKUP_TABLE default" << std::endl;
+	for (int k = 1; k < parameters_.get_num_cells(2)+1; k++) {
+		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+			for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+				outputFile_ << flowField_.GetQ()[i][j][k] << std::endl;
 			}
 		}
 	}
 
-	*this->_outputFile << std::endl;
+	outputFile_ << std::endl;
 } 

@@ -1,9 +1,13 @@
 #include "Simulation.h" 
 #include "Solver.h"
+#include "output.h"
 
 // TODO check the implementation of each function -> are the results correct?
 //
 void Simulation::Run(){
+
+	Output output(parameters_, flowField_);
+			
 	InitEtta();
 //	InitEttaBoundaries();
 	Initm();									//DONE TESTED
@@ -20,6 +24,7 @@ void Simulation::Run(){
 	InitGK();									//TODO test
 	//initialization is finished
 	//time step
+	output.write(0, "./output/");
 	for (int i = 0; i < 100; i++) {
 		Updatem();					//redundant for the very first time step
 		UpdateM();					//redundant for the very first time step
@@ -50,6 +55,7 @@ void Simulation::Run(){
 		FirstStepUpdateU();
 		FirstStepUpdateV();
 		FirstStepUpdateW();		//TODO test
+		output.write(i, "./output/");
 	}
 }
 

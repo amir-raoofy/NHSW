@@ -1,32 +1,32 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <flowField.h>
+#include "FlowField.h"
 
 class Output {
 
     private:
-		std::ofstream *_outputFile;
-		std::stringstream _velocityStringStream;
-		std::stringstream _pressureStringStream;
-		const Parameters& _parameters;
-		const flowField& _flowfield;
-    public:
+		std::ofstream &outputFile_;
+		std::stringstream velocityStringStream_;
+		std::stringstream pressureStringStream_;
+		const Parameters& parameters_;
+		const FlowField& flowField_;
 
-        Output(const Parameters& parameters, const flowField& flowfield);
+		public:
+    Output(const Parameters& parameters, FlowField& flowField);
 		~Output ();
 
-        void write (flowField & flowfield, int timeStep, std::string foldername);
+		void write (int timeStep, std::string folderName);
 
-        std::string getFilename(int timeStep, std::string foldername);
-        void writeFileHeader();
-        void writeGrid ();
-        void writePressure();
-        void writeVelocity();
-        void writeHeight();
-				void writebathymetry();
-        void writeQ();
-        void clearStringStreams();
-        //@ Debug
-	void writeDZ();
+		std::string getFilename(int timeStep, std::string folderName);
+    void writeFileHeader();
+    void writeGrid ();
+    void writePressure();
+    void writeVelocity();
+    void writeHeight();
+		void writeBathymetry();
+    void writeQ();
+    void clearStringStreams();
+    //@ Debug
+		void writeDZ();
 };
