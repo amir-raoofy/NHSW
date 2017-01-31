@@ -52,6 +52,13 @@ public:
 	void FirstStepUpdateV();
 	void FirstStepUpdateW();		//TODO implement
 	void Run();
+
+	void SolveQ();								//TODO implement
+	void SecondStepUpdateU();			//TODO implement
+	void SecondStepUpdateV();			//TODO implement
+	void SecondStepUpdateW();			//TODO implement
+	void SecondStepUpdateEtta();	//TODO implement
+
 private:
 	const Parameters& parameters_;
 	FlowField& flowField_;

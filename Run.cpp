@@ -25,7 +25,7 @@ void Simulation::Run(){
 	//initialization is finished
 	//time step
 	output.write(0, "./output/");
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 1000; i++) {
 		Updatem();					//redundant for the very first time step
 		UpdateM();					//redundant for the very first time step
 
@@ -55,7 +55,16 @@ void Simulation::Run(){
 		FirstStepUpdateU();
 		FirstStepUpdateV();
 		FirstStepUpdateW();		//TODO test
-		output.write(i, "./output/");
+		output.write(i+1, "./output/");
+
+		//TODO check and take care of the boundary conditions more carefully specially at top and bottom and especially for the pressure equation 
+		//for which the BC should be replaced by neuman.
+		//SolveQ();								//TODO check
+		//SecondStepUpdateU();		//TODO check
+		//SecondStepUpdateV();		//TODO check
+		//SecondStepUpdateW();		//TODO check
+		//SecondStepUpdateEtta();	//TODO check
+
 	}
 }
 

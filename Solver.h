@@ -79,3 +79,16 @@ protected:
 	void iterate();
 };
 
+class JacobiSolverQ: public IterativeSolver
+{
+public:
+	JacobiSolverQ(const Parameters& parameters, FlowField& flowField);
+	void solve();
+protected:
+	DiscreteCube Q_old_;
+	DiscreteCube error_;
+	void updateDomain();
+	void updateBoundary();
+	void updateError();
+	void iterate();
+};

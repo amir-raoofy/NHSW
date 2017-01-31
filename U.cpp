@@ -84,16 +84,16 @@ void Simulation::FirstStepUpdateU(){
 			flowField_.SetU()[parameters_.get_num_cells(0)+1][j][k]=0;
 		}
 	}
-	//bottom
+	//back
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for (int k = 0; k < flowField_.GetM()[i][0] - flowField_.Getm()[i][0]+1; k++) {
 			flowField_.SetU()[i][0][k]=flowField_.GetU()[i][1][k];
 		}
 	}
-	//top
+	//front
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		for (int k = 0; k < flowField_.GetM()[i][parameters_.get_num_cells(0)+1] - flowField_.Getm()[i][parameters_.get_num_cells(0)+1]+1; k++) {
-			flowField_.SetU()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetU()[i][parameters_.get_num_cells(0)][k];
+		for (int k = 0; k < flowField_.GetM()[i][parameters_.get_num_cells(1)+1] - flowField_.Getm()[i][parameters_.get_num_cells(1)+1]+1; k++) {
+			flowField_.SetU()[i][parameters_.get_num_cells(1)+1][k]=flowField_.GetU()[i][parameters_.get_num_cells(1)][k];
 		}
 	}
 	//@test
@@ -113,3 +113,40 @@ void Simulation::FirstStepUpdateU(){
 		}
 	}
 }
+
+void Simulation::SecondStepUpdateU(){
+	//Domain
+	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+			for (int k = 1; k < flowField_.GetM()[i][j] - flowField_.Getm()[i][j]; k++) {
+				flowField_.SetU()[i][j][k]=flowField_.GetU()[i][j][k] - parameters_.get_theta() * parameters_.get_time_step() / parameters_.get_dxdydz(0)  * (flowField_.GetQ()[i+1][j][k] - flowField_.GetQ()[i][j][k]);
+			}
+		}
+	}
+	// Boundary
+	//left
+	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+		for (int k = 0; k < flowField_.GetM()[0][j] - flowField_.Getm()[0][j]+1; k++) {
+			flowField_.SetU()[0][j][k]=0;
+		}
+	}
+	//right
+	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+		for (int k = 0; k < flowField_.GetM()[parameters_.get_num_cells(0)+1][j] - flowField_.Getm()[parameters_.get_num_cells(0)+1][j]+1; k++) {
+			flowField_.SetU()[parameters_.get_num_cells(0)+1][j][k]=0;
+		}
+	}
+	//back
+	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+		for (int k = 0; k < flowField_.GetM()[i][0] - flowField_.Getm()[i][0]+1; k++) {
+			flowField_.SetU()[i][0][k]=flowField_.GetU()[i][1][k];
+		}
+	}
+	//front
+	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+		for (int k = 0; k < flowField_.GetM()[i][parameters_.get_num_cells(1)+1] - flowField_.Getm()[i][parameters_.get_num_cells(1)+1]+1; k++) {
+			flowField_.SetU()[i][parameters_.get_num_cells(1)+1][k]=flowField_.GetU()[i][parameters_.get_num_cells(1)][k];
+		}
+	}
+}		//TODO implement
+

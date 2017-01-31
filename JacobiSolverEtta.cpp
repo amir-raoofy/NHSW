@@ -54,8 +54,8 @@ void JacobiSolverEtta::updateBoundary(){
 		flowField_.SetEtta()[parameters_.get_num_cells(0)+1][j]=flowField_.GetEtta()[parameters_.get_num_cells(0)][j];	//right
 	}
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		flowField_.SetEtta()[i][0]=flowField_.GetEtta()[i][1];								//bottom
-		flowField_.SetEtta()[i][parameters_.get_num_cells(1)+1]=flowField_.GetEtta()[i][parameters_.get_num_cells(1)];	//top
+		flowField_.SetEtta()[i][0]=flowField_.GetEtta()[i][1];								//back
+		flowField_.SetEtta()[i][parameters_.get_num_cells(1)+1]=flowField_.GetEtta()[i][parameters_.get_num_cells(1)];	//front
 	}
 }
 
