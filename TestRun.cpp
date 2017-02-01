@@ -75,28 +75,50 @@ void Simulation::Run(){
 	std::cout << "++++++++++++++++++" << std::endl;
 	std::cout << "===INITCOMPLETE===" << std::endl;
 
-
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "====FIRSTLOOP=====" << std::endl;
+	
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "=====UPDATEm=======" << std::endl;
+	Updatem();	
+	std::cout << "=====COMPLETE=====" << std::endl;
+	
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "=====UPDATEM=======" << std::endl;
+	UpdateM();	
+	std::cout << "=====COMPLETE=====" << std::endl;
+	
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "====UPDATEDZI=====" << std::endl;
+	UpdateDzI();
+	std::cout << "=====COMPLETE=====" << std::endl;
+		
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "====UPDATEDZJ=====" << std::endl;
+	UpdateDzJ();
+	std::cout << "=====COMPLETE=====" << std::endl;
+	
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "====UPDATEDZK=====" << std::endl;
+	UpdateDzK();
+	std::cout << "=====COMPLETE=====" << std::endl;
+			
 	/*	
 	//initialization is finished
 	//time step
 	output.write(0, "./output/");
 	for (int i = 0; i < 1 ; i++) {
-		Updatem();					//redundant for the very first time step
-		UpdateM();					//redundant for the very first time step
-
-		UpdateCellNumberDzI();
-		UpdateCellNumberDzJ();
-		UpdateCellNumberDzK();
-		UpdateCellNumberU();
-		UpdateCellNumberV();
-		UpdateCellNumberW();
-		UpdateCellNumberQ();
-		UpdateCellNumberGI();
-		UpdateCellNumberGJ();
-		UpdateCellNumberGK();
-		UpdateDzI();
-		UpdateDzJ();
-		UpdateDzK();
+		
+		UpdateCellNumberDzI();		// depricated
+		UpdateCellNumberDzJ();		// depricated
+		UpdateCellNumberDzK();		// depricated
+		UpdateCellNumberU();			// depricated
+		UpdateCellNumberV();			// depricated
+		UpdateCellNumberW();			// depricated
+		UpdateCellNumberQ();			// depricated
+		UpdateCellNumberGI();			// depricated
+		UpdateCellNumberGJ();			// depricated
+		UpdateCellNumberGK();			// depricated
 		UpdateGI();
 		UpdateGJ();
 		UpdateGK();
