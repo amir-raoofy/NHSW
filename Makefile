@@ -28,7 +28,7 @@ test: $(obj_test)
 
 testrun:
 	rm -f output/*
-	./test 10 10 24 3.5 0.01 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
+	./test 4 4 6 3.5 0.01 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
 
 run:
 	rm -f output/*

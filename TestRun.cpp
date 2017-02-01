@@ -36,14 +36,47 @@ void Simulation::Run(){
 	InitDzK();
 	std::cout << "=====COMPLETE=====" << std::endl;
 
-	/*	
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "======INITm=======" << std::endl;
 	InitU();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "======INITm=======" << std::endl;
 	InitV();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "======INITm=======" << std::endl;
 	InitW();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "======INITm=======" << std::endl;
 	InitQ();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "======INITm=======" << std::endl;
 	InitGI();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "======INITm=======" << std::endl;
 	InitGJ();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "======INITm=======" << std::endl;
 	InitGK();
+	std::cout << "=====COMPLETE=====" << std::endl;
+	
+	std::cout << "++++++++++++++++++" << std::endl;
+	std::cout << "++++++++++++++++++" << std::endl;
+	std::cout << "===INITCOMPLETE===" << std::endl;
+
+
+	/*	
 	//initialization is finished
 	//time step
 	output.write(0, "./output/");
