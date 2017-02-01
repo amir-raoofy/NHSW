@@ -102,7 +102,22 @@ void Simulation::Run(){
 	std::cout << "====UPDATEDZK=====" << std::endl;
 	UpdateDzK();
 	std::cout << "=====COMPLETE=====" << std::endl;
-			
+	
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "====UPDATEDZK=====" << std::endl;
+	UpdateGI();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "====UPDATEDZK=====" << std::endl;
+	UpdateGJ();
+	std::cout << "=====COMPLETE=====" << std::endl;
+	
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "====UPDATEDZK=====" << std::endl;
+	UpdateGK();
+	std::cout << "=====COMPLETE=====" << std::endl;
+	
 	/*	
 	//initialization is finished
 	//time step
@@ -119,7 +134,6 @@ void Simulation::Run(){
 		UpdateCellNumberGI();			// depricated
 		UpdateCellNumberGJ();			// depricated
 		UpdateCellNumberGK();			// depricated
-		UpdateGI();
 		UpdateGJ();
 		UpdateGK();
 
