@@ -69,30 +69,35 @@ void Simulation::FirstStepUpdateU(){
 			solver.solve();
 
 			flowField_.SetU()[i][j] = buffer;
+
+			for (int k = flowField_.GetM()[i][j] + 1; k < parameters_.get_num_cells(2); k++) {
+				flowField_.SetU()[i][j][k]=0.0;
+			}
+
 		}
 	}
 	// Boundary
 	//left
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-		for (int k = 0; k < flowField_.GetM()[0][j] - flowField_.Getm()[0][j]+1; k++) {
+		for(int k = 0; k < parameters_.get_num_cells(2); k++){
 			flowField_.SetU()[0][j][k]=0;
 		}
 	}
 	//right
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-		for (int k = 0; k < flowField_.GetM()[parameters_.get_num_cells(0)+1][j] - flowField_.Getm()[parameters_.get_num_cells(0)+1][j]+1; k++) {
+		for(int k = 0; k < parameters_.get_num_cells(2); k++){
 			flowField_.SetU()[parameters_.get_num_cells(0)+1][j][k]=0;
 		}
 	}
 	//back
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		for (int k = 0; k < flowField_.GetM()[i][0] - flowField_.Getm()[i][0]+1; k++) {
+		for(int k = 0; k < parameters_.get_num_cells(2); k++){
 			flowField_.SetU()[i][0][k]=flowField_.GetU()[i][1][k];
 		}
 	}
 	//front
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		for (int k = 0; k < flowField_.GetM()[i][parameters_.get_num_cells(1)+1] - flowField_.Getm()[i][parameters_.get_num_cells(1)+1]+1; k++) {
+		for(int k = 0; k < parameters_.get_num_cells(2); k++){
 			flowField_.SetU()[i][parameters_.get_num_cells(1)+1][k]=flowField_.GetU()[i][parameters_.get_num_cells(1)][k];
 		}
 	}

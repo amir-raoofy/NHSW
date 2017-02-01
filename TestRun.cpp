@@ -117,7 +117,48 @@ void Simulation::Run(){
 	std::cout << "====UPDATEDZK=====" << std::endl;
 	UpdateGK();
 	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "====UPDATEDZK=====" << std::endl;
+	CalculateZAZI();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "====UPDATEDZK=====" << std::endl;
+	CalculateZAZJ();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "====UPDATEDZK=====" << std::endl;
+	CalculateZAGI();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "====UPDATEDZK=====" << std::endl;
+	CalculateZAGJ();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	std::cout << "====UPDATEDZK=====" << std::endl;
+	CalculateDelta();
+	std::cout << "=====COMPLETE=====" << std::endl;
 	
+	std::cout << "=====CHECKING=====" << std::endl;
+	FirstStepUpdateEtta();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	FirstStepUpdateU();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	FirstStepUpdateV();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
+	std::cout << "=====CHECKING=====" << std::endl;
+	FirstStepUpdateW();
+	std::cout << "=====COMPLETE=====" << std::endl;
+
 	/*	
 	//initialization is finished
 	//time step
@@ -134,18 +175,7 @@ void Simulation::Run(){
 		UpdateCellNumberGI();			// depricated
 		UpdateCellNumberGJ();			// depricated
 		UpdateCellNumberGK();			// depricated
-		UpdateGJ();
-		UpdateGK();
-
-		CalculateZAZI();
-		CalculateZAZJ();
-		CalculateZAGI();
-		CalculateZAGJ();
-		CalculateDelta();
-		FirstStepUpdateEtta();
-		FirstStepUpdateU();
-		FirstStepUpdateV();
-		FirstStepUpdateW();
+	
 		output.write(i+1, "./output/");
 	}
 	*/

@@ -38,7 +38,7 @@ struct:
 	./nhsw 2 2 2 3.5 0.1 0.5 2.0 2.0 2.0 2.0 9.81 0.000001787 0 0 0 0 > output/log
 oscilation:
 	rm -f output/*
-	./nhsw 20 20 24 3.5 0.1 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
+	./nhsw 20 20 24 3.5 0.01 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
 clean:
 	rm -f *.o core.*
 	rm -f nhsw test

@@ -15,7 +15,7 @@ void JacobiSolverAI::updateDomain(){
 	const	DiscreteLine& DzI=flowField_.GetDzI()[i_][j_];
 	FLOAT coeff = parameters_.get_vis() * parameters_.get_sim_time();
 	
-	for (int k = 1; k <flowField_.GetM()[i_][j_] - flowField_.Getm()[i_][j_]; k++) {
+	for (int k = flowField_.Getm()[i_][j_]+1; k <flowField_.GetM()[i_][j_] ; k++) {
 			x_old_[k] = (	(coeff / ( (DzI[k] + DzI[k-1])/2 )  )	*	x_[k-1] +
 									(	 coeff / ( (DzI[k] + DzI[k+1])/2 )  )	*	x_[k+1] + rhs_[k]		) /
 									(	 coeff / ( (DzI[k] + DzI[k-1])/2 )    					+
@@ -29,11 +29,11 @@ void JacobiSolverAI::updateBoundary(){
 	FLOAT coeff = parameters_.get_vis() * parameters_.get_sim_time();
 
 	int k;
-	k=flowField_.GetM()[i_][j_] - flowField_.Getm()[i_][j_];
+	k=flowField_.GetM()[i_][j_];
 	x_old_[k] =	( (	 coeff / ( (DzI[k] + DzI[k-1])/2 )  )	*	x_[k-1] + rhs_[k]	) /
 								(	 coeff / ( (DzI[k] + DzI[k-1])/2 ) 							+ DzI[k] + 
 									 parameters_.get_gamma_t() * parameters_.get_sim_time()   );
- 	k=0;
+ 	k=flowField_.Getm()[i_][j_];
 	x_old_[k] = ( (	 coeff / ( (DzI[k] + DzI[k+1])/2 )  )	*	x_[k+1] + rhs_[k]	) /
 								(	 coeff / ( (DzI[k] + DzI[k+1])/2 ) 							+ DzI[k] + 
 									 parameters_.get_gamma_b() * parameters_.get_sim_time()   );									 

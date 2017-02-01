@@ -29,6 +29,7 @@ void Simulation::Run(){
 		Updatem();					//redundant for the very first time step
 		UpdateM();					//redundant for the very first time step
 
+		/*	//these methods are depricated
 		UpdateCellNumberDzI();	//TODO test
 		UpdateCellNumberDzJ();	//TODO test
 		UpdateCellNumberDzK();	//TODO test
@@ -39,6 +40,8 @@ void Simulation::Run(){
 		UpdateCellNumberGI();		//TODO test
 		UpdateCellNumberGJ();		//TODO test
 		UpdateCellNumberGK();		//TODO test
+		*/
+
 		UpdateDzI();						//TODO test
 		UpdateDzJ();						//TODO test
 		UpdateDzK();						//TODO test
