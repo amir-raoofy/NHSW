@@ -58,6 +58,7 @@ void Simulation::FirstStepUpdateW(){
 					flowField_.SetW()[i][j][k]=10.0;
 				}
 				*/
+						/*
 			rhs.clear();
 			std::transform(		flowField_.GetDzK()[i][j].begin(),flowField_.GetDzK()[i][j].end(), std::back_inserter(rhs), std::bind1st(std::multiplies<FLOAT>(),
 			(flowField_.GetEtta()[i+1][j]-flowField_.GetEtta()[i][j]) * parameters_.get_theta() * parameters_.get_g() * parameters_.get_time_step() / parameters_.get_dxdydz(0)		));
@@ -71,26 +72,19 @@ void Simulation::FirstStepUpdateW(){
 			solver.solve();
 
 			flowField_.SetW()[i][j] = buffer;
-			
-/*
-			//divegence free w
-			flowField_.SetW()[i][j][0]=0.0;			//low boundary
-			for(int k = 1; k < flowField_.GetM()[i][j] - flowField_.Getm()[i][j]; k++){
-				flowField_.SetW()[i][j][k]=flowField_.GetW()[i][j][k-1] - (flowField_.GetU()[i][j][k]*flowField_.GetDzI()[i][j][k]-flowField_.GetU()[i-1][j][k]*flowField_.GetDzI()[i-1][j][k])/parameters_.get_dxdydz(0)
-																																- (flowField_.GetV()[i][j][k]*flowField_.GetDzJ()[i][j][k]-flowField_.GetV()[i][j-1][k]*flowField_.GetDzJ()[i][j-1][k])/parameters_.get_dxdydz(1);
-					flowField_.SetW()[i][j][flowField_.GetM()[i][j] - flowField_.Getm()[i][j]]=flowField_.GetW()[i][j][flowField_.GetM()[i][j] - flowField_.Getm()[i][j]-1];		//top boundary
-					flowField_.SetW()[i][j][flowField_.GetM()[i][j] - flowField_.Getm()[i][j]]-=( flowField_.GetM()[i][j]<=flowField_.GetM()[i-1][j] )?
-									(flowField_.GetU()[i][j][k]*flowField_.GetDzI()[i][j][k]-flowField_.GetU()[i-1][j][k]*flowField_.GetDzI()[i-1][j][k])/parameters_.get_dxdydz(0):
-									(flowField_.GetU()[i][j][k]*flowField_.GetDzI()[i][j][k]-parameters_.get_u_a()*flowField_.GetDzI()[i][j][k])/parameters_.get_dxdydz(0);			
-					flowField_.SetW()[i][j][flowField_.GetM()[i][j] - flowField_.Getm()[i][j]]-=( flowField_.GetM()[i][j]<=flowField_.GetM()[i][j-1] )?
-									(flowField_.GetV()[i][j][k]*flowField_.GetDzJ()[i][j][k]-flowField_.GetV()[i][j-1][k]*flowField_.GetDzJ()[i][j-1][k])/parameters_.get_dxdydz(1):
-									(flowField_.GetV()[i][j][k]*flowField_.GetDzJ()[i][j][k]-parameters_.get_v_a()*flowField_.GetDzJ()[i][j][k])/parameters_.get_dxdydz(1);
+			*/
 
-			}
-	*/
+			//divegence free w
 			for (int k = flowField_.GetM()[i][j] + 1; k < parameters_.get_num_cells(2); k++) {
 				flowField_.SetW()[i][j][k]=0.0;
 			}
+			flowField_.SetW()[i][j][flowField_.Getm()[i][j]]=0.0;			//low boundary
+			for(int k = flowField_.Getm()[i][j]+1; k <= flowField_.GetM()[i][j] ; k++){ //domain and the top boundary
+				flowField_.SetW()[i][j][k]=flowField_.GetW()[i][j][k-1] - (flowField_.GetU()[i][j][k]*flowField_.GetDzI()[i][j][k]-flowField_.GetU()[i-1][j][k]*flowField_.GetDzI()[i-1][j][k])/parameters_.get_dxdydz(0)
+																																- (flowField_.GetV()[i][j][k]*flowField_.GetDzJ()[i][j][k]-flowField_.GetV()[i][j-1][k]*flowField_.GetDzJ()[i][j-1][k])/parameters_.get_dxdydz(1);
+			}
+			//flowField_.SetW()[i][j][flowField_.GetM()[i][j]]=flowField_.GetW()[i][j][flowField_.GetM()[i][j] -1];		//top boundary
+	
 
 		}
 	}
