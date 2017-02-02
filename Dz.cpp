@@ -176,8 +176,8 @@ void Simulation::InitDzJ(){
 				flowField_.SetDzJ()[i][j][k] = parameters_.get_dxdydz(2);
 			}
 			flowField_.SetDzJ()[i][j][flowField_.GetM()[i][j]]=  	parameters_.get_dxdydz(2) *
-				(  1-  ceil( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i][j+1])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
-				  				 ( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i][j+1])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
+				(  1-  ceil( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i+1][j])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
+				  				 ( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i+1][j])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
 			 	)   ;
 		}
 	}
@@ -240,8 +240,8 @@ void Simulation::UpdateDzJ(){
 				flowField_.SetDzJ()[i][j][k]=parameters_.get_dxdydz(2);
 			}
 			flowField_.SetDzJ()[i][j][flowField_.GetM()[i][j]]= 	parameters_.get_dxdydz(2) *
-				(  1-  ceil( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i][j+1])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
-				  				 ( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i][j+1])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
+				(  1-  ceil( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i+1][j])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
+				  				 ( (  ( flowField_.GetEtta()[i][j] +flowField_.GetEtta()[i+1][j])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
 				);
 			for (int k = flowField_.GetM()[i][j] + 1; k < parameters_.get_num_cells(2); k++) {
 				flowField_.SetDzJ()[i][j][k]=0.0;

@@ -10,11 +10,11 @@ void Simulation::InitEtta(){
 	// D + B
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-			//flowField_.SetEtta()[i][j] = -0.1 + (i-0.5) * parameters_.get_dxdydz(0)/(5.0 * parameters_.GetCubeLength(0));		//TEST 1
+			//flowField_.SetEtta()[i][j] = -0.1 + (i-0.5) * parameters_.get_dxdydz(0)/(5.0 * parameters_.GetCubeLength(0));		//TEST 1			WORKS PERFECTLY Hydro
 			
-			//flowField_.SetEtta()[i][j] = -0.1 + (j-0.5) * parameters_.get_dxdydz(1)/(5.0 * parameters_.GetCubeLength(1));		//TEST2
+			//flowField_.SetEtta()[i][j] = -0.1 + (j-0.5) * parameters_.get_dxdydz(1)/(5.0 * parameters_.GetCubeLength(1));		//TEST2					
 			
-			//flowField_.SetEtta()[i][j] = -0.1 + (j-0.5) * parameters_.get_dxdydz(1)/(5.0 * parameters_.GetCubeLength(1))/2	//TEST3
+			//flowField_.SetEtta()[i][j] = -0.1 + (j-0.5) * parameters_.get_dxdydz(1)/(5.0 * parameters_.GetCubeLength(1))/2	//TEST3				
 			//																	+ (i-0.5) * parameters_.get_dxdydz(0)/(5.0 * parameters_.GetCubeLength(0))/2;
 			//flowField_.SetEtta()[i][j] = i<=parameters_.get_num_cells(0)/2?0.1:0.0;																					//TEST4: Dam break #1
 			//flowField_.SetEtta()[i][j] = i<=parameters_.get_num_cells(0)/2?-0.2:0.2;																					//TEST4: Dam break #2
