@@ -97,7 +97,7 @@ protected:
 class Petsc1DSolver: public Solver
 {
 public:	
-	Petsc1DSolver(const Parameters& parameters, FlowField& flowField, const DiscreteCube& Dz);
+	Petsc1DSolver(const Parameters& parameters, FlowField& flowField, const DiscreteCube& Dz, const DiscreteCube& RHS, DiscreteRectangle& resultField);
 	
 	~Petsc1DSolver();
 	void updateMat();
@@ -116,6 +116,8 @@ protected:
   PetscScalar    v;
 
 	const DiscreteCube& Dz_;
+	const DiscreteCube& RHS_;
+	DiscreteRectangle& resultField_;
 	FLOAT TOL_;
 	int MaxIt_;
 	int i_;

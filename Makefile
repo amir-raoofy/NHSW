@@ -16,14 +16,15 @@ LIB = $(PETSC_LIB)
 
 obj= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o zAz.o zAG.o Run.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o Petsc1DSolver.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o
 
-obj_test=Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o zAz.o zAG.o TestRun.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o Petsc1DSolver.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o
+obj_test= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o zAz.o zAG.o TestRun.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o Petsc1DSolver.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o
 
-obj_petsc= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o PetscZAZ.o zAG.o Run.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o Petsc1DSolver.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o
+obj_petsc= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o PetscZAZ.o PetscZAG.o Run.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o Petsc1DSolver.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o
+
+obj_petsc_test= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o PetscZAZ.o PetscZAG.o TestRun.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o Petsc1DSolver.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o
 
 
-all: nhsw nhsw_petsc test
-	rm -f *.o core.*
 
+all: nhsw nhsw_petsc test test_petsc
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INC) $(LIB) -c -o $@ $<
@@ -32,7 +33,7 @@ nhsw: $(obj)
 	$(CXX) $(CXXFLAGS) $(INC)  -o $@ $+ $(LIB)
 	mkdir -p output
 
-nhsw_petsc: $(obj)
+nhsw_petsc: $(obj_petsc)
 	$(CXX) $(CXXFLAGS) $(INC)  -o $@ $+ $(LIB)
 	mkdir -p output
 
@@ -40,9 +41,17 @@ test: $(obj_test)
 	$(CXX) $(CXXFLAGS) $(INC)  -o $@ $+ $(LIB)
 	mkdir -p output
 
-testrun:
+test_petsc: $(obj_petsc_test)
+	$(CXX) $(CXXFLAGS) $(INC)  -o $@ $+ $(LIB)
+	mkdir -p output
+
+test_run:
 	rm -f output/*
 	./test 4 4 6 3.5 0.01 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
+
+test_run_petsc:
+	rm -f output/*
+	./test_petsc 4 4 6 3.5 0.01 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
 
 run:
 	rm -f output/*
@@ -55,7 +64,7 @@ oscilation:
 	./nhsw 20 20 24 3.5 0.01 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
 clean:
 	rm -f *.o core.*
-	rm -f nhsw nhsw_petsc test
+	rm -f nhsw nhsw_petsc test test_petsc
 	rm -rf output
 clear:
 	rm -f output/*
