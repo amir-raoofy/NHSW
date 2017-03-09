@@ -1,5 +1,6 @@
 #include "Parameters.h"
 #include "FlowField.h"
+#include <petscksp.h>
 
 class Solver
 {
@@ -91,4 +92,32 @@ protected:
 	void updateBoundary();
 	void updateError();
 	void iterate();
+};
+
+class Petsc1DSolver: public Solver
+{
+public:	
+	Petsc1DSolver(const Parameters& parameters, FlowField& flowField, const DiscreteCube& Dz);
+	
+	~Petsc1DSolver();
+	void updateMat();
+	void updateRHS();
+	void solve();	
+	void updateZAZ();
+	void setIndices(int i, int j);
+	void setParameters(float TOL, int MaxIt);
+
+protected:
+	Vec            x,b;  
+  Mat            A;      
+  KSP            ksp;    
+  PetscInt       i,j,Ii,J,Istart,Iend,m,n,its;
+  PetscErrorCode ierr;
+  PetscScalar    v;
+
+	const DiscreteCube& Dz_;
+	FLOAT TOL_;
+	int MaxIt_;
+	int i_;
+	int j_;
 };
