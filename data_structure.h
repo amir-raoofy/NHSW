@@ -5,7 +5,7 @@
  *	integer data structure
  */
 
-typedef float FLOAT;
+typedef double FLOAT;
 typedef std::vector <int> LineFlagField;
 typedef std::vector < std::vector <int> > RectangleFlagField;
 typedef std::vector < std::vector < std::vector <int> > >CubeFlagField;
@@ -13,9 +13,9 @@ typedef std::vector < std::vector < std::vector <int> > >CubeFlagField;
 /*
  *	field data structure
  */
-typedef std::vector < float > DiscreteLine;
-typedef std::vector < std::vector <float> > DiscreteRectangle;
-typedef std::vector < std::vector < std::vector <float> > > DiscreteCube;
+typedef std::vector < FLOAT > DiscreteLine;
+typedef std::vector < std::vector <FLOAT> > DiscreteRectangle;
+typedef std::vector < std::vector < std::vector <FLOAT> > > DiscreteCube;
 
 /*
  *	stencil structors

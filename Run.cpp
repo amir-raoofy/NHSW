@@ -25,7 +25,7 @@ void Simulation::Run(){
 	//initialization is finished
 	//time step
 	output.write(0, "./output/");
-	for (int i = 0; i < 1000; i++) {
+	for (int i = 0; i < 100; i++) {
 		Updatem();					//redundant for the very first time step
 		UpdateM();					//redundant for the very first time step
 

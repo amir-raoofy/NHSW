@@ -17,7 +17,7 @@ Petsc1DSolver::Petsc1DSolver(const Parameters& parameters, FlowField& flowField,
 
 	VecCreate(PETSC_COMM_WORLD,&b);
   VecSetSizes(b,PETSC_DECIDE,n);
-  VecSetFromOptions(b);
+	VecSetFromOptions(b);
   VecDuplicate(b,&x);
 	VecSet(x,0.0);
 
@@ -68,11 +68,14 @@ void Petsc1DSolver::updateMat(){
 //DONE copy z to right handside
 void Petsc1DSolver::updateRHS(){
 
- 	for (Ii=Istart; Ii<Iend; Ii++) {
+ 	VecPlaceArray(b, RHS_[i_][j_].data());
+
+/*	for (Ii=Istart; Ii<Iend; Ii++) {
 		v = RHS_[i_][j_][Ii]; VecSetValues(b,1,&Ii,&v,INSERT_VALUES); //TODO optimize this using set more than one value in Petsc
 	}
 	VecAssemblyBegin(b);
 	VecAssemblyEnd(b);
+	*/
 }
 
 //TODO copy result back to the routine
@@ -84,6 +87,8 @@ void Petsc1DSolver::solve(){
 void Petsc1DSolver::updateZAZ(){
 	VecDot(b,x,&v);
 	resultField_[i_][j_]=v;
+
+  VecResetArray(b);
 }
 
 void Petsc1DSolver::setIndices(int i, int j){i_=i; j_=j;}
