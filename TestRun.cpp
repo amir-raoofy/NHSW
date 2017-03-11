@@ -38,7 +38,13 @@ void Simulation::Run(){
 	FirstStepUpdateU();
 	FirstStepUpdateV();
 	FirstStepUpdateW();
-	flowField_.PrintData(1);
   output.write(1, "./output/");
+
+	for (int i = 0; i <parameters_.topology.np; i++) {
+		MPI_Barrier(parameters_.topology.communicator);
+		if (parameters_.topology.id==0)
+			flowField_.printEtta(1);
+	}
+
 
 }

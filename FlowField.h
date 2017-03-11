@@ -14,7 +14,24 @@ public:
 	FlowField(const Parameters& parameters);
 	~FlowField();
 	// for debug only
-	void PrintData(int it=0);
+	void printEtta(int it=0);
+	void printm(int it=0);
+	void printM(int it=0);
+	void printDzI(int it=0);
+	void printDzJ(int it=0);
+	void printDzK(int it=0);
+	void printU(int it=0);
+	void printV(int it=0);
+	void printW(int it=0);
+	void printQ(int it=0);
+	void printGI(int it=0);
+	void printGJ(int it=0);
+	void printGK(int it=0);
+	void printZazi(int it=0);
+	void printZazj(int it=0);
+	void printZagi(int it=0);
+	void printZagj(int it=0);
+	void PrintDelta(int it=0);
 
 	// methods	
 	// getters

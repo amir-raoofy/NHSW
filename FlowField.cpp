@@ -148,16 +148,21 @@ DiscreteCube& FlowField::SetBoundariesDzJ() {return dz_j_boundaries_;}
 DiscreteCube& FlowField::SetBoundariesQ() {return q_boundaries_;}
 DiscreteRectangle& FlowField::SetBoundariesEtta() {return etta_boundaries_;}
 
-void FlowField::PrintData(int it){it++;// jsut to get rid of the error
-	
-	std::cout << "test the initialization of initial water elevation" << std::endl;
+void FlowField::printEtta(int it){
+
+	std::cout << "water elevation at time step:" << it << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			std::cout << etta_[i][j] << "\t";
 		}
 		std::cout << std::endl;
 	}
-	std::cout << "m" << std::endl;
+
+}
+
+void FlowField::printm(int it){
+
+	std::cout << "m at time step:" << it << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			std::cout << m_[i][j] << "\t";
@@ -165,7 +170,11 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 		std::cout << std::endl;
 	}
 
-	std::cout << "M" << std::endl;
+}
+
+void FlowField::printM(int it){
+
+	std::cout << "M at time step:" << it << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			std::cout << M_[i][j] << "\t";
@@ -173,7 +182,11 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 		std::cout << std::endl;
 	}
 
-	std::cout << "DzI" << std::endl;
+}
+
+void FlowField::printDzI(int it){
+
+	std::cout << "DzI at time step:" << it  << std::endl;
 	for(int k = 0; k < parameters_.get_num_cells(2); k++){
 		std::cout << "layer: " << k << std::endl;
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
@@ -188,8 +201,12 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 			std::cout << std::endl;
 		}
 	}
-	
-	std::cout << "DzJ" << std::endl;
+
+}
+
+void FlowField::printDzJ(int it){
+
+	std::cout << "DzJ at time step:" << it  << std::endl;
 	for(int k = 0; k < parameters_.get_num_cells(2); k++){
 		std::cout << "layer: " << k << std::endl;
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
@@ -205,7 +222,11 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 		}
 	}
 
-	std::cout << "DzK" << std::endl;
+}
+
+void FlowField::printDzK(int it){
+								
+	std::cout << "DzK at time step:" << it << std::endl;
 	for(int k = 0; k < parameters_.get_num_cells(2); k++){
 		std::cout << "layer: " << k << std::endl;
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
@@ -220,8 +241,12 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 			std::cout << std::endl;
 		}
 	}
-	
-	std::cout << "velocity; U:" << std::endl;
+								
+}
+
+void FlowField::printU(int it){
+
+	std::cout << "velocity; U: at time step:" << it << std::endl;
 	for(int k = 0; k < parameters_.get_num_cells(2); k++){
 		std::cout << "layer: " << k << std::endl;
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
@@ -237,7 +262,11 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 		}
 	}
 
-	std::cout << "velocity; V:" << std::endl;
+}
+
+void FlowField::printV(int it){
+
+	std::cout << "velocity; V: at time step:" << it << std::endl;
 	for(int k = 0; k < parameters_.get_num_cells(2); k++){
 		std::cout << "layer: " << k << std::endl;
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
@@ -253,7 +282,11 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 		}
 	}
 
-	std::cout << "velocity; W:" << std::endl;
+}
+
+void FlowField::printW(int it){
+
+	std::cout << "velocity; W: at time step:" << it << std::endl;
 	for(int k = 0; k < parameters_.get_num_cells(2); k++){
 		std::cout << "layer: " << k << std::endl;
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
@@ -269,7 +302,11 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 		}
 	}
 
-	std::cout << "nonhydrostatic pressure: " << std::endl;
+}
+
+void FlowField::printQ(int it){
+
+	std::cout << "nonhydrostatic pressure:  at time step:" << it << std::endl;
 	for(int k = 0; k < parameters_.get_num_cells(2); k++){
 		std::cout << "layer: " << k << std::endl;
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
@@ -284,8 +321,12 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 			std::cout << std::endl;
 		}
 	}
-	
-	std::cout << "GI" << std::endl;
+
+}
+
+void FlowField::printGI(int it){
+
+	std::cout << "GI at time step:" << it << std::endl;
 	for(int k = 0; k < parameters_.get_num_cells(2); k++){
 		std::cout << "layer: " << k << std::endl;
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
@@ -301,7 +342,11 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 		}
 	}
 
-	std::cout << "GJ" << std::endl;
+}
+
+void FlowField::printGJ(int it){
+
+	std::cout << "GJ at time step:" << it << std::endl;
 	for(int k = 0; k < parameters_.get_num_cells(2); k++){
 		std::cout << "layer: " << k << std::endl;
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
@@ -317,7 +362,11 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 		}
 	}
 
-	std::cout << "GK" << std::endl;
+}
+
+void FlowField::printGK(int it){
+
+	std::cout << "GK at time step:" << it << std::endl;
 	for(int k = 0; k < parameters_.get_num_cells(2); k++){
 		std::cout << "layer: " << k << std::endl;
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
@@ -332,8 +381,12 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 			std::cout << std::endl;
 		}
 	}
-	
-	std::cout << " ZI' * inv AI * ZI" << std::endl;
+
+}
+
+void FlowField::printZazi(int it){
+
+	std::cout << " ZI' * inv AI * ZI at time step:" << it << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			std::cout << zaz_i_[i][j] << "\t";
@@ -341,7 +394,11 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 		std::cout << std::endl;
 	}
 
-	std::cout << "ZJ' * inv AJ * ZJ" << std::endl;
+}
+
+void FlowField::printZazj(int it){
+
+	std::cout << "ZJ' * inv AJ * ZJ at time step:" << it << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			std::cout << zaz_j_[i][j] << "\t";
@@ -349,7 +406,11 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 		std::cout << std::endl;
 	}
 
-	std::cout << "ZI' * inv AI * GI" << std::endl;
+}
+
+void FlowField::printZagi(int it){
+
+	std::cout << "ZI' * inv AI * GI at time step:" << it << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			std::cout << zag_i_[i][j] << "\t";
@@ -357,7 +418,11 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 		std::cout << std::endl;
 	}
 
-	std::cout << "ZJ' * inv AJ * GJ" << std::endl;
+}
+
+void FlowField::printZagj(int it){
+
+	std::cout << "ZJ' * inv AJ * GJat time step:" << it << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			std::cout << zag_j_[i][j] << "\t";
@@ -365,7 +430,11 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 		std::cout << std::endl;
 	}
 
-	std::cout << "test Delta" << std::endl;
+}
+
+void FlowField::PrintDelta(int it){
+
+	std::cout << "test Delta at time step:" << it << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			std::cout << delta_[i][j] << "\t";
@@ -373,4 +442,4 @@ void FlowField::PrintData(int it){it++;// jsut to get rid of the error
 		std::cout << std::endl;
 	}
 
-} 
+}
