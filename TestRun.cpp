@@ -40,12 +40,21 @@ void Simulation::Run(){
 	FirstStepUpdateW();
   output.write(1, "./output/");
 
+
 	for (int i = 0; i < parameters_.topology.np; i++) {
 			MPI_Barrier(parameters_.topology.communicator);
 			if (parameters_.topology.id == i)	
 				flowField_.printEtta(1);
 	}
 	MPI_Barrier(parameters_.topology.communicator);
+	
+	//parameters_.topology.print();
+
+	communicationManager_.updateRightNeighbour();
+	//communicationManager_.updateLeftNeighbour();
+	//communicationManager_.updateFrontNeighbour();
+	//communicationManager_.updateBackNeighbour();
+
 /*
 	for (int i = 0; i < parameters_.topology.np; i++) {
 		MPI_Barrier(parameters_.topology.communicator);

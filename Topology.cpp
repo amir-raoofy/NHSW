@@ -80,19 +80,19 @@ void Topology::set_neighbour_ids(){
 
 	coords[1]--;
 	if (coords[1]==-1) {
-		front_id = -1;
+		back_id = -1;
 	}
 	else{
-		MPI_Cart_rank(communicator, coords, &front_id);
+		MPI_Cart_rank(communicator, coords, &back_id);
 	}
 
 	coords[1]++;
 	coords[1]++;
 	if (coords[1]==npy) {
-		back_id = -1;
+		front_id = -1;
 	}
 	else{
-		MPI_Cart_rank(communicator, coords, &back_id);
+		MPI_Cart_rank(communicator, coords, &front_id);
 	}
 	coords[1]--;
 
