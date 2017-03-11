@@ -3,6 +3,8 @@
 #include <cstdlib>
 #include <math.h>
 #include <iomanip>
+#include "Topology.h"
+
 class Parameters
 {
 private:
@@ -20,11 +22,13 @@ private:
 	float _height;  // free surface water height
 protected:
 	int _N[3]	;				// Number of cells in xyz directions
+	int _NGlobal[3]	;				// Number of cells in xyz directions
 public:
 	Parameters();						// constructor
-	Parameters(int argc, const char * argv[]);
+	Parameters(int argc, char * argv[]);
+	Parameters(int argc, char * argv[], Topology& topology);
 	~Parameters();						// destructor
-	void parse(int argc, const char * argv[]); 	// method to parse inputs and set the parameters
+	void parse(int argc, char * argv[]); 	// method to parse inputs and set the parameters
 	void print_parameters(); 			// print parameters to the consule
 
 	float get_sim_time() const;
@@ -41,4 +45,6 @@ public:
 	float get_u_a() const;
 	float get_v_a() const;
 	float GetHeight() const;
+	
+	Topology& topology;
 };

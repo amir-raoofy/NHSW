@@ -1,7 +1,8 @@
-#include <Parameters.h>
+#include "Parameters.h"
 
 Parameters::Parameters():
-	_T(1.0), _dt(0.1)
+	_T(1.0), _dt(0.1),topology(*(new Topology()))
+
 {
 	_N[0]=10 ; _N[1]=10 ; _N[2]=10 ;
 	_L[0]=1.0; _L[1]=1.0; _L[2]=1.0;
@@ -9,10 +10,16 @@ Parameters::Parameters():
 	_dX[0]=_L[0]/_N[0];
 	_dX[1]=_L[1]/_N[1];
 	_dX[2]=_L[2]/_N[2];
+	_NGlobal[0]=_N[0];
+	_NGlobal[1]=_N[1];
+	_NGlobal[2]=_N[2];
+
+	print_parameters();
+	
 }
 
-Parameters::Parameters(int argc, const char *argv[]):
-	_T(1.0), _dt(0.1)
+Parameters::Parameters(int argc, char *argv[]):
+	_T(1.0), _dt(0.1),topology(*(new Topology()))
 {
 	_N[0]=10 ; _N[1]=10 ; _N[2]=10 ;
 	_L[0]=1.0; _L[1]=1.0; _L[2]=1.0;
@@ -20,10 +27,36 @@ Parameters::Parameters(int argc, const char *argv[]):
 	_dX[0]=_L[0]/_N[0];
 	_dX[1]=_L[1]/_N[1];
 	_dX[2]=_L[2]/_N[2];
+	_NGlobal[0]=_N[0];
+	_NGlobal[1]=_N[1];
+	_NGlobal[2]=_N[2];
+	
+	print_parameters();
 }
+
+Parameters::Parameters(int argc, char *argv[], Topology& topology):
+	_T(1.0), _dt(0.1), topology(topology)
+{
+	_N[0]=10 ; _N[1]=10 ; _N[2]=10 ;
+	_L[0]=1.0; _L[1]=1.0; _L[2]=1.0;
+	this->parse(argc, argv);
+	_dX[0]=_L[0]/_N[0];
+	_dX[1]=_L[1]/_N[1];
+	_dX[2]=_L[2]/_N[2];
+	_NGlobal[0]=_N[0];
+	_NGlobal[1]=_N[1];
+	_NGlobal[2]=_N[2];
+	_N[0]/=topology.npx;
+	_N[1]/=topology.npy;
+
+	if (topology.id==0) {
+		print_parameters();	
+	}
+}
+
 Parameters::~Parameters(){}
 
-void Parameters::parse(int argc, const char *argv[])  {
+void Parameters::parse(int argc, char *argv[])  {
 
 	if (argc!=17){
 		std::cout << "Warning: The default values for parameters are used." << std::endl;
@@ -112,9 +145,9 @@ void Parameters::print_parameters(){
 	std::cout 	<< "   ===================================="<< std::endl;
 	
 	//print the parameters
-	std::cout 	<< "Number of cells in x-direction	-> 	"<< _N[0]	<<	std::endl
-				<< "Number of cells in y-direction	-> 	"<< _N[1]	<<	std::endl
-				<< "Number of cells in z-direction	-> 	"<< _N[2]	<<	std::endl
+	std::cout 	<< "Number of cells in x-direction	-> 	"<< _NGlobal[0]	<<	std::endl
+				<< "Number of cells in y-direction	-> 	"<< _NGlobal[1]	<<	std::endl
+				<< "Number of cells in z-direction	-> 	"<< _NGlobal[2]	<<	std::endl
 				<< "Simulation time 		-> 	"		<< _T		<<	std::endl
 				<< "Time step			-> 	"			<< _dt		<<	std::endl
 				<< "theta in numerical scheme	-> 	"	<< _theta	<<	std::endl

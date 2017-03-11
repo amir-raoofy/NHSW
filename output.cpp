@@ -16,7 +16,6 @@ void Output::write (int timeStep, std::string foldername ) {
 	// Open the file and set precision
 	outputFile_.open(this->getFilename(timeStep, foldername).c_str());
 	outputFile_ << std::fixed << std::setprecision(6);
-	
 	// Output the different sections of the file
 	this->writeFileHeader();
 	this->writeGrid();
@@ -25,7 +24,7 @@ void Output::write (int timeStep, std::string foldername ) {
 	//this->writebathymetry();
 	this->writeVelocity();
 	this->writeDZ();
-  this->writeQ();
+  //this->writeQ();
 	
 	// Close the file
 	outputFile_.close();
@@ -52,8 +51,8 @@ void Output::writeGrid (){
 	for (int k = 0; k < parameters_.get_num_cells(2)+1; k++) {
 		for (int j = 0; j < parameters_.get_num_cells(1)+1; j++) {
 			for (int i = 0; i < parameters_.get_num_cells(0)+1; i++) {
-				outputFile_ << parameters_.get_dxdydz(0) *i << " "
-   								   <<  parameters_.get_dxdydz(1) *j << " " 
+				outputFile_ << parameters_.topology.id_x * parameters_.GetCubeLength(0)/ parameters_.topology.npx + parameters_.get_dxdydz(0) *i << " "
+   								  << parameters_.topology.id_y * parameters_.GetCubeLength(1)/ parameters_.topology.npy +  parameters_.get_dxdydz(1) *j << " " 
    								   <<  parameters_.get_dxdydz(2) *k << std::endl;
 			}
 		}	
@@ -109,7 +108,7 @@ void Output::writeBathymetry (){
 
 std::string Output::getFilename( int timeStep, std::string foldername ) {	
 	std::stringstream filename;
-	filename << foldername << "/" << "output." << timeStep << ".vtk";
+	filename << foldername << "/" << "output." << parameters_.topology.id << "." << timeStep << ".vtk";
 	return filename.str();
 }
 

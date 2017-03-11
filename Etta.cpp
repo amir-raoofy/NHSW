@@ -22,9 +22,14 @@ void Simulation::InitEtta(){
 			//flowField_.SetEtta()[i][j] = i<=parameters_.get_num_cells(0)/2?-5.5:-4.5;																					//TEST4: Dam break #3
 			//flowField_.SetEtta()[i][j] = (i - parameters_.get_num_cells(0)/2 )*(i - parameters_.get_num_cells(0)/2 )+ (j - parameters_.get_num_cells(0)/2)*(j-parameters_.get_num_cells(0)/2)<=(parameters_.get_num_cells(0)*parameters_.get_num_cells(0)+parameters_.get_num_cells(1)*parameters_.get_num_cells(1))/32?0.1:0;																					//TEST4: Dam break #3
 			//flowField_.SetEtta()[i][j] = ( (i<9*parameters_.get_num_cells(0)/16 && i>7*parameters_.get_num_cells(0)/16) && (j<9*parameters_.get_num_cells(1)/16 && j>7*parameters_.get_num_cells(1)/16) ) ?0.3:0.1;																					//TEST4: Dam break #3
-			flowField_.SetEtta()[i][j] = 0.1* exp( -( ( i - parameters_.get_num_cells(0)/2 ) *  ( i - parameters_.get_num_cells(0)/2 ) * parameters_.get_dxdydz(0) * parameters_.get_dxdydz(0) +( j - parameters_.get_num_cells(1)/2 ) *  ( j - parameters_.get_num_cells(1)/2 ) * parameters_.get_dxdydz(1) * parameters_.get_dxdydz(1) ) );
+			
+			//flowField_.SetEtta()[i][j] = 0.1* exp( -( ( i - parameters_.get_num_cells(0)/2 ) *  ( i - parameters_.get_num_cells(0)/2 ) * parameters_.get_dxdydz(0) * parameters_.get_dxdydz(0) +( j - parameters_.get_num_cells(1)/2 ) *  ( j - parameters_.get_num_cells(1)/2 ) * parameters_.get_dxdydz(1) * parameters_.get_dxdydz(1) ) );
+
+			flowField_.SetEtta()[i][j] = 0.1* exp( -( pow (parameters_.topology.id_x * (parameters_.GetCubeLength(0)) / parameters_.topology.npx + i * parameters_.get_dxdydz(0)  - parameters_.GetCubeLength(0)/2	,2) +
+																						    pow (parameters_.topology.id_y * (parameters_.GetCubeLength(1)) / parameters_.topology.npy + j * parameters_.get_dxdydz(1)  - parameters_.GetCubeLength(1)/2	,2)	 ) );
 		}
 	}
+
 	//test the initialization of initial water elevation
 	std::cout << "test the initialization of initial water elevation" << std::endl;
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
