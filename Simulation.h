@@ -1,10 +1,11 @@
 #include "Parameters.h"
 #include "FlowField.h"
+#include "CommunicationManager.h"
 
 class Simulation
 {
 public:
-	Simulation(const Parameters& parameters, FlowField& flowField);
+	Simulation(const Parameters& parameters, FlowField& flowField, CommunicationManager& communicationManager);
 	~Simulation();
 
 	// methods
@@ -62,5 +63,6 @@ public:
 private:
 	const Parameters& parameters_;
 	FlowField& flowField_;
+	CommunicationManager& communicationManager_;
 	/* data */
 };

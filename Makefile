@@ -14,14 +14,13 @@ CXXFLAGS = -Wall -std=c++11
 INC = -I. $(PETSC_INC) ${PETSC_CC_INCLUDES}
 LIB = $(PETSC_LIB)
 
-obj= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o zAz.o zAG.o Run.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o Petsc1DSolver.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o
+obj= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o zAz.o zAG.o Run.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o Petsc1DSolver.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
 
-obj_test= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o zAz.o zAG.o TestRun.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o Petsc1DSolver.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o
+obj_test= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o zAz.o zAG.o TestRun.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o Petsc1DSolver.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
 
-obj_petsc= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o PetscZAZ.o PetscZAG.o Run.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o Petsc1DSolver.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o
+obj_petsc= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o PetscZAZ.o PetscZAG.o Run.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o Petsc1DSolver.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
 
-obj_petsc_test= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o PetscZAZ.o PetscZAG.o TestRun.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o Petsc1DSolver.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o
-
+obj_petsc_test= Main.o flowField.o FlowField.o Stencil.o StencilInvA.o Iterator.o Simulation.o PetscZAZ.o PetscZAG.o TestRun.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o Petsc1DSolver.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
 
 
 all: nhsw nhsw_petsc test test_petsc

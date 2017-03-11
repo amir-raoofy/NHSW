@@ -40,11 +40,17 @@ void Simulation::Run(){
 	FirstStepUpdateW();
   output.write(1, "./output/");
 
-	for (int i = 0; i <parameters_.topology.np; i++) {
-		MPI_Barrier(parameters_.topology.communicator);
-		if (parameters_.topology.id==0)
-			flowField_.printEtta(1);
+	for (int i = 0; i < parameters_.topology.np; i++) {
+			MPI_Barrier(parameters_.topology.communicator);
+			if (parameters_.topology.id == i)	
+				flowField_.printEtta(1);
 	}
-
-
+	MPI_Barrier(parameters_.topology.communicator);
+/*
+	for (int i = 0; i < parameters_.topology.np; i++) {
+		MPI_Barrier(parameters_.topology.communicator);
+		if (parameters_.topology.id == i) {
+						std::cout << "rank: " << i << std::endl;
+		}
+*/
 }
