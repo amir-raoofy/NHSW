@@ -16,14 +16,6 @@ void Simulation::CalculateDelta(){
 		}
 	}
 	//TODO decide on the boundary; since Delta is not initialized and directly calcualated, the boundaries at least once should be set to at least zero to be on the safe side
-	//test the initialization of delta
-	std::cout << "test Delta" << std::endl;
-	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-			std::cout << flowField_.GetDelta()[i][j] << "\t";
-		}
-		std::cout << std::endl;
-	}
 	//TODO boundary is set to zero at the moment
 
 }

@@ -19,13 +19,6 @@ void Simulation::InitM(){
 		flowField_.SetM()[i][parameters_.get_num_cells(1)+1]=flowField_.GetM()[i][parameters_.get_num_cells(1)];	//top
 	}
 	//@test
-	std::cout << "print M" << std::endl;
-	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-			std::cout << flowField_.GetM()[i][j] << "\t";
-		}
-		std::cout << std::endl;
-	}
 }
 
 void Simulation::UpdateM(){InitM();}

@@ -50,22 +50,6 @@ void Simulation::InitGK(){
 			flowField_.SetGK()[i][parameters_.get_num_cells(0)+1][k]=flowField_.SetGK()[i][parameters_.get_num_cells(0)][k];
 		}
 	}
-	//@test the initializattion:
-	std::cout << "test initialization of GK" << std::endl;
-	for(int k = 0; k < parameters_.get_num_cells(2); k++){
-		std::cout << "layer: " << k << std::endl;
-		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-				if (k <= flowField_.GetM()[i][j]-flowField_.Getm()[i][j] ) {
-				std::cout << flowField_.GetGK()[i][j][k] << "\t";
-				}
-				else{
-				std::cout << "x" << "\t";
-				}
-			}
-			std::cout << std::endl;
-		}
-	}
 }
 
 void Simulation::UpdateCellNumberGK(){
@@ -130,22 +114,6 @@ void Simulation::UpdateGK(){
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
 			flowField_.SetGK()[i][parameters_.get_num_cells(0)+1][k]=flowField_.SetGK()[i][parameters_.get_num_cells(0)][k];
-		}
-	}
-	//@test the initializattion:
-	std::cout << "test GK" << std::endl;
-	for(int k = 0; k < parameters_.get_num_cells(2); k++){
-		std::cout << "layer: " << k << std::endl;
-		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-				if (k <= flowField_.GetM()[i][j]-flowField_.Getm()[i][j] ) {
-				std::cout << flowField_.GetGK()[i][j][k] << "\t";
-				}
-				else{
-				std::cout << "x" << "\t";
-				}
-			}
-			std::cout << std::endl;
 		}
 	}
 }

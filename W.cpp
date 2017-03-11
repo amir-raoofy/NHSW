@@ -11,23 +11,6 @@ void Simulation::InitW(){
 			}
 		}
 	}
-
-	//@test
-	std::cout << "initialized velocity; W:" << std::endl;
-	for(int k = 0; k < parameters_.get_num_cells(2); k++){
-		std::cout << "layer: " << k << std::endl;
-		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-				if (k <= flowField_.GetM()[i][j]-flowField_.Getm()[i][j] ) {
-				std::cout << flowField_.GetV()[i][j][k] << "\t";
-				}
-				else{
-				std::cout << "x" << "\t";
-				}
-			}
-			std::cout << std::endl;
-		}
-	}
 }
 
 void Simulation::UpdateCellNumberW(){
@@ -114,23 +97,6 @@ void Simulation::FirstStepUpdateW(){
 			flowField_.SetW()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetW()[i][parameters_.get_num_cells(0)][k];
 		}
 	}
-	//@test
-	std::cout << "first step velocity update; W:" << std::endl;
-	for(int k = 0; k < parameters_.get_num_cells(2); k++){
-		std::cout << "layer: " << k << std::endl;
-		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-				if (k <= flowField_.GetM()[i][j]-flowField_.Getm()[i][j] ) {
-				std::cout << flowField_.GetW()[i][j][k] << "\t";
-				}
-				else{
-				std::cout << "x" << "\t";
-				}
-			}
-			std::cout << std::endl;
-		}
-	}
-	//TODO
 }
 
 void Simulation::SecondStepUpdateW(){

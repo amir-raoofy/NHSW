@@ -22,14 +22,6 @@ void Simulation::CalculateZAGI(){
 		}
 	}
 	//TODO decide on the boundary; since GI is not initialized and directly calcualated, the boundaries at least once should be set to at least zero to be on the safe side
-	//@test the initialization of Zt * inv A * GI
-	std::cout << "test initialization of  Zt * inv A * GI" << std::endl;
-	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-			std::cout << flowField_.GetZAGI()[i][j] << "\t";
-		}
-		std::cout << std::endl;
-	}
 }
 
 void Simulation::CalculateZAGJ(){
@@ -51,12 +43,4 @@ void Simulation::CalculateZAGJ(){
 		}
 	}
 	//TODO decide on the boundary; since GJ is not initialized and directly calcualated, the boundaries at least once should be set to at least zero to be on the safe side
-	//@test the initialization of Zt * inv A * GJ
-	std::cout << "test initialization of  Zt * inv A * GJ" << std::endl;
-	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-			std::cout << flowField_.GetZAGJ()[i][j] << "\t";
-		}
-		std::cout << std::endl;
-	}
 }

@@ -46,22 +46,6 @@ void Simulation::InitDzI(){
 			flowField_.SetDzI()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetDzI()[i][parameters_.get_num_cells(0)][k];
 		}
 	}
-	//@test the initializattion:
-	std::cout << "test DzI" << std::endl;
-	for(int k = 0; k < parameters_.get_num_cells(2); k++){
-		std::cout << "layer: " << k << std::endl;
-		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-				if (k <= flowField_.GetM()[i][j]-flowField_.Getm()[i][j] ) {
-				std::cout << flowField_.GetDzI()[i][j][k] << "\t";
-				}
-				else{
-				std::cout << "x" << "\t";
-				}
-			}
-			std::cout << std::endl;
-		}
-	}
 }
 
 void Simulation::UpdateDzI(){
@@ -111,22 +95,6 @@ void Simulation::UpdateDzI(){
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
 			flowField_.SetDzI()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetDzI()[i][parameters_.get_num_cells(0)][k];
-		}
-	}
-	//@test the initializattion:
-	std::cout << "test DzI" << std::endl;
-	for(int k = 0; k < parameters_.get_num_cells(2); k++){
-		std::cout << "layer: " << k << std::endl;
-		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-				if (k <= flowField_.GetM()[i][j]-flowField_.Getm()[i][j] ) {
-				std::cout << flowField_.GetDzI()[i][j][k] << "\t";
-				}
-				else{
-				std::cout << "x" << "\t";
-				}
-			}
-			std::cout << std::endl;
 		}
 	}
 }
@@ -206,22 +174,6 @@ void Simulation::InitDzJ(){
 			flowField_.SetDzJ()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetDzJ()[i][parameters_.get_num_cells(0)][k];
 		}
 	}
-	//@test the initializattion:
-	std::cout << "test DzJ" << std::endl;
-	for(int k = 0; k < parameters_.get_num_cells(2); k++){
-		std::cout << "layer: " << k << std::endl;
-		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-				if (k <= flowField_.GetM()[i][j]-flowField_.Getm()[i][j] ) {
-				std::cout << flowField_.GetDzJ()[i][j][k] << "\t";
-				}
-				else{
-				std::cout << "x" << "\t";
-				}
-			}
-			std::cout << std::endl;
-		}
-	}
 }
 
 void Simulation::UpdateDzJ(){
@@ -271,22 +223,6 @@ void Simulation::UpdateDzJ(){
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
 			flowField_.SetDzJ()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetDzJ()[i][parameters_.get_num_cells(0)][k];
-		}
-	}
-	//@test the initializattion:
-	std::cout << "test DzJ" << std::endl;
-	for(int k = 0; k < parameters_.get_num_cells(2); k++){
-		std::cout << "layer: " << k << std::endl;
-		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-				if (k <= flowField_.GetM()[i][j]-flowField_.Getm()[i][j] ) {
-				std::cout << flowField_.GetDzJ()[i][j][k] << "\t";
-				}
-				else{
-				std::cout << "x" << "\t";
-				}
-			}
-			std::cout << std::endl;
 		}
 	}
 }
@@ -356,22 +292,6 @@ void Simulation::InitDzK(){
 			flowField_.SetDzK()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetDzK()[i][parameters_.get_num_cells(0)][k];
 		}
 	}
-	//@test the initializattion:
-	std::cout << "test DzK" << std::endl;
-	for(int k = 0; k < parameters_.get_num_cells(2); k++){
-		std::cout << "layer: " << k << std::endl;
-		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-				if (k <= flowField_.GetM()[i][j]-flowField_.Getm()[i][j] ) {
-				std::cout << flowField_.GetDzK()[i][j][k] << "\t";
-				}
-				else{
-				std::cout << "x" << "\t";
-				}
-			}
-			std::cout << std::endl;
-		}
-	}
 }
 
 void Simulation::UpdateDzK(){
@@ -421,22 +341,6 @@ void Simulation::UpdateDzK(){
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
 			flowField_.SetDzK()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetDzK()[i][parameters_.get_num_cells(0)][k];
-		}
-	}
-	//@test the initializattion:
-	std::cout << "test DzK" << std::endl;
-	for(int k = 0; k < parameters_.get_num_cells(2); k++){
-		std::cout << "layer: " << k << std::endl;
-		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-				if (k <= flowField_.GetM()[i][j]-flowField_.Getm()[i][j] ) {
-				std::cout << flowField_.GetDzK()[i][j][k] << "\t";
-				}
-				else{
-				std::cout << "x" << "\t";
-				}
-			}
-			std::cout << std::endl;
 		}
 	}
 }

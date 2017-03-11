@@ -55,22 +55,6 @@ void Simulation::InitGJ(){
 			flowField_.SetGJ()[i][parameters_.get_num_cells(0)  ][k]=0.0;
 		}
 	}
-	//@test the initializattion:
-	std::cout << "test initialization of GJ" << std::endl;
-	for(int k = 0; k < parameters_.get_num_cells(2); k++){
-		std::cout << "layer: " << k << std::endl;
-		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-				if (k <= flowField_.GetM()[i][j]-flowField_.Getm()[i][j] ) {
-				std::cout << flowField_.GetGJ()[i][j][k] << "\t";
-				}
-				else{
-				std::cout << "x" << "\t";
-				}
-			}
-			std::cout << std::endl;
-		}
-	}
 }
 
 void Simulation::UpdateCellNumberGJ(){
@@ -141,22 +125,6 @@ void Simulation::UpdateGJ(){
 			//flowField_.SetGJ()[i][parameters_.get_num_cells(0)+1][k]=flowField_.SetGJ()[i][parameters_.get_num_cells(0)][k];
 			flowField_.SetGJ()[i][parameters_.get_num_cells(0)+1][k]=0.0;
 			flowField_.SetGJ()[i][parameters_.get_num_cells(0)  ][k]=0.0;
-		}
-	}
-	//@test the initializattion:
-	std::cout << "test GJ" << std::endl;
-	for(int k = 0; k < parameters_.get_num_cells(2); k++){
-		std::cout << "layer: " << k << std::endl;
-		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-				if (k <= flowField_.GetM()[i][j]-flowField_.Getm()[i][j] ) {
-				std::cout << flowField_.GetGJ()[i][j][k] << "\t";
-				}
-				else{
-				std::cout << "x" << "\t";
-				}
-			}
-			std::cout << std::endl;
 		}
 	}
 }

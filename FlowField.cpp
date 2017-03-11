@@ -65,8 +65,7 @@ FlowField::FlowField(const Parameters& parameters):
 
 FlowField::~FlowField(){}
 
-void FlowField::PrintData(int it){it++;// jsut to get rid of the error
-} //TODO re-implement the print function
+
 
 //implmentation of getters
 const DiscreteCube& FlowField::GetU() const {return u_;}
@@ -148,3 +147,230 @@ DiscreteCube& FlowField::SetBoundariesDzI() {return dz_i_boundaries_;}
 DiscreteCube& FlowField::SetBoundariesDzJ() {return dz_j_boundaries_;}
 DiscreteCube& FlowField::SetBoundariesQ() {return q_boundaries_;}
 DiscreteRectangle& FlowField::SetBoundariesEtta() {return etta_boundaries_;}
+
+void FlowField::PrintData(int it){it++;// jsut to get rid of the error
+	
+	std::cout << "test the initialization of initial water elevation" << std::endl;
+	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+			std::cout << etta_[i][j] << "\t";
+		}
+		std::cout << std::endl;
+	}
+	std::cout << "m" << std::endl;
+	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+			std::cout << m_[i][j] << "\t";
+		}
+		std::cout << std::endl;
+	}
+
+	std::cout << "M" << std::endl;
+	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+			std::cout << M_[i][j] << "\t";
+		}
+		std::cout << std::endl;
+	}
+
+	std::cout << "DzI" << std::endl;
+	for(int k = 0; k < parameters_.get_num_cells(2); k++){
+		std::cout << "layer: " << k << std::endl;
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+				if (k <= M_[i][j]-m_[i][j] ) {
+				std::cout << dz_i_[i][j][k] << "\t";
+				}
+				else{
+				std::cout << "x" << "\t";
+				}
+			}
+			std::cout << std::endl;
+		}
+	}
+	
+	std::cout << "DzJ" << std::endl;
+	for(int k = 0; k < parameters_.get_num_cells(2); k++){
+		std::cout << "layer: " << k << std::endl;
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+				if (k <= M_[i][j]-m_[i][j] ) {
+				std::cout << dz_j_[i][j][k] << "\t";
+				}
+				else{
+				std::cout << "x" << "\t";
+				}
+			}
+			std::cout << std::endl;
+		}
+	}
+
+	std::cout << "DzK" << std::endl;
+	for(int k = 0; k < parameters_.get_num_cells(2); k++){
+		std::cout << "layer: " << k << std::endl;
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+				if (k <= M_[i][j]-m_[i][j] ) {
+				std::cout << dz_k_[i][j][k] << "\t";
+				}
+				else{
+				std::cout << "x" << "\t";
+				}
+			}
+			std::cout << std::endl;
+		}
+	}
+	
+	std::cout << "velocity; U:" << std::endl;
+	for(int k = 0; k < parameters_.get_num_cells(2); k++){
+		std::cout << "layer: " << k << std::endl;
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+				if (k <= M_[i][j]-m_[i][j] ) {
+				std::cout << u_[i][j][k] << "\t";
+				}
+				else{
+				std::cout << "x" << "\t";
+				}
+			}
+			std::cout << std::endl;
+		}
+	}
+
+	std::cout << "velocity; V:" << std::endl;
+	for(int k = 0; k < parameters_.get_num_cells(2); k++){
+		std::cout << "layer: " << k << std::endl;
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+				if (k <= M_[i][j]-m_[i][j] ) {
+				std::cout << v_[i][j][k] << "\t";
+				}
+				else{
+				std::cout << "x" << "\t";
+				}
+			}
+			std::cout << std::endl;
+		}
+	}
+
+	std::cout << "velocity; W:" << std::endl;
+	for(int k = 0; k < parameters_.get_num_cells(2); k++){
+		std::cout << "layer: " << k << std::endl;
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+				if (k <= M_[i][j]-m_[i][j] ) {
+				std::cout << w_[i][j][k] << "\t";
+				}
+				else{
+				std::cout << "x" << "\t";
+				}
+			}
+			std::cout << std::endl;
+		}
+	}
+
+	std::cout << "nonhydrostatic pressure: " << std::endl;
+	for(int k = 0; k < parameters_.get_num_cells(2); k++){
+		std::cout << "layer: " << k << std::endl;
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+				if (k <= M_[i][j]-m_[i][j] ) {
+				std::cout << q_[i][j][k] << "\t";
+				}
+				else{
+				std::cout << "x" << "\t";
+				}
+			}
+			std::cout << std::endl;
+		}
+	}
+	
+	std::cout << "GI" << std::endl;
+	for(int k = 0; k < parameters_.get_num_cells(2); k++){
+		std::cout << "layer: " << k << std::endl;
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+				if (k <= M_[i][j]-m_[i][j] ) {
+				std::cout << g_i_[i][j][k] << "\t";
+				}
+				else{
+				std::cout << "x" << "\t";
+				}
+			}
+			std::cout << std::endl;
+		}
+	}
+
+	std::cout << "GJ" << std::endl;
+	for(int k = 0; k < parameters_.get_num_cells(2); k++){
+		std::cout << "layer: " << k << std::endl;
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+				if (k <= M_[i][j]-m_[i][j] ) {
+				std::cout << g_j_[i][j][k] << "\t";
+				}
+				else{
+				std::cout << "x" << "\t";
+				}
+			}
+			std::cout << std::endl;
+		}
+	}
+
+	std::cout << "GK" << std::endl;
+	for(int k = 0; k < parameters_.get_num_cells(2); k++){
+		std::cout << "layer: " << k << std::endl;
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+			for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+				if (k <= M_[i][j]-m_[i][j] ) {
+				std::cout << g_k_[i][j][k] << "\t";
+				}
+				else{
+				std::cout << "x" << "\t";
+				}
+			}
+			std::cout << std::endl;
+		}
+	}
+	
+	std::cout << " ZI' * inv AI * ZI" << std::endl;
+	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+			std::cout << zaz_i_[i][j] << "\t";
+		}
+		std::cout << std::endl;
+	}
+
+	std::cout << "ZJ' * inv AJ * ZJ" << std::endl;
+	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+			std::cout << zaz_j_[i][j] << "\t";
+		}
+		std::cout << std::endl;
+	}
+
+	std::cout << "ZI' * inv AI * GI" << std::endl;
+	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+			std::cout << zag_i_[i][j] << "\t";
+		}
+		std::cout << std::endl;
+	}
+
+	std::cout << "ZJ' * inv AJ * GJ" << std::endl;
+	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+			std::cout << zag_j_[i][j] << "\t";
+		}
+		std::cout << std::endl;
+	}
+
+	std::cout << "test Delta" << std::endl;
+	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+			std::cout << delta_[i][j] << "\t";
+		}
+		std::cout << std::endl;
+	}
+
+} 
