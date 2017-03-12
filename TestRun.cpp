@@ -8,6 +8,9 @@ void Simulation::Run(){
 	output.write(0, "./output/");
 
 	InitEtta();
+	
+	communicationManager_.communicteEtta();
+
 	Initm();
 	InitM();
 	InitDzI();
@@ -35,6 +38,9 @@ void Simulation::Run(){
 	CalculateZAGJ();
 	CalculateDelta();
 	FirstStepUpdateEtta();
+
+	communicationManager_.communicteEtta();
+	
 	FirstStepUpdateU();
 	FirstStepUpdateV();
 	FirstStepUpdateW();
@@ -44,10 +50,6 @@ void Simulation::Run(){
 		
 	//parameters_.topology.print();
 
-	communicationManager_.updateRightNeighbour();
-	communicationManager_.updateLeftNeighbour();
-	communicationManager_.updateFrontNeighbour();
-	communicationManager_.updateBackNeighbour();
 	
 	
 	MPI_Barrier(parameters_.topology.communicator);
