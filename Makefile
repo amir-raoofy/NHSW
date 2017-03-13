@@ -61,6 +61,14 @@ struct:
 oscilation:
 	rm -f output/*
 	./nhsw 20 20 24 3.5 0.01 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
+
+dev: all
+	rm -f output/*
+	mpirun -n 1 ./test 4 4 6 3.5 0.01 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0
+	rm -f output/*
+	mpirun -n 2 ./test 4 4 6 3.5 0.01 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0
+
+
 clean:
 	rm -f *.o core.*
 	rm -f nhsw nhsw_petsc test test_petsc
