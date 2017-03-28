@@ -51,8 +51,8 @@ void Simulation::InitGJ(){
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
 			//flowField_.SetGJ()[i][parameters_.get_num_cells(0)+1].push_back(flowField_.SetGJ()[i][parameters_.get_num_cells(0)][k]);
-			flowField_.SetGJ()[i][parameters_.get_num_cells(0)+1][k]=0.0;
-			flowField_.SetGJ()[i][parameters_.get_num_cells(0)  ][k]=0.0;
+			flowField_.SetGJ()[i][parameters_.get_num_cells(1)+1][k]=0.0;
+			flowField_.SetGJ()[i][parameters_.get_num_cells(1)  ][k]=0.0;
 		}
 	}
 }
@@ -123,8 +123,8 @@ void Simulation::UpdateGJ(){
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
 			//flowField_.SetGJ()[i][parameters_.get_num_cells(0)+1][k]=flowField_.SetGJ()[i][parameters_.get_num_cells(0)][k];
-			flowField_.SetGJ()[i][parameters_.get_num_cells(0)+1][k]=0.0;
-			flowField_.SetGJ()[i][parameters_.get_num_cells(0)  ][k]=0.0;
+			flowField_.SetGJ()[i][parameters_.get_num_cells(1)+1][k]=0.0;
+			flowField_.SetGJ()[i][parameters_.get_num_cells(1)  ][k]=0.0;
 		}
 	}
 }

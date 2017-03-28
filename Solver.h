@@ -1,5 +1,6 @@
 #include "Parameters.h"
 #include "FlowField.h"
+#include "CommunicationManager.h"
 #include <petscksp.h>
 
 class Solver
@@ -77,7 +78,17 @@ protected:
 	void updateDomain();
 	void updateBoundary();
 	void updateError();
+	virtual void iterate();
+};
+
+class ParallelJacobiSolverEtta: public JacobiSolverEtta
+{
+public:
+	ParallelJacobiSolverEtta(const Parameters& parameters, FlowField& flowField, CommunicationManager &communicationManager);
+protected:
 	void iterate();
+private: 
+	CommunicationManager &communicationManager_;
 };
 
 class JacobiSolverQ: public IterativeSolver

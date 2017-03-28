@@ -43,7 +43,7 @@ void Simulation::InitDzI(){
 	//top
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.SetDzI()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetDzI()[i][parameters_.get_num_cells(0)][k];
+			flowField_.SetDzI()[i][parameters_.get_num_cells(1)+1][k]=flowField_.GetDzI()[i][parameters_.get_num_cells(1)][k];
 		}
 	}
 }
@@ -94,7 +94,7 @@ void Simulation::UpdateDzI(){
 	//top
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.SetDzI()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetDzI()[i][parameters_.get_num_cells(0)][k];
+			flowField_.SetDzI()[i][parameters_.get_num_cells(1)+1][k]=flowField_.GetDzI()[i][parameters_.get_num_cells(1)][k];
 		}
 	}
 }
@@ -171,7 +171,7 @@ void Simulation::InitDzJ(){
 	//top
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.SetDzJ()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetDzJ()[i][parameters_.get_num_cells(0)][k];
+			flowField_.SetDzJ()[i][parameters_.get_num_cells(1)+1][k]=flowField_.GetDzJ()[i][parameters_.get_num_cells(1)][k];
 		}
 	}
 }
@@ -222,7 +222,7 @@ void Simulation::UpdateDzJ(){
 	//top
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.SetDzJ()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetDzJ()[i][parameters_.get_num_cells(0)][k];
+			flowField_.SetDzJ()[i][parameters_.get_num_cells(1)+1][k]=flowField_.GetDzJ()[i][parameters_.get_num_cells(1)][k];
 		}
 	}
 }
@@ -289,7 +289,7 @@ void Simulation::InitDzK(){
 	//top
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.SetDzK()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetDzK()[i][parameters_.get_num_cells(0)][k];
+			flowField_.SetDzK()[i][parameters_.get_num_cells(1)+1][k]=flowField_.GetDzK()[i][parameters_.get_num_cells(1)][k];
 		}
 	}
 }
@@ -340,7 +340,7 @@ void Simulation::UpdateDzK(){
 	//top
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.SetDzK()[i][parameters_.get_num_cells(0)+1][k]=flowField_.GetDzK()[i][parameters_.get_num_cells(0)][k];
+			flowField_.SetDzK()[i][parameters_.get_num_cells(1)+1][k]=flowField_.GetDzK()[i][parameters_.get_num_cells(1)][k];
 		}
 	}
 }

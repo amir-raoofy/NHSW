@@ -14,7 +14,6 @@ void Simulation::Run(){
 	InitDzI();
 	communicationManager_.communicteDzI();
 	MPI_Barrier(parameters_.topology.communicator);
-	
 
 	InitDzJ();
 	communicationManager_.communicteDzJ();
@@ -41,9 +40,8 @@ void Simulation::Run(){
 	InitGK();
 	communicationManager_.communicteGK();
 	MPI_Barrier(parameters_.topology.communicator);
-
 	output.write(0, "./output/");
-	for (int i = 1; i < 2; i++) {
+	for (int i = 1; i < 100; i++) {
 		Updatem();	
 		UpdateM();	
 		UpdateDzI();
@@ -65,12 +63,24 @@ void Simulation::Run(){
 		communicationManager_.communicteGK();
 		MPI_Barrier(parameters_.topology.communicator);
 	
+		//TODO FIX BUG communicate the 2d computational fields
 		CalculateZAZI();
+		communicationManager_.communicteZazi();
+		MPI_Barrier(parameters_.topology.communicator);
 		CalculateZAZJ();
+		communicationManager_.communicteZazj();
+		MPI_Barrier(parameters_.topology.communicator);
 		CalculateZAGI();
+		communicationManager_.communicteZagi();
+		MPI_Barrier(parameters_.topology.communicator);
 		CalculateZAGJ();
+		communicationManager_.communicteZagj();
+		MPI_Barrier(parameters_.topology.communicator);
 		CalculateDelta();
-		FirstStepUpdateEtta();
+		communicationManager_.communicteDelta();
+		MPI_Barrier(parameters_.topology.communicator);
+		//FirstStepUpdateEtta();
+		ParallelFirstStepUpdateEtta();
 		communicationManager_.communicteEtta();
 		MPI_Barrier(parameters_.topology.communicator);
 		FirstStepUpdateU();
@@ -80,15 +90,14 @@ void Simulation::Run(){
 		communicationManager_.communicteV();
 		MPI_Barrier(parameters_.topology.communicator);
 		FirstStepUpdateW();
-		communicationManager_.communicteV();
+		communicationManager_.communicteW();
 		MPI_Barrier(parameters_.topology.communicator);
 		output.write(i, "./output/");
 		
 	}
-	
 
 
-	//parameters_.topology.print();
+	parameters_.topology.print();
 	
 	MPI_Barrier(parameters_.topology.communicator);
 	for (int i = 0; i < parameters_.topology.np; i++) {

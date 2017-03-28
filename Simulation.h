@@ -49,6 +49,7 @@ public:
 	void UpdateGJ();
 	void UpdateGK();
 	void FirstStepUpdateEtta();
+	void ParallelFirstStepUpdateEtta();
 	void FirstStepUpdateU();
 	void FirstStepUpdateV();
 	void FirstStepUpdateW();		//TODO implement

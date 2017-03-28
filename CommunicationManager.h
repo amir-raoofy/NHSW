@@ -18,6 +18,11 @@ public:
 	void communicteGI();
 	void communicteGJ();
 	void communicteGK();
+	void communicteZazi();
+	void communicteZazj();
+	void communicteZagi();
+	void communicteZagj();
+	void communicteDelta();
 
 private:
 	const Parameters& parameters_;

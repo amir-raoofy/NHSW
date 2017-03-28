@@ -136,6 +136,51 @@ void CommunicationManager::communicteGK(){
 
 }
 
+void CommunicationManager::communicteZazi(){
+		
+	updateRightNeighbour(flowField_.SetZAZI());
+	updateLeftNeighbour(flowField_.SetZAZI());
+	updateFrontNeighbour(flowField_.SetZAZI());
+	updateBackNeighbour(flowField_.SetZAZI());
+
+}
+
+void CommunicationManager::communicteZazj(){
+
+	updateRightNeighbour(flowField_.SetZAZJ());
+	updateLeftNeighbour(flowField_.SetZAZJ());
+	updateFrontNeighbour(flowField_.SetZAZJ());
+	updateBackNeighbour(flowField_.SetZAZJ());
+
+}
+
+void CommunicationManager::communicteZagi(){
+
+	updateRightNeighbour(flowField_.SetZAGI());
+	updateLeftNeighbour(flowField_.SetZAGI());
+	updateFrontNeighbour(flowField_.SetZAGI());
+	updateBackNeighbour(flowField_.SetZAGI());
+
+}
+
+void CommunicationManager::communicteZagj(){
+
+	updateRightNeighbour(flowField_.SetZAGJ());
+	updateLeftNeighbour(flowField_.SetZAGJ());
+	updateFrontNeighbour(flowField_.SetZAGJ());
+	updateBackNeighbour(flowField_.SetZAGJ());
+
+}
+
+void CommunicationManager::communicteDelta(){
+
+	updateRightNeighbour(flowField_.SetDelta());
+	updateLeftNeighbour(flowField_.SetDelta());
+	updateFrontNeighbour(flowField_.SetDelta());
+	updateBackNeighbour(flowField_.SetDelta());
+
+}
+
 void CommunicationManager::updateRightNeighbour(DiscreteRectangle &field){
 
 	if (parameters_.topology.right_id!=-1)  {
@@ -312,3 +357,5 @@ void CommunicationManager::updateBackNeighbour(DiscreteCube &field){
 	}
 
 }
+
+

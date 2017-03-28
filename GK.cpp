@@ -47,7 +47,7 @@ void Simulation::InitGK(){
 	//top
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.SetGK()[i][parameters_.get_num_cells(0)+1][k]=flowField_.SetGK()[i][parameters_.get_num_cells(0)][k];
+			flowField_.SetGK()[i][parameters_.get_num_cells(1)+1][k]=flowField_.SetGK()[i][parameters_.get_num_cells(1)][k];
 		}
 	}
 }
@@ -113,7 +113,7 @@ void Simulation::UpdateGK(){
 	//top
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.SetGK()[i][parameters_.get_num_cells(0)+1][k]=flowField_.SetGK()[i][parameters_.get_num_cells(0)][k];
+			flowField_.SetGK()[i][parameters_.get_num_cells(1)+1][k]=flowField_.SetGK()[i][parameters_.get_num_cells(1)][k];
 		}
 	}
 }
