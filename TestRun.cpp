@@ -14,7 +14,6 @@ void Simulation::Run(){
 	InitDzI();
 	communicationManager_.communicteDzI();
 	MPI_Barrier(parameters_.topology.communicator);
-
 	InitDzJ();
 	communicationManager_.communicteDzJ();
 	MPI_Barrier(parameters_.topology.communicator);
@@ -42,6 +41,7 @@ void Simulation::Run(){
 	MPI_Barrier(parameters_.topology.communicator);
 	output.write(0, "./output/");
 	for (int i = 1; i < 100; i++) {
+			
 		Updatem();	
 		UpdateM();	
 		UpdateDzI();
@@ -93,17 +93,15 @@ void Simulation::Run(){
 		communicationManager_.communicteW();
 		MPI_Barrier(parameters_.topology.communicator);
 		output.write(i, "./output/");
-		
 	}
 
-
-	parameters_.topology.print();
+	//parameters_.topology.print();
 	
 	MPI_Barrier(parameters_.topology.communicator);
 	for (int i = 0; i < parameters_.topology.np; i++) {
 			MPI_Barrier(parameters_.topology.communicator);
 			if (parameters_.topology.id == i)	
-				flowField_.printEtta(1);
+				flowField_.printGI(1);
 	}
 	MPI_Barrier(parameters_.topology.communicator);
 

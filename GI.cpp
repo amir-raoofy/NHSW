@@ -39,7 +39,8 @@ void Simulation::InitGI(){
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
 			//flowField_.SetGI()[parameters_.get_num_cells(0)+1][j].push_back(flowField_.SetGI()[parameters_.get_num_cells(0)][j][k]);
 			flowField_.SetGI()[parameters_.get_num_cells(0)+1][j][k]=0.0;
-			flowField_.SetGI()[parameters_.get_num_cells(0)  ][j][k]=0.0;
+			//flowField_.SetGI()[parameters_.get_num_cells(0)  ][j][k]=0.0;
+			//flowField_.SetGI()[parameters_.get_num_cells(0)+1][j][k]=flowField_.SetGI()[parameters_.get_num_cells(0)][j][k];
 		}
 	}
 	//bottom
@@ -113,7 +114,7 @@ void Simulation::UpdateGI(){
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
 			//flowField_.SetGI()[parameters_.get_num_cells(0)+1][j][k]=flowField_.SetGI()[parameters_.get_num_cells(0)][j][k];
 			flowField_.SetGI()[parameters_.get_num_cells(0)+1][j][k]=0.0;
-			flowField_.SetGI()[parameters_.get_num_cells(0)  ][j][k]=0.0;
+			//flowField_.SetGI()[parameters_.get_num_cells(0)  ][j][k]=0.0;
 		}
 	}
 	//bottom
