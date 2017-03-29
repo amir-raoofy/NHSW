@@ -319,11 +319,11 @@ void CommunicationManager::updateFrontNeighbour(DiscreteCube &field){
 				front_send_buffer_rectangle[i*parameters_.get_num_cells(2)+k]=field[i][parameters_.get_num_cells(1)][k];
 			}
 		}
-		MPI::COMM_WORLD.Send(front_send_buffer_rectangle, (parameters_.get_num_cells(1)+2)*parameters_.get_num_cells(2), MPI::DOUBLE, parameters_.topology.front_id, 0);
+		MPI::COMM_WORLD.Send(front_send_buffer_rectangle, (parameters_.get_num_cells(0)+2)*parameters_.get_num_cells(2), MPI::DOUBLE, parameters_.topology.front_id, 0);
 	}
 
 	if (parameters_.topology.back_id!=-1) {
-		MPI::COMM_WORLD.Recv(back_recv_buffer_rectangle, (parameters_.get_num_cells(1)+2)*parameters_.get_num_cells(2), MPI::DOUBLE, parameters_.topology.back_id, 0);
+		MPI::COMM_WORLD.Recv(back_recv_buffer_rectangle, (parameters_.get_num_cells(0)+2)*parameters_.get_num_cells(2), MPI::DOUBLE, parameters_.topology.back_id, 0);
 		//read the buffer
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {
@@ -343,11 +343,11 @@ void CommunicationManager::updateBackNeighbour(DiscreteCube &field){
 				back_send_buffer_rectangle[i*parameters_.get_num_cells(2)+k]=field[i][1][k];
 			}
 		}
-		MPI::COMM_WORLD.Send(back_send_buffer_rectangle, (parameters_.get_num_cells(1)+2)*parameters_.get_num_cells(2), MPI::DOUBLE, parameters_.topology.back_id, 0);
+		MPI::COMM_WORLD.Send(back_send_buffer_rectangle, (parameters_.get_num_cells(0)+2)*parameters_.get_num_cells(2), MPI::DOUBLE, parameters_.topology.back_id, 0);
 	}
 
 	if (parameters_.topology.front_id!=-1) {
-		MPI::COMM_WORLD.Recv(front_recv_buffer_rectangle, (parameters_.get_num_cells(1)+2)*parameters_.get_num_cells(2), MPI::DOUBLE, parameters_.topology.front_id, 0);
+		MPI::COMM_WORLD.Recv(front_recv_buffer_rectangle, (parameters_.get_num_cells(0)+2)*parameters_.get_num_cells(2), MPI::DOUBLE, parameters_.topology.front_id, 0);
 		//read the buffer
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {
