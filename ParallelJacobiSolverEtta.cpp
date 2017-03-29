@@ -8,7 +8,7 @@ void ParallelJacobiSolverEtta::iterate(){
 	MPI_Barrier(parameters_.topology.communicator);
 	updateDomain();
 	updateBoundary();
-	updateError();
+	//updateError();
 	//etta_old_.swap(flowField_.SetEtta());
 }
 

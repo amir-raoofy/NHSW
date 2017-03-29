@@ -1,6 +1,6 @@
 .PHONY: clean
 #CXX = g++
-CXX = mpic++
+CXX = mpicxx
 CXXFLAGS = -Wall -std=c++11
 
 #INC =-I.

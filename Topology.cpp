@@ -1,5 +1,6 @@
 #include "Topology.h"
 #include <math.h>
+#include <iostream>
 
 Topology::Topology(int argc, char *argv[]){
 
