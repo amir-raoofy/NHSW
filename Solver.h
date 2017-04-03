@@ -87,6 +87,7 @@ public:
 	ParallelJacobiSolverEtta(const Parameters& parameters, FlowField& flowField, CommunicationManager &communicationManager);
 protected:
 	void iterate();
+	void parallelUpdateError();
 private: 
 	CommunicationManager &communicationManager_;
 };
