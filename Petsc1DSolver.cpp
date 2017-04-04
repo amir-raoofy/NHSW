@@ -9,10 +9,11 @@ Petsc1DSolver::Petsc1DSolver(const Parameters& parameters, FlowField& flowField,
 	MatSetSizes(A,PETSC_DECIDE,PETSC_DECIDE,n,n);
 	MatSetType(A,MATSEQAIJ);
 	MatSetFromOptions(A);
-	MatMPIAIJSetPreallocation(A,3,NULL,3,NULL);
-	MatSetOption(A, MAT_NEW_NONZERO_ALLOCATION_ERR, PETSC_FALSE);
+	//MatMPIAIJSetPreallocation(A,3,NULL,3,NULL);
+	//MatSetOption(A, MAT_NEW_NONZERO_ALLOCATION_ERR, PETSC_FALSE);
 	MatSeqAIJSetPreallocation(A,3,NULL);
-	MatSeqSBAIJSetPreallocation(A,1,3,NULL);
+	//MatSeqSBAIJSetPreallocation(A,1	,3,NULL);
+	MatSetOption(A, MAT_NEW_NONZERO_ALLOCATION_ERR, PETSC_FALSE);
 	MatGetOwnershipRange(A,&Istart,&Iend);
 
 	VecCreate(PETSC_COMM_SELF,&b);
