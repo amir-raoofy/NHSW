@@ -5,33 +5,33 @@ Petsc1DSolver::Petsc1DSolver(const Parameters& parameters, FlowField& flowField,
 	
 	n=parameters_.get_num_cells(2);
 	//create matrix
-	MatCreate(PETSC_COMM_WORLD,&A);
-  MatSetSizes(A,PETSC_DECIDE,PETSC_DECIDE,n,n);
-	MatSetType(A,MATMPIAIJ);
+	MatCreate(PETSC_COMM_SELF,&A);
+	MatSetSizes(A,PETSC_DECIDE,PETSC_DECIDE,n,n);
+	MatSetType(A,MATSEQAIJ);
 	MatSetFromOptions(A);
 	MatMPIAIJSetPreallocation(A,3,NULL,3,NULL);
 	MatSetOption(A, MAT_NEW_NONZERO_ALLOCATION_ERR, PETSC_FALSE);
-  MatSeqAIJSetPreallocation(A,3,NULL);
-  MatSeqSBAIJSetPreallocation(A,1,3,NULL);
-  MatGetOwnershipRange(A,&Istart,&Iend);
+	MatSeqAIJSetPreallocation(A,3,NULL);
+	MatSeqSBAIJSetPreallocation(A,1,3,NULL);
+	MatGetOwnershipRange(A,&Istart,&Iend);
 
-	VecCreate(PETSC_COMM_WORLD,&b);
-  VecSetSizes(b,PETSC_DECIDE,n);
+	VecCreate(PETSC_COMM_SELF,&b);
+	VecSetSizes(b,PETSC_DECIDE,n);
 	VecSetFromOptions(b);
-  VecDuplicate(b,&x);
+	VecDuplicate(b,&x);
 	VecSet(x,0.0);
 
-	KSPCreate(PETSC_COMM_WORLD,&ksp);
+	KSPCreate(PETSC_COMM_SELF,&ksp);
 	KSPSetType(ksp,KSPGMRES);
-  KSPSetOperators(ksp,A,A);
-  KSPSetTolerances(ksp,1.e-2/n,1.e-50,PETSC_DEFAULT,PETSC_DEFAULT);
-  KSPSetFromOptions(ksp);
+	KSPSetOperators(ksp,A,A);
+	KSPSetTolerances(ksp,1.e-2/n,1.e-50,PETSC_DEFAULT,PETSC_DEFAULT);
+	KSPSetFromOptions(ksp);
 }
 
 Petsc1DSolver::~Petsc1DSolver(){
 	KSPDestroy(&ksp);
 	VecDestroy(&x);
-  VecDestroy(&b);
+	VecDestroy(&b);
 	MatDestroy(&A);
 }
 
@@ -80,15 +80,15 @@ void Petsc1DSolver::updateRHS(){
 
 //TODO copy result back to the routine
 void Petsc1DSolver::solve(){
-  KSPSolve(ksp,b,x);
-  KSPGetIterationNumber(ksp,&its);
+	KSPSolve(ksp,b,x);
+	KSPGetIterationNumber(ksp,&its);
 }
 
 void Petsc1DSolver::updateZAZ(){
 	VecDot(b,x,&v);
 	resultField_[i_][j_]=v;
 
-  VecResetArray(b);
+	VecResetArray(b);
 }
 
 void Petsc1DSolver::setIndices(int i, int j){i_=i; j_=j;}
