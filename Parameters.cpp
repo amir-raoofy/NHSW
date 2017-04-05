@@ -13,6 +13,9 @@ Parameters::Parameters():
 	_NGlobal[0]=_N[0];
 	_NGlobal[1]=_N[1];
 	_NGlobal[2]=_N[2];
+	_N[0]/=topology.npx;
+	_N[1]/=topology.npy;
+	_block_size_2d = _N[0]*_N[1]; 
 
 	print_parameters();
 	
@@ -30,8 +33,9 @@ Parameters::Parameters(int argc, char *argv[]):
 	_NGlobal[0]=_N[0];
 	_NGlobal[1]=_N[1];
 	_NGlobal[2]=_N[2];
+	_block_size_2d = _N[0]*_N[1]; 
 	
-	print_parameters();
+	print_parameters();	
 }
 
 Parameters::Parameters(int argc, char *argv[], Topology& topology):
@@ -48,6 +52,7 @@ Parameters::Parameters(int argc, char *argv[], Topology& topology):
 	_NGlobal[2]=_N[2];
 	_N[0]/=topology.npx;
 	_N[1]/=topology.npy;
+	_block_size_2d = _N[0]*_N[1]; 
 
 	if (topology.id==0) {
 		print_parameters();	
@@ -133,6 +138,10 @@ float Parameters::get_v_a() const{
 
 float Parameters::GetHeight() const{
 	return _height;
+}
+
+float Parameters::GetBlockSize2d() const{
+	return _block_size_2d;
 }
 
 void Parameters::print_parameters(){

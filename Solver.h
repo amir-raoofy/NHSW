@@ -106,32 +106,66 @@ protected:
 	void iterate();
 };
 
-class Petsc1DSolver: public Solver
+class PetscSolver: public Solver
 {
-public:	
-	Petsc1DSolver(const Parameters& parameters, FlowField& flowField, const DiscreteCube& Dz, const DiscreteCube& RHS, DiscreteRectangle& resultField);
-	
-	~Petsc1DSolver();
-	void updateMat();
-	void updateRHS();
-	void solve();	
-	void updateZAZ();
-	void setIndices(int i, int j);
+public:
+	PetscSolver(const Parameters& parameters, FlowField& flowField);
+	~PetscSolver();
+
+	virtual void updateMat() = 0;
+	virtual void updateRHS() = 0;
+	virtual	void solve() = 0;	
+	virtual void updateField() = 0;
 	void setParameters(float TOL, int MaxIt);
 
 protected:
 	Vec            x,b;  
-  Mat            A;      
-  KSP            ksp;    
-  PetscInt       i,j,Ii,J,Istart,Iend,m,n,its;
-  PetscErrorCode ierr;
-  PetscScalar    v;
+	Mat            A;      
+	KSP            ksp;    
+	PetscInt       i,j,Ii,J,Istart,Iend,m,n,its;
+
+	FLOAT TOL_;
+	int MaxIt_;
+};
+
+
+class Petsc1DSolver: public PetscSolver
+{
+public:
+
+	Petsc1DSolver(const Parameters& parameters, FlowField& flowField, const DiscreteCube& Dz, const DiscreteCube& RHS, DiscreteRectangle& resultField);
+	~Petsc1DSolver();
+	
+	void updateMat();
+	void updateRHS();
+	void solve();	
+	void updateField();
+	void setIndices(int i, int j);
+
+protected:
+	PetscErrorCode ierr;
+	PetscScalar    v;
 
 	const DiscreteCube& Dz_;
 	const DiscreteCube& RHS_;
 	DiscreteRectangle& resultField_;
-	FLOAT TOL_;
-	int MaxIt_;
 	int i_;
 	int j_;
+};
+
+class Petsc2DSolver: public PetscSolver
+{
+public:
+
+	Petsc2DSolver(const Parameters& parameters, FlowField& flowField);
+	~Petsc2DSolver();
+	
+	void updateMat();
+	void updateRHS();
+	void solve();	
+	void updateField();
+
+protected:
+	PetscErrorCode ierr;
+	PetscScalar    v;
 };

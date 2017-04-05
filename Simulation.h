@@ -50,6 +50,7 @@ public:
 	void UpdateGK();
 	void FirstStepUpdateEtta();
 	void ParallelFirstStepUpdateEtta();
+	void PetscFirstStepUpdateEtta();
 	void FirstStepUpdateU();
 	void FirstStepUpdateV();
 	void FirstStepUpdateW();		//TODO implement

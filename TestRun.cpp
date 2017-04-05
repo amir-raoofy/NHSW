@@ -40,7 +40,7 @@ void Simulation::Run(){
 	communicationManager_.communicteGK();
 	MPI_Barrier(parameters_.topology.communicator);
 	output.write(0, "./output/");
-	for (int i = 1; i < 100; i++) {
+	for (int i = 1; i < 200; i++) {
 			
 		Updatem();	
 		UpdateM();	
@@ -80,7 +80,8 @@ void Simulation::Run(){
 		communicationManager_.communicteDelta();
 		MPI_Barrier(parameters_.topology.communicator);
 		//FirstStepUpdateEtta();
-		ParallelFirstStepUpdateEtta();
+		//ParallelFirstStepUpdateEtta();
+		PetscFirstStepUpdateEtta();
 		communicationManager_.communicteEtta();
 		MPI_Barrier(parameters_.topology.communicator);
 		FirstStepUpdateU();
@@ -96,7 +97,8 @@ void Simulation::Run(){
 	}
 
 	//parameters_.topology.print();
-	
+
+/*	
 	MPI_Barrier(parameters_.topology.communicator);
 	for (int i = 0; i < parameters_.topology.np; i++) {
 			MPI_Barrier(parameters_.topology.communicator);
@@ -104,7 +106,7 @@ void Simulation::Run(){
 				flowField_.printGI(1);
 	}
 	MPI_Barrier(parameters_.topology.communicator);
-
+*/
 /*
 	for (int i = 0; i < parameters_.topology.np; i++) {
 		MPI_Barrier(parameters_.topology.communicator);

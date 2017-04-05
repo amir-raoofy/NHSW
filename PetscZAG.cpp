@@ -13,16 +13,8 @@ void Simulation::CalculateZAGI(){
 			solver.updateMat();
 			solver.updateRHS();
 			solver.solve();
-			solver.updateZAZ();
+			solver.updateField();
 		}
-	}
-	//@test the initialization of Zt * inv A * ZI
-	std::cout << "test initialization of  Zt * inv A * ZI" << std::endl;
-	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-			std::cout << flowField_.GetZAZI()[i][j] << "\t";
-		}
-		std::cout << std::endl;
 	}
 }
 
@@ -38,15 +30,7 @@ void Simulation::CalculateZAGJ(){
 			solver.updateMat();
 			solver.updateRHS();
 			solver.solve();
-			solver.updateZAZ();
+			solver.updateField();
 		}
-	}
-	//@test the initialization of Zt * inv A * ZJ
-	std::cout << "test initialization of  Zt * inv A * ZJ" << std::endl;
-	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-			std::cout << flowField_.GetZAZJ()[i][j] << "\t";
-		}
-		std::cout << std::endl;
 	}
 }

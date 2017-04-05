@@ -13,14 +13,13 @@ void Simulation::CalculateZAZI(){
 			solver.updateMat();
 			solver.updateRHS();
 			solver.solve();
-			solver.updateZAZ();
+			solver.updateField();
 		}
 	}
 }
 
 void Simulation::CalculateZAZJ(){
 	// (dz invA dz)	j+0.5
-	std::cout << "here" << std::endl;
 	Petsc1DSolver solver(parameters_, flowField_,flowField_.GetDzJ(), flowField_.GetDzJ(), flowField_.SetZAZJ());
 	solver.setParameters (0.00001,1000);
 
@@ -31,7 +30,7 @@ void Simulation::CalculateZAZJ(){
 			solver.updateMat();
 			solver.updateRHS();
 			solver.solve();
-			solver.updateZAZ();
+			solver.updateField();
 		}
 	}
 }

@@ -1,7 +1,7 @@
 #include "Solver.h"
 
-Petsc1DSolver::Petsc1DSolver(const Parameters& parameters, FlowField& flowField, const DiscreteCube& Dz, const DiscreteCube& RHS, DiscreteRectangle& resultField)
-	:Solver(parameters, flowField),Dz_(Dz),RHS_(RHS), resultField_(resultField){
+Petsc1DSolver::Petsc1DSolver(const Parameters& parameters, FlowField& flowField, const DiscreteCube& Dz, const DiscreteCube& RHS, DiscreteRectangle& resultField):
+	PetscSolver(parameters, flowField),Dz_(Dz),RHS_(RHS), resultField_(resultField){
 	
 	n=parameters_.get_num_cells(2);
 	//create matrix
@@ -25,15 +25,12 @@ Petsc1DSolver::Petsc1DSolver(const Parameters& parameters, FlowField& flowField,
 	KSPCreate(PETSC_COMM_SELF,&ksp);
 	KSPSetType(ksp,KSPGMRES);
 	KSPSetOperators(ksp,A,A);
+	KSPSetInitialGuessNonzero(ksp,PETSC_TRUE);
 	KSPSetTolerances(ksp,1.e-2/n,1.e-50,PETSC_DEFAULT,PETSC_DEFAULT);
 	KSPSetFromOptions(ksp);
 }
 
 Petsc1DSolver::~Petsc1DSolver(){
-	KSPDestroy(&ksp);
-	VecDestroy(&x);
-	VecDestroy(&b);
-	MatDestroy(&A);
 }
 
 //DONE cheat from the iterate function
@@ -85,7 +82,7 @@ void Petsc1DSolver::solve(){
 	KSPGetIterationNumber(ksp,&its);
 }
 
-void Petsc1DSolver::updateZAZ(){
+void Petsc1DSolver::updateField(){
 	VecDot(b,x,&v);
 	resultField_[i_][j_]=v;
 
@@ -93,4 +90,3 @@ void Petsc1DSolver::updateZAZ(){
 }
 
 void Petsc1DSolver::setIndices(int i, int j){i_=i; j_=j;}
-void Petsc1DSolver::setParameters(float TOL, int MaxIt){TOL_=TOL; MaxIt_=MaxIt;}

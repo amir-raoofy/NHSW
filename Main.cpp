@@ -13,6 +13,6 @@ int main(int argc, char *argv[])
 	Simulation simulation(parameters, flowField, communicationManager);
 	simulation.Run();
 	
-	//PetscFinalize();
+	PetscFinalize();
 	return EXIT_SUCCESS;
 }
