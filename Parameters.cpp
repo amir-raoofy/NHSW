@@ -10,6 +10,7 @@ Parameters::Parameters():
 	_dX[0]=_L[0]/_N[0];
 	_dX[1]=_L[1]/_N[1];
 	_dX[2]=_L[2]/_N[2];
+	_output_flag=1;
 	_NGlobal[0]=_N[0];
 	_NGlobal[1]=_N[1];
 	_NGlobal[2]=_N[2];
@@ -27,6 +28,7 @@ Parameters::Parameters(int argc, char *argv[]):
 	_N[0]=10 ; _N[1]=10 ; _N[2]=10 ;
 	_L[0]=1.0; _L[1]=1.0; _L[2]=1.0;
 	this->parse(argc, argv);
+	_output_flag=1;
 	_dX[0]=_L[0]/_N[0];
 	_dX[1]=_L[1]/_N[1];
 	_dX[2]=_L[2]/_N[2];
@@ -63,7 +65,7 @@ Parameters::~Parameters(){}
 
 void Parameters::parse(int argc, char *argv[])  {
 
-	if (argc!=17){
+	if (argc!=18){
 		std::cout << "Warning: The default values for parameters are used." << std::endl;
 	}else{
 		_N[0]  	= atoi(argv[1]);
@@ -71,17 +73,18 @@ void Parameters::parse(int argc, char *argv[])  {
 		_N[2]  	= atoi(argv[3]);
 		_T	 		= atof(argv[4]);
 		_dt  		= atof(argv[5]);
-		_theta 	= atof(argv[6]);
-		_L[0]		= atof(argv[7]);
-		_L[1]		= atof(argv[8]);
-		_L[2] 	= atof(argv[9]);
-		_height =	atof(argv[10]);
-		_g	 		= atof(argv[11]);
-		_nu			= atof(argv[12]);
-		_gamma_t= atof(argv[13]);
-		_gamma_b= atof(argv[14]);
-		_u_a		= atof(argv[15]);
-		_v_a		= atof(argv[16]);
+		_output_flag= atof(argv[6]);
+		_theta 	= atof(argv[7]);
+		_L[0]		= atof(argv[8]);
+		_L[1]		= atof(argv[9]);
+		_L[2] 	= atof(argv[10]);
+		_height =	atof(argv[11]);
+		_g	 		= atof(argv[12]);
+		_nu			= atof(argv[13]);
+		_gamma_t= atof(argv[14]);
+		_gamma_b= atof(argv[15]);
+		_u_a		= atof(argv[16]);
+		_v_a		= atof(argv[17]);
 	}
 }
 
@@ -144,6 +147,10 @@ float Parameters::GetBlockSize2d() const{
 	return _block_size_2d;
 }
 
+float Parameters::GetOutputFlag() const{
+	return _output_flag;
+}
+
 void Parameters::print_parameters(){
 	
 	// print the header
@@ -159,6 +166,7 @@ void Parameters::print_parameters(){
 				<< "Number of cells in z-direction	-> 	"<< _NGlobal[2]	<<	std::endl
 				<< "Simulation time 		-> 	"		<< _T		<<	std::endl
 				<< "Time step			-> 	"			<< _dt		<<	std::endl
+				<< "Output flag			-> 	"			<< _output_flag	<<	std::endl
 				<< "theta in numerical scheme	-> 	"	<< _theta	<<	std::endl
 				<< "Length in x-direction		-> 	"	<< _L[0]	<<	std::endl
 				<< "Length in y-direction		-> 	"	<< _L[1]	<<	std::endl
@@ -168,5 +176,6 @@ void Parameters::print_parameters(){
 				<< "Wind constant			-> 	"	<< _gamma_t	<<	std::endl
 				<< "friction constant		-> 	"	<< _gamma_b	<<	std::endl
 				<< "horizontal speed of wind	-> 	"	<< _u_a		<<	std::endl
-				<< "vertical speed of wind		-> 	"	<< _v_a		<<	std::endl;
+				<< "vertical speed of wind		-> 	"	<< _v_a		<<	std::endl
+				<< "\033[1;31m==========================================\033[0m"  << std::endl;
 }

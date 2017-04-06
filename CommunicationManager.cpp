@@ -199,6 +199,8 @@ void CommunicationManager::updateRightNeighbour(DiscreteRectangle &field){
 		}
 	}
 
+	MPI_Barrier(parameters_.topology.communicator);
+
 }
 
 void CommunicationManager::updateLeftNeighbour(DiscreteRectangle &field){
@@ -219,6 +221,8 @@ void CommunicationManager::updateLeftNeighbour(DiscreteRectangle &field){
 		}
 	}
 						
+	MPI_Barrier(parameters_.topology.communicator);
+
 }
 
 void CommunicationManager::updateFrontNeighbour(DiscreteRectangle &field){
@@ -239,6 +243,8 @@ void CommunicationManager::updateFrontNeighbour(DiscreteRectangle &field){
 		}
 	}
 	
+	MPI_Barrier(parameters_.topology.communicator);
+
 }
 
 void CommunicationManager::updateBackNeighbour(DiscreteRectangle &field){
@@ -258,7 +264,9 @@ void CommunicationManager::updateBackNeighbour(DiscreteRectangle &field){
 			field[i][parameters_.get_num_cells(1)+1]=front_recv_buffer_line[i];
 		}
 	}
-				
+
+	MPI_Barrier(parameters_.topology.communicator);
+
 }
 
 
@@ -284,6 +292,8 @@ void CommunicationManager::updateRightNeighbour(DiscreteCube &field){
 		}
 	}
 
+	MPI_Barrier(parameters_.topology.communicator);
+
 }
 				
 void CommunicationManager::updateLeftNeighbour(DiscreteCube &field){
@@ -307,6 +317,8 @@ void CommunicationManager::updateLeftNeighbour(DiscreteCube &field){
 			}
 		}
 	}
+
+	MPI_Barrier(parameters_.topology.communicator);
 
 }
 
@@ -332,6 +344,8 @@ void CommunicationManager::updateFrontNeighbour(DiscreteCube &field){
 		}
 	}
 
+	MPI_Barrier(parameters_.topology.communicator);
+
 }
 
 void CommunicationManager::updateBackNeighbour(DiscreteCube &field){
@@ -355,6 +369,8 @@ void CommunicationManager::updateBackNeighbour(DiscreteCube &field){
 			}
 		}
 	}
+
+	MPI_Barrier(parameters_.topology.communicator);
 
 }
 

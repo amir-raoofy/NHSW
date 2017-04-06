@@ -8,92 +8,78 @@ void Simulation::Run(){
 
 	InitEtta();
 	communicationManager_.communicteEtta();
-	MPI_Barrier(parameters_.topology.communicator);
 	Initm();
 	InitM();
 	InitDzI();
 	communicationManager_.communicteDzI();
-	MPI_Barrier(parameters_.topology.communicator);
 	InitDzJ();
 	communicationManager_.communicteDzJ();
-	MPI_Barrier(parameters_.topology.communicator);
 	InitDzK();
 	communicationManager_.communicteDzK();
-	MPI_Barrier(parameters_.topology.communicator);
 	InitU();
 	communicationManager_.communicteU();
-	MPI_Barrier(parameters_.topology.communicator);
 	InitV();
 	communicationManager_.communicteV();
-	MPI_Barrier(parameters_.topology.communicator);
 	InitW();
 	communicationManager_.communicteW();
-	MPI_Barrier(parameters_.topology.communicator);
 	InitQ();
 	InitGI();
 	communicationManager_.communicteGI();
-	MPI_Barrier(parameters_.topology.communicator);
 	InitGJ();
 	communicationManager_.communicteGJ();
-	MPI_Barrier(parameters_.topology.communicator);
 	InitGK();
 	communicationManager_.communicteGK();
-	MPI_Barrier(parameters_.topology.communicator);
-	output.write(0, "./output/");
+
+	if (parameters_.GetOutputFlag()==1) {
+		output.write(0, "./output/");
+	}
+
 	for (int i = 1; i < 50; i++) {
-			
+		// print out to the log
+		if (parameters_.topology.id==0) {
+			std::cout << "Time Step: " << i << std::endl;
+		}
+
 		Updatem();	
 		UpdateM();	
 		UpdateDzI();
 		communicationManager_.communicteDzI();
-		MPI_Barrier(parameters_.topology.communicator);
 		UpdateDzJ();
 		communicationManager_.communicteDzJ();
-		MPI_Barrier(parameters_.topology.communicator);
 		UpdateDzK();
 		communicationManager_.communicteDzK();
-		MPI_Barrier(parameters_.topology.communicator);
 		UpdateGI();
 		communicationManager_.communicteGI();
-		MPI_Barrier(parameters_.topology.communicator);
 		UpdateGJ();
 		communicationManager_.communicteGJ();
-		MPI_Barrier(parameters_.topology.communicator);
 		UpdateGK();
 		communicationManager_.communicteGK();
-		MPI_Barrier(parameters_.topology.communicator);
 	
 		//TODO FIX BUG communicate the 2d computational fields
 		CalculateZAZI();
 		communicationManager_.communicteZazi();
-		MPI_Barrier(parameters_.topology.communicator);
 		CalculateZAZJ();
 		communicationManager_.communicteZazj();
-		MPI_Barrier(parameters_.topology.communicator);
 		CalculateZAGI();
 		communicationManager_.communicteZagi();
-		MPI_Barrier(parameters_.topology.communicator);
 		CalculateZAGJ();
 		communicationManager_.communicteZagj();
-		MPI_Barrier(parameters_.topology.communicator);
 		CalculateDelta();
 		communicationManager_.communicteDelta();
-		MPI_Barrier(parameters_.topology.communicator);
 		//FirstStepUpdateEtta();
-		//ParallelFirstStepUpdateEtta();
-		PetscFirstStepUpdateEtta();
+		ParallelFirstStepUpdateEtta();
+		//PetscFirstStepUpdateEtta();
 		communicationManager_.communicteEtta();
-		MPI_Barrier(parameters_.topology.communicator);
 		FirstStepUpdateU();
 		communicationManager_.communicteU();
-		MPI_Barrier(parameters_.topology.communicator);
 		FirstStepUpdateV();
 		communicationManager_.communicteV();
-		MPI_Barrier(parameters_.topology.communicator);
 		FirstStepUpdateW();
 		communicationManager_.communicteW();
-		MPI_Barrier(parameters_.topology.communicator);
-		//output.write(i, "./output/");
+
+		if (parameters_.GetOutputFlag()==1) {
+			output.write(i, "./output/");	
+		}
 	}
 	//parameters_.topology.print();
 

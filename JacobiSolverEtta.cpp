@@ -5,7 +5,7 @@
 JacobiSolverEtta::JacobiSolverEtta(const Parameters& parameters, FlowField& flowField):
 	IterativeSolver(parameters, flowField),
 	etta_old_(flowField.GetEtta()){
-		std::cout << "\033[1;31m====Jacobi solver for etta is invoked====\033[0m"	<< std::endl;
+		//std::cout << "\033[1;31m====Jacobi solver for etta is invoked====\033[0m"	<< std::endl;
 	}
 
 void JacobiSolverEtta::updateDomain(){
@@ -86,6 +86,7 @@ void JacobiSolverEtta::solve(){
 	}
 	if (i==MaxIt_)
 		std::cout << "\033[1;31mWARNING\033[0m: solver did not converge; maximum number of iterations was reached." << std::endl;
-	else
-		std::cout << "Jacobi solver converged after " << i << " iterations, the value of error is "<< err_ << std::endl;
+	else{
+		//std::cout << "Jacobi solver converged after " << i << " iterations, the value of error is "<< err_ << std::endl;
+	}
 }

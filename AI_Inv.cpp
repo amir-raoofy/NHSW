@@ -9,7 +9,7 @@ JacobiSolverAI::JacobiSolverAI(const Parameters& parameters, FlowField& flowFiel
 	x_(x),
 	x_old_(x),
 	error_(){
-		std::cout << "\033[1;31m====Jacobi solver for inv [A(i,j)] is invoked====\033[0m"	<< std::endl;
+		//std::cout << "\033[1;31m====Jacobi solver for inv [A(i,j)] is invoked====\033[0m"	<< std::endl;
 	}
 
 void JacobiSolverAI::updateDomain(){

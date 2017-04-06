@@ -14,9 +14,9 @@ CXXFLAGS = -Wall -std=c++11
 INC = -I. $(PETSC_INC) ${PETSC_CC_INCLUDES}
 LIB = $(PETSC_LIB)
 
-obj= Main.o FlowField.o Simulation.o zAz.o zAG.o Run.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o ParallelJacobiSolverEtta.o PetscSolver.o Petsc1DSolver.o Petsc2DSolver.o  PetscSolverEtta.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
+obj= Main.o FlowField.o Simulation.o zAz.o zAG.o Run.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o ParallelJacobiSolverEtta.o  ParallelSolverEtta.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
 
-obj_test= Main.o FlowField.o Simulation.o zAz.o zAG.o TestRun.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o ParallelJacobiSolverEtta.o PetscSolver.o Petsc1DSolver.o Petsc2DSolver.o  PetscSolverEtta.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
+obj_test= Main.o FlowField.o Simulation.o zAz.o zAG.o TestRun.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o ParallelJacobiSolverEtta.o ParallelSolverEtta.o  jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
 
 obj_petsc= Main.o FlowField.o Simulation.o PetscZAZ.o PetscZAG.o Run.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o ParallelJacobiSolverEtta.o PetscSolver.o Petsc1DSolver.o Petsc2DSolver.o PetscSolverEtta.o jacobiSolver.o helper.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
 
@@ -46,27 +46,27 @@ test_petsc: $(obj_petsc_test)
 
 test_run:
 	rm -f output/*
-	mpirun -n 4 ./test 10 10 6 3.5 0.01 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
+	mpirun -n 4 ./test 10 10 6 3.5 0.01 1 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
 
 test_run_petsc:
 	rm -f output/*
-	mpirun -n 4 ./test_petsc 10 10 6 3.5 0.01 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
+	mpirun -n 4 ./test_petsc 10 10 6 3.5 0.01 1 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
 
 run:
 	rm -f output/*
-	./nhsw 10 10 12 3.5 0.1 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
+	./nhsw 10 10 12 3.5 0.1 1 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
 struct:
 	rm -f output/*
-	./nhsw 2 2 2 3.5 0.1 0.5 2.0 2.0 2.0 2.0 9.81 0.000001787 0 0 0 0 > output/log
+	./nhsw 2 2 2 3.5 0.1 1 0.5 2.0 2.0 2.0 2.0 9.81 0.000001787 0 0 0 0 > output/log
 oscilation:
 	rm -f output/*
-	./nhsw 20 20 24 3.5 0.01 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
+	./nhsw 20 20 24 3.5 0.01 1 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 > output/log
 
 dev: all
 	rm -f output/*
-	mpirun -n 1 ./test 4 4 6 3.5 0.01 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0
+	mpirun -n 1 ./test 4 4 6 3.5 0.01 1 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0
 	rm -f output/*
-	mpirun -n 2 ./test 4 4 6 3.5 0.01 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0
+	mpirun -n 2 ./test 4 4 6 3.5 0.01 1 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0
 
 
 clean:

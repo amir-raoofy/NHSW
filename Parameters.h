@@ -21,6 +21,7 @@ private:
 	float _v_a;			// wind speed in y direction
 	float _height;  // free surface water height
 	float _block_size_2d;
+	float _output_flag;
 protected:
 	int _N[3]	;				// Number of cells in xyz directions
 	int _NGlobal[3]	;				// Number of cells in xyz directions
@@ -47,6 +48,7 @@ public:
 	float get_v_a() const;
 	float GetHeight() const;
 	float GetBlockSize2d() const;		// just used for the petsc parallel 2d solver in case of well distributed domains
+	float GetOutputFlag() const;
 
 	Topology& topology;
 };

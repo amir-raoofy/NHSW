@@ -37,12 +37,6 @@ void Simulation::FirstStepUpdateEtta(){
 	etta_solver.solve();
 }
 
-void Simulation::ParallelFirstStepUpdateEtta(){
-	ParallelJacobiSolverEtta etta_solver(parameters_, flowField_, communicationManager_);
-	etta_solver.SetParameters (0.00001,1000);
-	etta_solver.solve();
-}
-
 void Simulation::SecondStepUpdateEtta(){  //TODO check the implementation expecially the index of M and m
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
