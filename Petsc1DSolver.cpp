@@ -67,8 +67,8 @@ void Petsc1DSolver::updateMat(){
 void Petsc1DSolver::updateRHS(){
 
  	VecPlaceArray(b, RHS_[i_][j_].data());
-
-/*	for (Ii=Istart; Ii<Iend; Ii++) {
+	/*
+	for (Ii=Istart; Ii<Iend; Ii++) {
 		v = RHS_[i_][j_][Ii]; VecSetValues(b,1,&Ii,&v,INSERT_VALUES); //TODO optimize this using set more than one value in Petsc
 	}
 	VecAssemblyBegin(b);

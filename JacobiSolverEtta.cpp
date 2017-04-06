@@ -1,5 +1,6 @@
 #include "Solver.h"
 #include <algorithm>
+#include <numeric>
 
 JacobiSolverEtta::JacobiSolverEtta(const Parameters& parameters, FlowField& flowField):
 	IterativeSolver(parameters, flowField),

@@ -40,7 +40,7 @@ void Simulation::Run(){
 	communicationManager_.communicteGK();
 	MPI_Barrier(parameters_.topology.communicator);
 	output.write(0, "./output/");
-	for (int i = 1; i < 200; i++) {
+	for (int i = 1; i < 50; i++) {
 			
 		Updatem();	
 		UpdateM();	
@@ -93,9 +93,8 @@ void Simulation::Run(){
 		FirstStepUpdateW();
 		communicationManager_.communicteW();
 		MPI_Barrier(parameters_.topology.communicator);
-		output.write(i, "./output/");
+		//output.write(i, "./output/");
 	}
-
 	//parameters_.topology.print();
 
 /*	

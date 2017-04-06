@@ -1,6 +1,7 @@
 #include "Solver.h"
 #include <algorithm>    // std::transform
 #include <functional>   // std::plus
+#include <numeric>
 
 JacobiSolverAI::JacobiSolverAI(const Parameters& parameters, FlowField& flowField, DiscreteLine& x, DiscreteLine& rhs):
 	IterativeSolver(parameters, flowField),

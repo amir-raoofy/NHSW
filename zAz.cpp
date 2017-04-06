@@ -1,6 +1,7 @@
 #include "Simulation.h"
 #include "Solver.h"
 #include <algorithm>
+#include <numeric>
 
 void Simulation::CalculateZAZI(){
 	// (dz invA dz)	i+0.5
