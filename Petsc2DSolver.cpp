@@ -56,7 +56,7 @@ void Petsc2DSolver::updateMat(){
 		 	 	 +beta  * flowField_.GetZAZJ()[i][j  ]
 		 	 	 +beta  * flowField_.GetZAZJ()[i][j-1]; 
 		
-			//considering the Nueman bounary condition	
+			//considering the Nueman bounary condition at real boundareis	
 			if ( parameters_.topology.right_id ==-1 && i==parameters_.get_num_cells(0) ) {
 				v -=alpha * flowField_.GetZAZI()[i  ][j];
 			}
@@ -74,27 +74,53 @@ void Petsc2DSolver::updateMat(){
 			}
 
 			MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
-
+			
+			//inner domain elements
 			J=Ii+1;
-			if (parameters_.topology.right_id !=-1 || ( parameters_.topology.right_id ==-1 && i!=parameters_.get_num_cells(0) ) ) {
+			if ( i!=parameters_.get_num_cells(0) ) {
 				v = -alpha * flowField_.GetZAZI()[i  ][j];
 				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
 			}
 
 			J=Ii-1;
-			if (parameters_.topology.left_id !=-1 || ( parameters_.topology.left_id ==-1 && i!=1 ) ) {
+			if ( i!=1 ) {
 				v = -alpha * flowField_.GetZAZI()[i-1][j]; 
 				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
 			}
 
 			J=Ii+parameters_.get_num_cells(0);
-			if (parameters_.topology.front_id !=-1 || ( parameters_.topology.front_id ==-1 && j!=parameters_.get_num_cells(1) ) ) {
+			if ( j!=parameters_.get_num_cells(1) ) {
 				v = -beta  * flowField_.GetZAZJ()[i][j  ];
 				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
 			}
 			
 			J=Ii-parameters_.get_num_cells(0);
-			if (parameters_.topology.back_id !=-1 || ( parameters_.topology.back_id ==-1 && j!=1 ) ) {
+			if ( j!=1 ) {
+				v = -beta  * flowField_.GetZAZJ()[i][j-1];
+				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
+			}
+
+			//domain coupling
+			J=Ii +1 - parameters_.get_num_cells(0) + parameters_.topology.npy * parameters_.GetBlockSize2d();
+			if ( parameters_.topology.right_id !=-1 && i==parameters_.get_num_cells(0) ) {
+				v = -alpha * flowField_.GetZAZI()[i  ][j];
+				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
+			}
+
+			J=Ii -1 + parameters_.get_num_cells(0) - parameters_.topology.npy * parameters_.GetBlockSize2d();
+			if ( parameters_.topology.left_id !=-1 && i==1 ) {
+				v = -alpha * flowField_.GetZAZI()[i-1][j]; 
+				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
+			}
+
+			J=Ii+parameters_.get_num_cells(0);
+			if ( parameters_.topology.front_id !=-1 && j==parameters_.get_num_cells(1 ) ) {
+				v = -beta  * flowField_.GetZAZJ()[i][j  ];
+				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
+			}
+			
+			J=Ii-parameters_.get_num_cells(0);
+			if ( parameters_.topology.back_id !=-1 && j==1 ) {
 				v = -beta  * flowField_.GetZAZJ()[i][j-1];
 				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
 			}
