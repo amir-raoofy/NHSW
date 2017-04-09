@@ -7,4 +7,4 @@ Solver::Solver(const Parameters& parameters, FlowField& flowField):
 IterativeSolver::IterativeSolver(const Parameters& parameters, FlowField& flowField):
 	Solver(parameters, flowField){}
 
-void IterativeSolver::SetParameters(float TOL, int MaxIt){TOL_=TOL; MaxIt_=MaxIt;}
+void IterativeSolver::SetParameters(FLOAT TOL, int MaxIt){TOL_=TOL; MaxIt_=MaxIt;}

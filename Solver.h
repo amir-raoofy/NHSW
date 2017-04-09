@@ -18,7 +18,7 @@ class IterativeSolver: public Solver
 {
 public:	
 	IterativeSolver(const Parameters& parameters, FlowField& flowField);
-	void SetParameters(float TOL, int MaxIt);
+	void SetParameters(FLOAT TOL, int MaxIt);
 protected:
 	FLOAT TOL_;
 	int MaxIt_;
@@ -116,7 +116,7 @@ public:
 	virtual void updateRHS() = 0;
 	virtual	void solve() = 0;	
 	virtual void updateField() = 0;
-	void setParameters(float TOL, int MaxIt);
+	void setParameters(FLOAT TOL, int MaxIt);
 
 protected:
 	Vec            x,b;  

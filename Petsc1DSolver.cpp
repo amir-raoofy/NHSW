@@ -23,10 +23,17 @@ Petsc1DSolver::Petsc1DSolver(const Parameters& parameters, FlowField& flowField,
 	VecSet(x,0.0);
 
 	KSPCreate(PETSC_COMM_SELF,&ksp);
-	KSPSetType(ksp,KSPGMRES);
+
+	PC pc;
+	KSPGetPC(ksp, &pc);
+	PCSetType(pc, PCJACOBI);
+	//PCSetType(pc, PCSOR);
+
+	//KSPSetType(ksp,KSPGMRES);
+	KSPSetType(ksp,KSPCG);
 	KSPSetOperators(ksp,A,A);
 	KSPSetInitialGuessNonzero(ksp,PETSC_TRUE);
-	KSPSetTolerances(ksp,1.e-2/n,1.e-50,PETSC_DEFAULT,PETSC_DEFAULT);
+	KSPSetTolerances(ksp,1.e-50,1.e-5,PETSC_DEFAULT,PETSC_DEFAULT);
 	KSPSetFromOptions(ksp);
 }
 

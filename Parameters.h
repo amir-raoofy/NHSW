@@ -3,25 +3,27 @@
 #include <cstdlib>
 #include <math.h>
 #include <iomanip>
+
 #include "Topology.h"
+#include "data_structure.h"
 
 class Parameters
 {
 private:
-	float _T	;				// Time span of the simulation
-	float _dt	;				// Time-step of the numerical scheme
-	float _theta;				// theta in the numerical scheme
-	float _L[3]	;				// Geometery of the simulation cube
-	float _dX[3];
-	float _g	;			// gravitational constant
-	float _nu	;			// kinmetic viscosity
-	float _gamma_t;		// wind constant
-	float _gamma_b;		// friction constant
-	float _u_a;			// wind speed in x direction
-	float _v_a;			// wind speed in y direction
-	float _height;  // free surface water height
-	float _block_size_2d;
-	float _output_flag;
+	FLOAT _T	;				// Time span of the simulation
+	FLOAT _dt	;				// Time-step of the numerical scheme
+	FLOAT _theta;				// theta in the numerical scheme
+	FLOAT _L[3]	;				// Geometery of the simulation cube
+	FLOAT _dX[3];
+	FLOAT _g	;			// gravitational constant
+	FLOAT _nu	;			// kinmetic viscosity
+	FLOAT _gamma_t;		// wind constant
+	FLOAT _gamma_b;		// friction constant
+	FLOAT _u_a;			// wind speed in x direction
+	FLOAT _v_a;			// wind speed in y direction
+	FLOAT _height;  // free surface water height
+	FLOAT _block_size_2d;
+	FLOAT _output_flag;
 protected:
 	int _N[3]	;				// Number of cells in xyz directions
 	int _NGlobal[3]	;				// Number of cells in xyz directions
@@ -33,22 +35,22 @@ public:
 	void parse(int argc, char * argv[]); 	// method to parse inputs and set the parameters
 	void print_parameters(); 			// print parameters to the consule
 
-	float get_sim_time() const;
-	float GetCubeLength(int dim) const;
-	float get_time_step() const;
+	FLOAT get_sim_time() const;
+	FLOAT GetCubeLength(int dim) const;
+	FLOAT get_time_step() const;
 	int   get_num_cells(int dim) const;
-	float get_dxdydz(int dim) const;
-	float get_vis() const;
-	float get_gamma_b() const;
-	float get_gamma_t() const;
-	float get_viscosity() const;
-	float get_theta() const;
-	float get_g() const;
-	float get_u_a() const;
-	float get_v_a() const;
-	float GetHeight() const;
-	float GetBlockSize2d() const;		// just used for the petsc parallel 2d solver in case of well distributed domains
-	float GetOutputFlag() const;
+	FLOAT get_dxdydz(int dim) const;
+	FLOAT get_vis() const;
+	FLOAT get_gamma_b() const;
+	FLOAT get_gamma_t() const;
+	FLOAT get_viscosity() const;
+	FLOAT get_theta() const;
+	FLOAT get_g() const;
+	FLOAT get_u_a() const;
+	FLOAT get_v_a() const;
+	FLOAT GetHeight() const;
+	FLOAT GetBlockSize2d() const;		// just used for the petsc parallel 2d solver in case of well distributed domains
+	FLOAT GetOutputFlag() const;
 
 	Topology& topology;
 };

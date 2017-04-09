@@ -120,7 +120,7 @@ const DiscreteRectangle& GetWaterSurface() const;
 	
 private:
 	const Parameters& parameters_; 										//reference to the parameters
-	const float height_	;															// reference height of water
+	const FLOAT height_	;															// reference height of water
 
 	/*domain data */
 	// velocity

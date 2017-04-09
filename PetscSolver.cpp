@@ -10,4 +10,4 @@ PetscSolver::~PetscSolver(){
 	MatDestroy(&A);
 }
 
-void PetscSolver::setParameters(float TOL, int MaxIt){TOL_=TOL; MaxIt_=MaxIt;}
+void PetscSolver::setParameters(FLOAT TOL, int MaxIt){TOL_=TOL; MaxIt_=MaxIt;}
