@@ -54,7 +54,6 @@ void Simulation::Run(){
 		UpdateGK();
 		communicationManager_.communicteGK();
 	
-		//TODO FIX BUG communicate the 2d computational fields
 		CalculateZAZI();
 		communicationManager_.communicteZazi();
 		CalculateZAZJ();

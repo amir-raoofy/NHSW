@@ -73,23 +73,17 @@ void Petsc1DSolver::updateMat(){
 //DONE copy z to right handside
 void Petsc1DSolver::updateRHS(){
 
- 	VecPlaceArray(b, RHS_);
-	/*
-	for (Ii=Istart; Ii<Iend; Ii++) {
-		v = RHS_[map(i,j,Ii)]; VecSetValues(b,1,&Ii,&v,INSERT_VALUES); //TODO optimize this using set more than one value in Petsc
+	VecPlaceArray(b, RHS_+(map(i,j,0)));
+	
 	}
-	VecAssemblyBegin(b);
-	VecAssemblyEnd(b);
-	*/
-}
 
-//TODO copy result back to the routine
 void Petsc1DSolver::solve(){
 	KSPSolve(ksp,b,x);
 	KSPGetIterationNumber(ksp,&its);
 }
 
 void Petsc1DSolver::updateField(){
+	
 	VecDot(b,x,&v);
 	resultField_[map(i,j)]=v;
 
