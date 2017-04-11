@@ -58,26 +58,26 @@ void Petsc2DSolver::updateMat(){
 		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
 			Ii= (i-1) + (j-1) * parameters_.get_num_cells(0) + parameters_.topology.id * parameters_.GetBlockSize2d();
 			J = Ii;
-			v = 1+alpha * flowField_.GetZAZI()[i  ][j]
-				 +alpha * flowField_.GetZAZI()[i-1][j]
-		 	 	 +beta  * flowField_.GetZAZJ()[i][j  ]
-		 	 	 +beta  * flowField_.GetZAZJ()[i][j-1]; 
+			v = 1+alpha * flowField_.zaz_i[map(i,j)]
+				 +alpha * flowField_.zaz_i[map(i-1,j)]
+		 	 	 +beta  * flowField_.zaz_j[map(i,j)]
+		 	 	 +beta  * flowField_.zaz_j[map(i,j-1)]; 
 		
 			//considering the Nueman bounary condition at real boundareis	
 			if ( parameters_.topology.right_id ==-1 && i==parameters_.get_num_cells(0) ) {
-				v -=alpha * flowField_.GetZAZI()[i  ][j];
+				v -=alpha * flowField_.zaz_i[map(i,j)];
 			}
 
 			if ( parameters_.topology.left_id ==-1 && i==1 ) {
-				v -=alpha * flowField_.GetZAZI()[i-1][j]; 
+				v -=alpha * flowField_.zaz_i[map(i-1,j)]; 
 			}
 
 			if ( parameters_.topology.front_id ==-1 && j==parameters_.get_num_cells(1 ) ) {
-				v -=beta  * flowField_.GetZAZJ()[i][j  ];
+				v -=beta  * flowField_.zaz_j[map(i,j)];
 			}
 
 			if ( parameters_.topology.back_id ==-1 && j==1 ) {
-				v -=beta  * flowField_.GetZAZJ()[i][j-1];
+				v -=beta  * flowField_.zaz_j[map(i,j-1)];
 			}
 
 			MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
@@ -85,50 +85,50 @@ void Petsc2DSolver::updateMat(){
 			//inner domain elements
 			J=Ii+1;
 			if ( i!=parameters_.get_num_cells(0) ) {
-				v = -alpha * flowField_.GetZAZI()[i  ][j];
+				v = -alpha * flowField_.zaz_i[map(i,j)];
 				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
 			}
 
 			J=Ii-1;
 			if ( i!=1 ) {
-				v = -alpha * flowField_.GetZAZI()[i-1][j]; 
+				v = -alpha * flowField_.zaz_i[map(i-1,j)]; 
 				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
 			}
 
 			J=Ii+parameters_.get_num_cells(0);
 			if ( j!=parameters_.get_num_cells(1) ) {
-				v = -beta  * flowField_.GetZAZJ()[i][j  ];
+				v = -beta  * flowField_.zaz_j[map(i,j)];
 				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
 			}
 			
 			J=Ii-parameters_.get_num_cells(0);
 			if ( j!=1 ) {
-				v = -beta  * flowField_.GetZAZJ()[i][j-1];
+				v = -beta  * flowField_.zaz_j[map(i,j-1)];
 				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
 			}
 
 			//domain coupling
 			J=Ii +1 - parameters_.get_num_cells(0) + parameters_.topology.npy * parameters_.GetBlockSize2d();
 			if ( parameters_.topology.right_id !=-1 && i==parameters_.get_num_cells(0) ) {
-				v = -alpha * flowField_.GetZAZI()[i  ][j];
+				v = -alpha * flowField_.zaz_i[map(i,j)];
 				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
 			}
 
 			J=Ii -1 + parameters_.get_num_cells(0) - parameters_.topology.npy * parameters_.GetBlockSize2d();
 			if ( parameters_.topology.left_id !=-1 && i==1 ) {
-				v = -alpha * flowField_.GetZAZI()[i-1][j]; 
+				v = -alpha * flowField_.zaz_i[map(i-1,j)]; 
 				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
 			}
 
 			J=Ii+parameters_.get_num_cells(0);
 			if ( parameters_.topology.front_id !=-1 && j==parameters_.get_num_cells(1 ) ) {
-				v = -beta  * flowField_.GetZAZJ()[i][j  ];
+				v = -beta  * flowField_.zaz_j[map(i,j)];
 				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
 			}
 			
 			J=Ii-parameters_.get_num_cells(0);
 			if ( parameters_.topology.back_id !=-1 && j==1 ) {
-				v = -beta  * flowField_.GetZAZJ()[i][j-1];
+				v = -beta  * flowField_.zaz_j[map(i,j-1)];
 				MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES);
 			}
 
@@ -157,11 +157,11 @@ void Petsc2DSolver::updateRHS(){
 	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
 		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
 			Ii= (i-1) + (j-1) * parameters_.get_num_cells(0) + parameters_.topology.id * parameters_.GetBlockSize2d();
-			v=  		 flowField_.GetDelta()[i][j]
-				-kappa * flowField_.GetZAGI()[i  ][j]
-				+kappa * flowField_.GetZAGI()[i-1][j]
-				-lambda* flowField_.GetZAGJ()[i][j  ]
-				+lambda* flowField_.GetZAGJ()[i][j-1];
+			v=  		 flowField_.delta[map(i,j)]
+				-kappa * flowField_.zag_i[map(i,j)]
+				+kappa * flowField_.zag_i[map(i-1,j)]
+				-lambda* flowField_.zag_j[map(i,j)]
+				+lambda* flowField_.zag_j[map(i,j-1)];
 			VecSetValues(b,1,&Ii,&v,INSERT_VALUES);
 
 	   	}
@@ -188,18 +188,18 @@ void Petsc2DSolver::updateField(){
 		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
 			Ii= (i-1) + (j-1) * parameters_.get_num_cells(0) + parameters_.topology.id * parameters_.GetBlockSize2d();
 			VecGetValues(x,1,&Ii,&v);
-			flowField_.SetEtta()[i][j]=v;
+			flowField_.etta[map(i,j)]=v;
 		}
 	}
 
 	// B
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-		flowField_.SetEtta()[0][j]=flowField_.GetEtta()[1][j];								//left
-		flowField_.SetEtta()[parameters_.get_num_cells(0)+1][j]=flowField_.GetEtta()[parameters_.get_num_cells(0)][j];	//right
+		flowField_.etta[map(0,j)]=flowField_.etta[map(1,j)];								//left
+		flowField_.etta[map(parameters_.get_num_cells(0)+1,j)]=flowField_.etta[map(parameters_.get_num_cells(0),j)];	//right
 	}
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		flowField_.SetEtta()[i][0]=flowField_.GetEtta()[i][1];								//back
-		flowField_.SetEtta()[i][parameters_.get_num_cells(1)+1]=flowField_.GetEtta()[i][parameters_.get_num_cells(1)];	//front
+		flowField_.etta[map(i,0)]=flowField_.etta[map(i,1)];								//back
+		flowField_.etta[map(i,parameters_.get_num_cells(1)+1)]=flowField_.etta[map(i,parameters_.get_num_cells(1))];	//front
 	}
 
 	VecResetArray(b);

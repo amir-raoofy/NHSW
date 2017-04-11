@@ -26,6 +26,8 @@ obj_petsc_test= Main.o FlowField.o Simulation.o PetscZAZ.o PetscZAG.o TestRun.o 
 
 obj_fix= main.o FlowField.o Parameters.o Topology.o Simulation.o TestRun.o Etta.o Delta.o m.o M.o U.o V.o W.o Dz.o Solver.o AI_Inv.o  AJ_Inv.o GI.o GJ.o GK.o zAz.o zAG.o JacobiSolverEtta.o ParallelSolverEtta.o ParallelJacobiSolverEtta.o output.o CommunicationManager.o
 
+obj_petsc_fix= main.o FlowField.o Parameters.o Topology.o Simulation.o TestRun.o Etta.o Delta.o m.o M.o U.o V.o W.o Dz.o Solver.o AI_Inv.o  AJ_Inv.o GI.o GJ.o GK.o zAz.o zAG.o JacobiSolverEtta.o PetscSolverEtta.o ParallelJacobiSolverEtta.o output.o CommunicationManager.o PetscSolver.o Petsc1DSolver.o Petsc2DSolver.o
+
 
 all: nhsw nhsw_petsc test test_petsc
 
@@ -33,6 +35,10 @@ all: nhsw nhsw_petsc test test_petsc
 	$(CXX) $(CXXFLAGS) $(INC) $(LIB) -c -o $@ $<
 
 fix: $(obj_fix)
+	$(CXX) $(CXXFLAGS) $(INC)  -o $@ $+ $(LIB)
+	mkdir -p output
+
+petsc_fix: $(obj_petsc_fix)
 	$(CXX) $(CXXFLAGS) $(INC)  -o $@ $+ $(LIB)
 	mkdir -p output
 
@@ -79,7 +85,7 @@ dev: all
 
 clean:
 	rm -f *.o core.*
-	rm -f nhsw nhsw_petsc test test_petsc fix
+	rm -f nhsw nhsw_petsc test test_petsc fix petsc_fix
 	rm -rf output
 clear:
 	rm -f output/*

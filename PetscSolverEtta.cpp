@@ -1,7 +1,7 @@
 #include "Simulation.h"
 #include "Solver.h"
 
-void Simulation::ParallelFirstStepUpdateEtta(){
+void Simulation::ParallelUpdateEtta(){
 	Petsc2DSolver etta_solver(parameters_, flowField_);
 	etta_solver.updateMat();
 	etta_solver.updateRHS();

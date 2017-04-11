@@ -124,7 +124,7 @@ class Petsc1DSolver: public PetscSolver
 {
 public:
 
-	Petsc1DSolver(const Parameters& parameters, FlowField& flowField, const FLOAT* Dz, const FLOAT* RHS, FLOAT* resultField);
+	Petsc1DSolver(const Parameters& parameters, FlowField& flowField, FLOAT* Dz, FLOAT* RHS, FLOAT* resultField);
 	~Petsc1DSolver();
 	
 	void updateMat();
@@ -137,8 +137,8 @@ protected:
 	PetscErrorCode ierr;
 	PetscScalar    v;
 
-	const FLOAT* Dz_;
-	const FLOAT* RHS_;
+	FLOAT* Dz_;
+	FLOAT* RHS_;
 	FLOAT* resultField_;
 	int i;
 	int j;
