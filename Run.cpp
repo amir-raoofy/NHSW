@@ -7,9 +7,7 @@
 void Simulation::Run(){
 
 	Output output(parameters_, flowField_);
-			
 	InitEtta();
-//	InitEttaBoundaries();
 	Initm();									//DONE TESTED
 	InitM();									//DONE TESTED
 	InitDzI();								//DONE TESTED
@@ -18,57 +16,36 @@ void Simulation::Run(){
 	InitU();									//DONE TESTED
 	InitV();									//DONE TESTED
 	InitW();									//DONE TESTED
-	InitQ();									//DONE TESTED
 	InitGI();									//DONE TESTED
 	InitGJ();									//DONE TESTED
 	InitGK();									//TODO test
 	//initialization is finished
 	//time step
 	output.write(0, "./output/");
+	
 	for (int i = 0; i < 100; i++) {
+		std::cout << "here" << std::endl;
 		Updatem();					//redundant for the very first time step
 		UpdateM();					//redundant for the very first time step
-
-		/*	//these methods are depricated
-		UpdateCellNumberDzI();	//TODO test
-		UpdateCellNumberDzJ();	//TODO test
-		UpdateCellNumberDzK();	//TODO test
-		UpdateCellNumberU();		//TODO test
-		UpdateCellNumberV();		//TODO test
-		UpdateCellNumberW();		//TODO test
-		UpdateCellNumberQ();		//TODO test
-		UpdateCellNumberGI();		//TODO test
-		UpdateCellNumberGJ();		//TODO test
-		UpdateCellNumberGK();		//TODO test
-		*/
-
 		UpdateDzI();						//TODO test
 		UpdateDzJ();						//TODO test
 		UpdateDzK();						//TODO test
 		UpdateGI();							//TODO test
 		UpdateGJ();							//TODO test
 		UpdateGK();							//TODO test
+		
 
 		CalculateZAZI();
 		CalculateZAZJ();
 		CalculateZAGI();
 		CalculateZAGJ();
 		CalculateDelta();
-		FirstStepUpdateEtta();
-		FirstStepUpdateU();
-		FirstStepUpdateV();
-		FirstStepUpdateW();		//TODO test
+		flowField_.PrintDelta();
+		UpdateEtta();
+		UpdateU();
+		UpdateV();
+		UpdateW();		//TODO test
+
 		output.write(i+1, "./output/");
-
-		//TODO check and take care of the boundary conditions more carefully specially at top and bottom and especially for the pressure equation 
-		//for which the BC should be replaced by neuman.
-		//SolveQ();								//TODO check
-		//SecondStepUpdateU();		//TODO check
-		//SecondStepUpdateV();		//TODO check
-		//SecondStepUpdateW();		//TODO check
-		//SecondStepUpdateEtta();	//TODO check
-
 	}
 }
-
-//TODO make all the solvers members of Simulation

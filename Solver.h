@@ -1,7 +1,9 @@
 #include "Parameters.h"
 #include "FlowField.h"
-#include "CommunicationManager.h"
+//#include "CommunicationManager.h"
+#include "helper.h"
 #include <petscksp.h>
+
 
 class Solver
 {
@@ -12,6 +14,9 @@ public:
 protected:
 	const Parameters& parameters_;
 	FlowField& flowField_;
+	inline int map(int i, int j) { return flowField_.map(i,j);}
+	inline int map(int i, int j, int k) { return flowField_.map(i,j,k);}
+
 };
 
 class IterativeSolver: public Solver
@@ -33,18 +38,18 @@ private:
 class JacobiSolverAI: public IterativeSolver
 {
 public:
-	JacobiSolverAI(const Parameters& parameters, FlowField& flowField, DiscreteLine& x, DiscreteLine& rhs);
+	JacobiSolverAI(const Parameters& parameters, FlowField& flowField, FLOAT* x, FLOAT* rhs);
+	~JacobiSolverAI();
 	void solve();
-	void SetBuffer(DiscreteLine& x);
-	void SetRhs(DiscreteLine& rhs);
+	void SetBuffer(FLOAT* x);
+	void SetRhs(FLOAT* rhs);
 	void SetIndices(int i, int j);
 protected:
-	int i_;
-	int j_;
-	DiscreteLine& rhs_;
-	DiscreteLine& x_;
-	DiscreteLine x_old_;
-	DiscreteLine error_;
+	int i;
+	int j;
+	FLOAT* rhs_;
+	FLOAT* x_;
+	FLOAT* x_old_;
 	virtual void updateDomain();
 	virtual void updateBoundary();
 	virtual void updateError();
@@ -53,7 +58,7 @@ protected:
 
 class JacobiSolverAJ: public JacobiSolverAI{
 public:
-	JacobiSolverAJ(const Parameters& parameters, FlowField& flowField, DiscreteLine& x, DiscreteLine& rhs);
+	JacobiSolverAJ(const Parameters& parameters, FlowField& flowField, FLOAT* x, FLOAT* rhs);
 protected:
 	void updateDomain();
 	void updateBoundary();
@@ -61,7 +66,7 @@ protected:
 
 class JacobiSolverAK: public JacobiSolverAI{
 public:
-	JacobiSolverAK(const Parameters& parameters, FlowField& flowField, DiscreteLine& x, DiscreteLine& rhs);
+	JacobiSolverAK(const Parameters& parameters, FlowField& flowField, FLOAT* x, FLOAT* rhs);
 protected:
 	void updateDomain();
 	void updateBoundary();
@@ -73,14 +78,14 @@ public:
 	JacobiSolverEtta(const Parameters& parameters, FlowField& flowField);
 	void solve();
 protected:
-	DiscreteRectangle etta_old_;
-	DiscreteRectangle error_;
+	FLOAT* etta_old_;
+	FLOAT* error_;
 	void updateDomain();
 	void updateBoundary();
 	void updateError();
 	virtual void iterate();
 };
-
+/*
 class ParallelJacobiSolverEtta: public JacobiSolverEtta
 {
 public:
@@ -91,21 +96,7 @@ protected:
 private: 
 	CommunicationManager &communicationManager_;
 };
-
-class JacobiSolverQ: public IterativeSolver
-{
-public:
-	JacobiSolverQ(const Parameters& parameters, FlowField& flowField);
-	void solve();
-protected:
-	DiscreteCube Q_old_;
-	DiscreteCube error_;
-	void updateDomain();
-	void updateBoundary();
-	void updateError();
-	void iterate();
-};
-
+*/
 class PetscSolver: public Solver
 {
 public:
@@ -133,7 +124,7 @@ class Petsc1DSolver: public PetscSolver
 {
 public:
 
-	Petsc1DSolver(const Parameters& parameters, FlowField& flowField, const DiscreteCube& Dz, const DiscreteCube& RHS, DiscreteRectangle& resultField);
+	Petsc1DSolver(const Parameters& parameters, FlowField& flowField, const FLOAT* Dz, const FLOAT* RHS, FLOAT* resultField);
 	~Petsc1DSolver();
 	
 	void updateMat();
@@ -146,11 +137,11 @@ protected:
 	PetscErrorCode ierr;
 	PetscScalar    v;
 
-	const DiscreteCube& Dz_;
-	const DiscreteCube& RHS_;
-	DiscreteRectangle& resultField_;
-	int i_;
-	int j_;
+	const FLOAT* Dz_;
+	const FLOAT* RHS_;
+	FLOAT* resultField_;
+	int i;
+	int j;
 };
 
 class Petsc2DSolver: public PetscSolver

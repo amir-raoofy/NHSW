@@ -2,7 +2,7 @@
 #include "Parameters.h"
 #include "data_structure.h"
 
-/* @class FlowField
+/* @breif class FlowField
  * this class abstracts the field attribute inside the domain
  * and the boundaries for the solver
  * this class stores the simulation data.
@@ -23,7 +23,6 @@ public:
 	void printU(int it=0);
 	void printV(int it=0);
 	void printW(int it=0);
-	void printQ(int it=0);
 	void printGI(int it=0);
 	void printGJ(int it=0);
 	void printGK(int it=0);
@@ -34,144 +33,49 @@ public:
 	void PrintDelta(int it=0);
 
 	// methods	
-	// getters
-	const	DiscreteCube& GetU() const;
-	const DiscreteCube& GetV() const;
-	const DiscreteCube& GetW() const;
-	const DiscreteRectangle& GetEtta() const;
-	const DiscreteRectangle& GetDelta() const;
-	const DiscreteRectangle& GetZAZI() const;
-	const DiscreteRectangle& GetZAZJ() const;
-	const DiscreteRectangle& GetZAGI() const;
-	const DiscreteRectangle& GetZAGJ() const;
-const DiscreteRectangle& GetWaterSurface() const;
-	const RectangleFlagField& Getm() const;
-	const RectangleFlagField& GetM() const;
-	const DiscreteCube& GetGI() const;
-	const DiscreteCube& GetGJ() const;
-	const DiscreteCube& GetGK() const;
-	const DiscreteCube& GetDzI() const;
-	const DiscreteCube& GetDzJ() const;
-	const DiscreteCube& GetDzK() const;
-	const DiscreteCube& GetQ() const;
+	int* mem_allocate_2d_int();
+	FLOAT* mem_allocate_2d_float();
+	FLOAT* mem_allocate_3d_float();
+	void init_field_2d_int(int* field);
+	void init_field_2d_float(FLOAT* field);
+	void init_field_3d_float(FLOAT* field);
 
-	const DiscreteCube& GetBoundariesU() const;
-	const DiscreteCube& GetBoundariesV() const;
-	const DiscreteCube& GetBoundariesW() const;
-	const DiscreteRectangle& GetBoundariesEtta() const;
-	const DiscreteCube& GetBoundariesGI() const;
-	const DiscreteCube& GetBoundariesGJ() const;
-	const DiscreteCube& GetBoundariesDzI() const;
-	const DiscreteCube& GetBoundariesDzJ() const;
-	const DiscreteCube& GetBoundariesQ() const;
 
-	//DONE declare setters
-	void SetU(DiscreteCube& u);
-	void SetV(DiscreteCube& v);
-	void SetW(DiscreteCube& w);
-	void SetEtta(DiscreteRectangle& etta);
-	void SetDelta(DiscreteRectangle& delta);
-	void Setm(RectangleFlagField& m);
-	void SetM(RectangleFlagField& M);
-	void SetGI(DiscreteCube& g_i);
-	void SetGJ(DiscreteCube& g_j);
-	void SetDzI(DiscreteCube& dz_i);
-	void SetDzJ(DiscreteCube& dz_j);
-	void SetQ(DiscreteCube& q);
+	inline int map(int i, int j){return j+i*(parameters_.get_num_cells(1)+2);}
+	inline int map(int i, int j, int k){return k+j*parameters_.get_num_cells(2)
+										        +i*(parameters_.get_num_cells(1)+2)*parameters_.get_num_cells(2);}
 
-	void SetBoundariesU(DiscreteCube u_boundaries);
-	void SetBoundariesV(DiscreteCube v_boundaries);
-	void SetBoundariesW(DiscreteCube w_boundaries);
-	void SetBoundariesEtta(DiscreteRectangle etta_boundaries);
-	void SetBoundariesGI(DiscreteCube g_i_boundaries);
-	void SetBoundariesGJ(DiscreteCube g_j_boundaries);
-	void SetBoundariesDzI(DiscreteCube dz_i_boundaries);
-	void SetBoundariesDzJ(DiscreteCube dz_j_boundaries);
-	void SetBoundariesQ(DiscreteCube q_boundaries);
-	//overloadted setters
-	DiscreteCube& SetU();
-	DiscreteCube& SetV();
-	DiscreteCube& SetW();
-	DiscreteRectangle& SetEtta();
-	DiscreteRectangle& SetDelta();
-	DiscreteRectangle& SetZAZI();
-	DiscreteRectangle& SetZAZJ();
-	DiscreteRectangle& SetZAGI();
-	DiscreteRectangle& SetZAGJ();
-	RectangleFlagField& Setm();
-	RectangleFlagField& SetM();
-	DiscreteCube& SetGI();
-	DiscreteCube& SetGJ();
-	DiscreteCube& SetGK();
-	DiscreteCube& SetDzI();
-	DiscreteCube& SetDzJ();
-	DiscreteCube& SetDzK();
-	DiscreteCube& SetQ();
+	// velocity
+	FLOAT* u; 																	// velocity field data domain
+	FLOAT* v;
+	FLOAT* w;
 
-	DiscreteCube& SetBoundariesU();
-	DiscreteCube& SetBoundariesV();
-	DiscreteCube& SetBoundariesW();
-	DiscreteRectangle& SetBoundariesEtta();
-	DiscreteCube& SetBoundariesGI();
-	DiscreteCube& SetBoundariesGJ();
-	DiscreteCube& SetBoundariesDzI();
-	DiscreteCube& SetBoundariesDzJ();
-	DiscreteCube& SetBoundariesQ();
+	// g_ij
+	FLOAT* g_i;																// intermediate clac. functions
+	FLOAT* g_j;
+	FLOAT* g_k;
+	
+	// dz
+	FLOAT* dz_i;																// data of delta_z of all cells
+	FLOAT* dz_j;
+	FLOAT* dz_k;
+
+	// elevation
+	FLOAT* etta;													// free surface heaight elevation
+
+	// intermediate buffer for elevation
+	FLOAT* delta;													// intermediate buffer
+	FLOAT* zaz_i;													// intermediate buffer
+	FLOAT* zaz_j;													// intermediate buffer
+	FLOAT* zag_i;													// intermediate buffer
+	FLOAT* zag_j;													// intermediate buffer
+
+	// higher and lower indices for 3rd dimension iteration
+	int* m	;														// discretized bathymetry
+	int* M	;														// discretized height of water
 	
 private:
 	const Parameters& parameters_; 										//reference to the parameters
 	const FLOAT height_	;															// reference height of water
 
-	/*domain data */
-	// velocity
-	DiscreteCube u_; 																	// velocity field data domain
-	DiscreteCube v_;
-	DiscreteCube w_;
-
-	// g_ij
-	DiscreteCube g_i_;																// intermediate clac. functions
-	DiscreteCube g_j_;
-	DiscreteCube g_k_;
-	
-	// dz
-	DiscreteCube dz_i_;																// data of delta_z of all cells
-	DiscreteCube dz_j_;
-	DiscreteCube dz_k_;
-
-	// non hydrostatic pressure
-	DiscreteCube q_;																	// data for non-hydro-static pressure
-
-	// elevation
-	DiscreteRectangle etta_;													// free surface heaight elevation
-
-	// intermediate buffer for elevation
-	DiscreteRectangle delta_;													// intermediate buffer
-	DiscreteRectangle zaz_i_;													// intermediate buffer
-	DiscreteRectangle zaz_j_;													// intermediate buffer
-	DiscreteRectangle zag_i_;													// intermediate buffer
-	DiscreteRectangle zag_j_;													// intermediate buffer
-
-	// higher and lower indices for 3rd dimension iteration
-	RectangleFlagField m_	;														// discretized bathymetry
-	RectangleFlagField M_	;														// discretized height of water
-
-	/* boundary data */
-	// velocity boundaries
-	DiscreteCube u_boundaries_;												// u boundaries
-	DiscreteCube v_boundaries_;												// v boundaries
-	DiscreteCube w_boundaries_;												// w boundaries
-
-	// g_ij boundaries
-	DiscreteCube g_i_boundaries_;											// boundaries for g_i
-	DiscreteCube g_j_boundaries_;											// boundaries for g_j
-
-	// boundaries for dz
-	DiscreteCube dz_i_boundaries_;											// boundaries for dz_i
-	DiscreteCube dz_j_boundaries_;											// boundaries for dz_j
-
-	// boundaries for q
-	DiscreteCube q_boundaries_;												// boundaries for non hydrostatic pressure
-
-	// boundaries for etta
-	DiscreteRectangle etta_boundaries_; 								// boundaries for surface elevation
 };

@@ -4,70 +4,54 @@ void Simulation::InitGJ(){
 	// Domain (for i and j) but Domain + Boundary for k
 	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
 		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-			for (int k = flowField_.Getm()[i][j]; k <= flowField_.GetM()[i][j] ; k++) {
-				flowField_.SetGJ()[i][j][k]=
+			for (int k = flowField_.m[map(i,j)]; k <= flowField_.M[map(i,j)] ; k++) {
+				flowField_.g_j[map(i,j,k)]=
 					(
 					//convection terms
-//					parameters_.get_sim_time()*flowField_.GetV()[i][j][k]
-					flowField_.GetV()[i][j][k]
-					+parameters_.get_time_step()*(flowField_.GetU() [i][j][k]+flowField_.GetU() [i][j+1][k]+flowField_.GetU() [i-1][j][k]+flowField_.GetU() [i-1][j+1][k])/4 *( (flowField_.GetV()[i][j][k]+flowField_.GetV()[i+1][j][k])/2 - (flowField_.GetV()[i][j][k]+flowField_.GetV()[i-1][j][k])/2 ) / parameters_.get_dxdydz(0)
-					+parameters_.get_time_step()*flowField_.GetV() [i][j][k] * ( (flowField_.GetV()[i][j+1][k]+flowField_.GetV()[i][j][k])/2 - (flowField_.GetV()[i][j][k]+flowField_.GetV()[i][j-1][k])/2 ) / parameters_.get_dxdydz(1)
-					+parameters_.get_time_step()*(flowField_.GetW() [i][j][k]+flowField_.GetW() [i][j+1][k]+flowField_.GetW() [i][j][k-1]+flowField_.GetW() [i][j+1][k-1])/4 *( (flowField_.GetV()[i][j][k]+flowField_.GetV()[i][j][k+1])/2 - (flowField_.GetV()[i][j][k]+flowField_.GetV()[i][j][k-1])/2 ) / flowField_.GetDzJ()[i][j][k]
-//+					 flowField_.GetU() [i][j][k] * (flowField_.GetV()[i][j][k] - flowField_.GetV()[i-1][j][k]) / parameters_.get_dxdydz(0)
-//					+flowField_.GetV() [i][j][k] * (flowField_.GetV()[i][j][k] - flowField_.GetV()[i][j-1][k]) / parameters_.get_dxdydz(1)
-//					+flowField_.GetW() [i][j][k] * (flowField_.GetV()[i][j][k] - flowField_.GetV()[i][j][k-1]) / ( (flowField_.GetDzJ()[i][j][k]+flowField_.GetDzJ()[i][j][k-1])/2 )
+//					parameters_.get_sim_time()*flowField_.v[map(i,j,k)]
+					flowField_.v[map(i,j,k)]
+					+parameters_.get_time_step()*(flowField_.u [map(i,j,k)]+flowField_.u [map(i,j+1,k)]+flowField_.u [map(i-1,j,k)]+flowField_.u [map(i-1,j+1,k)])/4 *( (flowField_.v[map(i,j,k)]+flowField_.v[map(i+1,j,k)])/2 - (flowField_.v[map(i,j,k)]+flowField_.v[map(i-1,j,k)])/2 ) / parameters_.get_dxdydz(0)
+					+parameters_.get_time_step()*flowField_.v [map(i,j,k)] * ( (flowField_.v[map(i,j+1,k)]+flowField_.v[map(i,j,k)])/2 - (flowField_.v[map(i,j,k)]+flowField_.v[map(i,j-1,k)])/2 ) / parameters_.get_dxdydz(1)
+					+parameters_.get_time_step()*(flowField_.w [map(i,j,k)]+flowField_.w [map(i,j+1,k)]+flowField_.w [map(i,j,k-1)]+flowField_.w [map(i,j+1,k-1)])/4 *( (flowField_.v[map(i,j,k)]+flowField_.v[map(i,j,k+1)])/2 - (flowField_.v[map(i,j,k)]+flowField_.v[map(i,j,k-1)])/2 ) / flowField_.dz_j[map(i,j,k)]
+//+					 flowField_.u [map(i,j,k)] * (flowField_.v[map(i,j,k)] - flowField_.v[map(i-1,j,k)]) / parameters_.get_dxdydz(0)
+//					+flowField_.v [map(i,j,k)] * (flowField_.v[map(i,j,k)] - flowField_.v[map(i,j-1,k)]) / parameters_.get_dxdydz(1)
+//					+flowField_.w [map(i,j,k)] * (flowField_.v[map(i,j,k)] - flowField_.v[map(i,j,k-1)]) / ( (flowField_.dz_j[map(i,j,k)]+flowField_.dz_j[map(i,j,k-1)])/2 )
 					//horizontal diffusion terms
-					+parameters_.get_time_step()*parameters_.get_viscosity() * (flowField_.GetV()[i+1][j][k] - 2 * flowField_.GetV()[i][j][k] + flowField_.GetV()[i-1][j][k]) / (parameters_.get_dxdydz(0) * parameters_.get_dxdydz(0))
-					+parameters_.get_time_step()*parameters_.get_viscosity() * (flowField_.GetV()[i][j+1][k] - 2 * flowField_.GetV()[i][j][k] + flowField_.GetV()[i][j-1][k]) / (parameters_.get_dxdydz(1) * parameters_.get_dxdydz(1))
+					+parameters_.get_time_step()*parameters_.get_viscosity() * (flowField_.v[map(i+1,j,k)] - 2 * flowField_.v[map(i,j,k)] + flowField_.v[map(i-1,j,k)]) / (parameters_.get_dxdydz(0) * parameters_.get_dxdydz(0))
+					+parameters_.get_time_step()*parameters_.get_viscosity() * (flowField_.v[map(i,j+1,k)] - 2 * flowField_.v[map(i,j,k)] + flowField_.v[map(i,j-1,k)]) / (parameters_.get_dxdydz(1) * parameters_.get_dxdydz(1))
 					//hydrostatic pressure
-					-(1-parameters_.get_theta()) * (parameters_.get_time_step() / parameters_.get_dxdydz(1)) * (flowField_.GetEtta()[i][j+1]-flowField_.GetEtta()[i][j]) * parameters_.get_g()
-					-(1-parameters_.get_theta()) * (parameters_.get_time_step() / parameters_.get_dxdydz(1)) * (flowField_.GetQ()[i][j+1][k]-flowField_.GetQ()[i][j][k])
-					) * flowField_.GetDzJ()[i][j][k];
+					-(1-parameters_.get_theta()) * (parameters_.get_time_step() / parameters_.get_dxdydz(1)) * (flowField_.etta[map(i,j+1)]-flowField_.etta[map(i,j)]) * parameters_.get_g()
+					) * flowField_.dz_j[map(i,j,k)];
 			}
-			flowField_.SetGJ()[i][j][flowField_.GetM()[i][j]] += parameters_.get_gamma_t() * parameters_.get_time_step() * parameters_.get_v_a();
+			flowField_.g_j[map(i,j,flowField_.M[map(i,j)])] += parameters_.get_gamma_t() * parameters_.get_time_step() * parameters_.get_v_a();
 		}
 	}
 	// Boundary
 	//left
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.SetGJ()[0][j][k]=flowField_.SetGJ()[1][j][k];
+			flowField_.g_j[map(0,j,k)]=flowField_.g_j[map(1,j,k)];
 		}
 	}
 	//right
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.SetGJ()[parameters_.get_num_cells(0)+1][j][k]=flowField_.SetGJ()[parameters_.get_num_cells(0)][j][k];
+			flowField_.g_j[map(parameters_.get_num_cells(0)+1,j,k)]=flowField_.g_j[map(parameters_.get_num_cells(0),j,k)];
 		}
 	}
 	//bottom
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			//flowField_.SetGJ()[i][0].push_back(flowField_.SetGJ()[i][1][k]);
-			flowField_.SetGJ()[i][0][k]=0.0;
+			//flowField_.g_j[i][0].push_back(flowField_.g_j[map(i,1,k)]);
+			flowField_.g_j[map(i,0,k)]=0.0;
 		}
 	}
 	//top
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			//flowField_.SetGJ()[i][parameters_.get_num_cells(0)+1].push_back(flowField_.SetGJ()[i][parameters_.get_num_cells(0)][k]);
-			flowField_.SetGJ()[i][parameters_.get_num_cells(1)+1][k]=0.0;
-			//flowField_.SetGJ()[i][parameters_.get_num_cells(1)  ][k]=0.0;
-		}
-	}
-}
-
-void Simulation::UpdateCellNumberGJ(){
-	//Adjust the cell numbers
-	//Domain and boundary
-	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-			while (flowField_.GetGJ()[i][j].size() < (unsigned)(flowField_.GetM()[i][j] - flowField_.Getm()[i][j] + 1)) {
-				flowField_.SetGJ()[i][j].push_back(0.0);
-			}
-			while (flowField_.GetGJ()[i][j].size() > (unsigned)(flowField_.GetM()[i][j] - flowField_.Getm()[i][j] + 1)) {
-				flowField_.SetGJ()[i][j].pop_back();
-			}
+			//flowField_.g_j[i][parameters_.get_num_cells(0)+1].push_back(flowField_.g_j[i][parameters_.get_num_cells(0)][k]);
+			flowField_.g_j[map(i,parameters_.get_num_cells(1)+1,k)]=0.0;
+			//flowField_.g_j[i][parameters_.get_num_cells(1)  ][k]=0.0;
 		}
 	}
 }
@@ -76,55 +60,54 @@ void Simulation::UpdateGJ(){
 	// Domain (for i and j) but Domain + Boundary for k
 	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
 		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-			for (int k = flowField_.Getm()[i][j]; k <= flowField_.GetM()[i][j] ; k++) {
-				flowField_.SetGJ()[i][j][k]=
+			for (int k = flowField_.m[map(i,j)]; k <= flowField_.M[map(i,j)] ; k++) {
+				flowField_.g_j[map(i,j,k)]=
 					(
 					//convection terms
-//					parameters_.get_sim_time()*flowField_.GetV()[i][j][k]
-					flowField_.GetV()[i][j][k]
-					+parameters_.get_time_step()*(flowField_.GetU() [i][j][k]+flowField_.GetU() [i][j+1][k]+flowField_.GetU() [i-1][j][k]+flowField_.GetU() [i-1][j+1][k])/4 *( (flowField_.GetV()[i][j][k]+flowField_.GetV()[i+1][j][k])/2 - (flowField_.GetV()[i][j][k]+flowField_.GetV()[i-1][j][k])/2 ) / parameters_.get_dxdydz(0)
-					+parameters_.get_time_step()*flowField_.GetV() [i][j][k] * ( (flowField_.GetV()[i][j+1][k]+flowField_.GetV()[i][j][k])/2 - (flowField_.GetV()[i][j][k]+flowField_.GetV()[i][j-1][k])/2 ) / parameters_.get_dxdydz(1)
-					+parameters_.get_time_step()*(flowField_.GetW() [i][j][k]+flowField_.GetW() [i][j+1][k]+flowField_.GetW() [i][j][k-1]+flowField_.GetW() [i][j+1][k-1])/4 *( (flowField_.GetV()[i][j][k]+flowField_.GetV()[i][j][k+1])/2 - (flowField_.GetV()[i][j][k]+flowField_.GetV()[i][j][k-1])/2 ) / flowField_.GetDzJ()[i][j][k]
-//+					 flowField_.GetU() [i][j][k] * (flowField_.GetV()[i][j][k] - flowField_.GetV()[i-1][j][k]) / parameters_.get_dxdydz(0)
-//					+flowField_.GetV() [i][j][k] * (flowField_.GetV()[i][j][k] - flowField_.GetV()[i][j-1][k]) / parameters_.get_dxdydz(1)
-//					+flowField_.GetW() [i][j][k] * (flowField_.GetV()[i][j][k] - flowField_.GetV()[i][j][k-1]) / ( (flowField_.GetDzJ()[i][j][k]+flowField_.GetDzJ()[i][j][k-1])/2 )
+//					parameters_.get_sim_time()*flowField_.v[map(i,j,k)]
+					flowField_.v[map(i,j,k)]
+					+parameters_.get_time_step()*(flowField_.u [map(i,j,k)]+flowField_.u [map(i,j+1,k)]+flowField_.u [map(i-1,j,k)]+flowField_.u [map(i-1,j+1,k)])/4 *( (flowField_.v[map(i,j,k)]+flowField_.v[map(i+1,j,k)])/2 - (flowField_.v[map(i,j,k)]+flowField_.v[map(i-1,j,k)])/2 ) / parameters_.get_dxdydz(0)
+					+parameters_.get_time_step()*flowField_.v [map(i,j,k)] * ( (flowField_.v[map(i,j+1,k)]+flowField_.v[map(i,j,k)])/2 - (flowField_.v[map(i,j,k)]+flowField_.v[map(i,j-1,k)])/2 ) / parameters_.get_dxdydz(1)
+					+parameters_.get_time_step()*(flowField_.w [map(i,j,k)]+flowField_.w [map(i,j+1,k)]+flowField_.w [map(i,j,k-1)]+flowField_.w [map(i,j+1,k-1)])/4 *( (flowField_.v[map(i,j,k)]+flowField_.v[map(i,j,k+1)])/2 - (flowField_.v[map(i,j,k)]+flowField_.v[map(i,j,k-1)])/2 ) / flowField_.dz_j[map(i,j,k)]
+//+					 flowField_.u [map(i,j,k)] * (flowField_.v[map(i,j,k)] - flowField_.v[map(i-1,j,k)]) / parameters_.get_dxdydz(0)
+//					+flowField_.v [map(i,j,k)] * (flowField_.v[map(i,j,k)] - flowField_.v[map(i,j-1,k)]) / parameters_.get_dxdydz(1)
+//					+flowField_.w [map(i,j,k)] * (flowField_.v[map(i,j,k)] - flowField_.v[map(i,j,k-1)]) / ( (flowField_.dz_j[map(i,j,k)]+flowField_.dz_j[map(i,j,k-1)])/2 )
 					//horizontal diffusion terms
-					+parameters_.get_time_step()*parameters_.get_viscosity() * (flowField_.GetV()[i+1][j][k] - 2 * flowField_.GetV()[i][j][k] + flowField_.GetV()[i-1][j][k]) / (parameters_.get_dxdydz(0) * parameters_.get_dxdydz(0))
-					+parameters_.get_time_step()*parameters_.get_viscosity() * (flowField_.GetV()[i][j+1][k] - 2 * flowField_.GetV()[i][j][k] + flowField_.GetV()[i][j-1][k]) / (parameters_.get_dxdydz(1) * parameters_.get_dxdydz(1))
+					+parameters_.get_time_step()*parameters_.get_viscosity() * (flowField_.v[map(i+1,j,k)] - 2 * flowField_.v[map(i,j,k)] + flowField_.v[map(i-1,j,k)]) / (parameters_.get_dxdydz(0) * parameters_.get_dxdydz(0))
+					+parameters_.get_time_step()*parameters_.get_viscosity() * (flowField_.v[map(i,j+1,k)] - 2 * flowField_.v[map(i,j,k)] + flowField_.v[map(i,j-1,k)]) / (parameters_.get_dxdydz(1) * parameters_.get_dxdydz(1))
 					//hydrostatic pressure
-					-(1-parameters_.get_theta()) * (parameters_.get_time_step() / parameters_.get_dxdydz(1)) * (flowField_.GetEtta()[i][j+1]-flowField_.GetEtta()[i][j]) * parameters_.get_g()
-					-(1-parameters_.get_theta()) * (parameters_.get_time_step() / parameters_.get_dxdydz(1)) * (flowField_.GetQ()[i][j+1][k]-flowField_.GetQ()[i][j][k])
-					) * flowField_.GetDzJ()[i][j][k];
+					-(1-parameters_.get_theta()) * (parameters_.get_time_step() / parameters_.get_dxdydz(1)) * (flowField_.etta[map(i,j+1)]-flowField_.etta[map(i,j)]) * parameters_.get_g()
+					) * flowField_.dz_j[map(i,j,k)];
 			}
-			flowField_.SetGJ()[i][j][flowField_.GetM()[i][j]] += parameters_.get_gamma_t() * parameters_.get_time_step() * parameters_.get_v_a();
+			flowField_.g_j[map(i,j,flowField_.M[map(i,j)])] += parameters_.get_gamma_t() * parameters_.get_time_step() * parameters_.get_v_a();
 		}
 	}
 	// Boundary
 	//left
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.SetGJ()[0][j][k]=flowField_.SetGJ()[1][j][k];
+			flowField_.g_j[map(0,j,k)]=flowField_.g_j[map(1,j,k)];
 		}
 	}
 	//right
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.SetGJ()[parameters_.get_num_cells(0)+1][j][k]=flowField_.SetGJ()[parameters_.get_num_cells(0)][j][k];
+			flowField_.g_j[map(parameters_.get_num_cells(0)+1,j,k)]=flowField_.g_j[map(parameters_.get_num_cells(0),j,k)];
 		}
 	}
 	//bottom
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			//flowField_.SetGJ()[i][0][k]=flowField_.SetGJ()[i][1][k];
-			flowField_.SetGJ()[i][0][k]=0.0;
+			//flowField_.g_j[map(i,0,k)]=flowField_.g_j[map(i,1,k)];
+			flowField_.g_j[map(i,0,k)]=0.0;
 		}
 	}
 	//top
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			//flowField_.SetGJ()[i][parameters_.get_num_cells(0)+1][k]=flowField_.SetGJ()[i][parameters_.get_num_cells(0)][k];
-			flowField_.SetGJ()[i][parameters_.get_num_cells(1)+1][k]=0.0;
-			//flowField_.SetGJ()[i][parameters_.get_num_cells(1)  ][k]=0.0;
+			//flowField_.g_j[i][parameters_.get_num_cells(0)+1][k]=flowField_.g_j[i][parameters_.get_num_cells(0)][k];
+			flowField_.g_j[map(i,parameters_.get_num_cells(1)+1,k)]=0.0;
+			//flowField_.g_j[i][parameters_.get_num_cells(1)  ][k]=0.0;
 		}
 	}
 }

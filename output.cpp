@@ -67,9 +67,9 @@ void Output::writeVelocity (){
 	for (int k = 0; k < parameters_.get_num_cells(2); k++) {
 		for (int j = 0; j < parameters_.get_num_cells(1); j++) {
 			for (int i = 0; i < parameters_.get_num_cells(0); i++) {
-				outputFile_ << ( flowField_.GetU()[i][j][k] + flowField_.GetU()[i+1][j][k] ) /2 << " " <<
-											 ( flowField_.GetV()[i][j][k] + flowField_.GetV()[i][j+1][k] ) /2 << " " <<
-											 ( flowField_.GetW()[i][j][k] + flowField_.GetW()[i][j][k+1] ) /2 << std::endl;
+				outputFile_ << ( flowField_.u[map(i,j,k)] + flowField_.u[map(i+1,j,k)] ) /2 << " " <<
+											 ( flowField_.v[map(i,j,k)] + flowField_.v[map(i,j+1,k)] ) /2 << " " <<
+											 ( flowField_.w[map(i,j,k)] + flowField_.w[map(i,j,k+1)] ) /2 << std::endl;
 			}
 		}
 	}
@@ -81,10 +81,10 @@ void Output::writeHeight (){
                                       *  parameters_.get_num_cells(2) << std::endl;
 	outputFile_ << "SCALARS height float 1" << std::endl;
 	outputFile_ << "LOOKUP_TABLE default" << std::endl;		
-	for (int k = 1; k < parameters_.get_num_cells(2)+1; k++) {
+	for (int k = 0; k < parameters_.get_num_cells(2); k++) {
 		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
 			for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
-				outputFile_ << flowField_.GetEtta()[i][j] << std::endl;
+				outputFile_ << flowField_.etta[map(i,j)] << std::endl;
 			}
 		}	
 	}
@@ -99,7 +99,7 @@ void Output::writeBathymetry (){
 	outputFile_ << "LOOKUP_TABLE default" << std::endl;		
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
 		for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
-			outputFile_ << flowField_.Getm()[i][j] << std::endl;	
+			outputFile_ << flowField_.m[map(i,j)] << std::endl;	
 		}
 	}	
 
@@ -120,27 +120,13 @@ void Output::clearStringStreams() {
 void Output::writeDZ(){
 	outputFile_ << "SCALARS dz float 1" << std::endl;
 	outputFile_ << "LOOKUP_TABLE default" << std::endl;
-	for (int k = 1; k < parameters_.get_num_cells(2)+1; k++) {
+	for (int k = 0; k < parameters_.get_num_cells(2); k++) {
 		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
 			for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
-				outputFile_ << flowField_.GetDzI()[i][j][k] << std::endl;
+				outputFile_ << flowField_.dz_i[map(i,j,k)] << std::endl;
 			}
 		}
 	}
 
 	outputFile_ << std::endl;
 }
-
-void Output::writeQ(){
-	outputFile_ << "SCALARS NonHydPressure float 1" << std::endl;
-	outputFile_ << "LOOKUP_TABLE default" << std::endl;
-	for (int k = 1; k < parameters_.get_num_cells(2)+1; k++) {
-		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-			for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
-				outputFile_ << flowField_.GetQ()[i][j][k] << std::endl;
-			}
-		}
-	}
-
-	outputFile_ << std::endl;
-} 

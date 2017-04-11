@@ -1,16 +1,19 @@
-#include <simulation.h>
+#include "FlowField.h"
+#include "Simulation.h"
+#include "Topology.h"
+#include <petscksp.h>
 
-int main(int argc, const char *argv[])
-{
-	//Parameters* parameters = new Parameters();
-	Parameters* parameters = new Parameters(argc, argv);
-	flowField* flowfield = new flowField(parameters);
-	Simulation * simulation = new Simulation(flowfield,parameters);
+int main(int argc, char *argv[]){
+
+	Topology topology(argc,argv);
+	Parameters parameters(argc, argv, topology);
+	//PetscInitialize(0, NULL,0,NULL);
+	FlowField flowField(parameters);
+
+	//CommunicationManager communicationManager (parameters,flowField);
+	Simulation simulation(parameters, flowField);
+	simulation.Run();
 	
-	parameters -> print_parameters();
-	simulation -> run();
-
-	delete parameters, flowfield, simulation;
-
-	return 0;
+	//PetscFinalize();
+	return EXIT_SUCCESS;
 }

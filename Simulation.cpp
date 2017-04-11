@@ -1,10 +1,8 @@
 #include "Simulation.h"
 
-Simulation::Simulation(const Parameters& parameters, FlowField& flowField, CommunicationManager& communicationManager):
+Simulation::Simulation(const Parameters& parameters, FlowField& flowField):
 	parameters_(parameters),
-	flowField_(flowField),
-	communicationManager_(communicationManager)
-	//communicationManager_(parameters,flowField)
+	flowField_(flowField)
 	{}
 
 Simulation::~Simulation(){}

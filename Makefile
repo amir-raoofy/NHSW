@@ -2,7 +2,7 @@
 #CXX = g++
 CXX = mpicxx
 #CXX = mpiCC
-CXXFLAGS = -Wall -std=c++11
+CXXFLAGS = -Wall -std=c++11 -fopenmp
 #CXXFLAGS = -g -O2 -qopt-report -Wall -std=c++11
 
 #INC =-I.
@@ -24,11 +24,17 @@ obj_petsc= Main.o FlowField.o Simulation.o PetscZAZ.o PetscZAG.o Run.o Etta.o m.
 
 obj_petsc_test= Main.o FlowField.o Simulation.o PetscZAZ.o PetscZAG.o TestRun.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o ParallelJacobiSolverEtta.o PetscSolver.o Petsc1DSolver.o Petsc2DSolver.o  PetscSolverEtta.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
 
+obj_fix= main.o FlowField.o Parameters.o Topology.o Simulation.o Run.o Etta.o Delta.o m.o M.o U.o V.o W.o Dz.o Solver.o AI_Inv.o  AJ_Inv.o GI.o GJ.o GK.o zAz.o zAG.o JacobiSolverEtta.o output.o
+
 
 all: nhsw nhsw_petsc test test_petsc
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INC) $(LIB) -c -o $@ $<
+
+fix: $(obj_fix)
+	$(CXX) $(CXXFLAGS) $(INC)  -o $@ $+ $(LIB)
+	mkdir -p output
 
 nhsw: $(obj)
 	$(CXX) $(CXXFLAGS) $(INC)  -o $@ $+ $(LIB)
@@ -73,7 +79,7 @@ dev: all
 
 clean:
 	rm -f *.o core.*
-	rm -f nhsw nhsw_petsc test test_petsc
+	rm -f nhsw nhsw_petsc test test_petsc fix
 	rm -rf output
 clear:
 	rm -f output/*

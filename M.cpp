@@ -5,18 +5,18 @@ void Simulation::InitM(){
 	// D
 	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
 		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-			flowField_.SetM()[i][j] =ceil( ( parameters_.GetHeight() + (flowField_.GetEtta()[i][j]+ flowField_.GetEtta()[i+1][j])/2 )
+			flowField_.M[map(i,j)] =ceil( ( parameters_.GetHeight() + (flowField_.etta[map(i,j)]+ flowField_.etta[map(i+1,j)])/2 )
 										 									 / parameters_.get_dxdydz(2) ) -1;
 		}
 	}
 	// B
 	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-		flowField_.SetM()[0][j]=flowField_.GetM()[1][j];								//left
-		flowField_.SetM()[parameters_.get_num_cells(0)+1][j]=flowField_.GetM()[parameters_.get_num_cells(0)][j];	//right
+		flowField_.M[map(0,j)]=flowField_.M[map(1,j)];								//left
+		flowField_.M[map(parameters_.get_num_cells(0)+1,j)]=flowField_.M[map(parameters_.get_num_cells(0),j)];	//right
 	}
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		flowField_.SetM()[i][0]=flowField_.GetM()[i][1];								//bottom
-		flowField_.SetM()[i][parameters_.get_num_cells(1)+1]=flowField_.GetM()[i][parameters_.get_num_cells(1)];	//top
+		flowField_.M[map(i,0)]=flowField_.M[map(i,1)];								//bottom
+		flowField_.M[map(i,parameters_.get_num_cells(1)+1)]=flowField_.M[map(i,parameters_.get_num_cells(1))];	//top
 	}
 	//@test
 }
