@@ -48,145 +48,145 @@ CommunicationManager::~CommunicationManager(){
 
 void CommunicationManager::communicteEtta(){
 
-	updateRightNeighbour(flowField_.SetEtta());
-	updateLeftNeighbour(flowField_.SetEtta());
-	updateFrontNeighbour(flowField_.SetEtta());
-	updateBackNeighbour(flowField_.SetEtta());
+	updateRightNeighbour2d(flowField_.etta);
+	updateLeftNeighbour2d(flowField_.etta);
+	updateFrontNeighbour2d(flowField_.etta);
+	updateBackNeighbour2d(flowField_.etta);
 
 }
 
 void CommunicationManager::communicteU(){
 
-	updateRightNeighbour(flowField_.SetU());
-	updateLeftNeighbour(flowField_.SetU());
-	updateFrontNeighbour(flowField_.SetU());
-	updateBackNeighbour(flowField_.SetU());
+	updateRightNeighbour3d(flowField_.u);
+	updateLeftNeighbour3d(flowField_.u);
+	updateFrontNeighbour3d(flowField_.u);
+	updateBackNeighbour3d(flowField_.u);
 
 }
 
 void CommunicationManager::communicteV(){
 
-	updateRightNeighbour(flowField_.SetV());
-	updateLeftNeighbour(flowField_.SetV());
-	updateFrontNeighbour(flowField_.SetV());
-	updateBackNeighbour(flowField_.SetV());
+	updateRightNeighbour3d(flowField_.v);
+	updateLeftNeighbour3d(flowField_.v);
+	updateFrontNeighbour3d(flowField_.v);
+	updateBackNeighbour3d(flowField_.v);
 
 }
 
 void CommunicationManager::communicteW(){
 
-	updateRightNeighbour(flowField_.SetW());
-	updateLeftNeighbour(flowField_.SetW());
-	updateFrontNeighbour(flowField_.SetW());
-	updateBackNeighbour(flowField_.SetW());
+	updateRightNeighbour3d(flowField_.w);
+	updateLeftNeighbour3d(flowField_.w);
+	updateFrontNeighbour3d(flowField_.w);
+	updateBackNeighbour3d(flowField_.w);
 
 }
 
 void CommunicationManager::communicteDzI(){
 
-	updateRightNeighbour(flowField_.SetDzI());
-	updateLeftNeighbour(flowField_.SetDzI());
-	updateFrontNeighbour(flowField_.SetDzI());
-	updateBackNeighbour(flowField_.SetDzI());
+	updateRightNeighbour3d(flowField_.dz_i);
+	updateLeftNeighbour3d(flowField_.dz_i);
+	updateFrontNeighbour3d(flowField_.dz_i);
+	updateBackNeighbour3d(flowField_.dz_i);
 
 }
 
 void CommunicationManager::communicteDzJ(){
 
-	updateRightNeighbour(flowField_.SetDzJ());
-	updateLeftNeighbour(flowField_.SetDzJ());
-	updateFrontNeighbour(flowField_.SetDzJ());
-	updateBackNeighbour(flowField_.SetDzJ());
+	updateRightNeighbour3d(flowField_.dz_j);
+	updateLeftNeighbour3d(flowField_.dz_j);
+	updateFrontNeighbour3d(flowField_.dz_j);
+	updateBackNeighbour3d(flowField_.dz_j);
 
 }
 
 void CommunicationManager::communicteDzK(){
 
-	updateRightNeighbour(flowField_.SetDzK());
-	updateLeftNeighbour(flowField_.SetDzK());
-	updateFrontNeighbour(flowField_.SetDzK());
-	updateBackNeighbour(flowField_.SetDzK());
+	updateRightNeighbour3d(flowField_.dz_k);
+	updateLeftNeighbour3d(flowField_.dz_k);
+	updateFrontNeighbour3d(flowField_.dz_k);
+	updateBackNeighbour3d(flowField_.dz_k);
 
 }
 
 void CommunicationManager::communicteGI(){
 
-	updateRightNeighbour(flowField_.SetGI());
-	updateLeftNeighbour(flowField_.SetGI());
-	updateFrontNeighbour(flowField_.SetGI());
-	updateBackNeighbour(flowField_.SetGI());
+	updateRightNeighbour3d(flowField_.g_i);
+	updateLeftNeighbour3d(flowField_.g_i);
+	updateFrontNeighbour3d(flowField_.g_i);
+	updateBackNeighbour3d(flowField_.g_i);
 
 }
 
 void CommunicationManager::communicteGJ(){
 
-	updateRightNeighbour(flowField_.SetGJ());
-	updateLeftNeighbour(flowField_.SetGJ());
-	updateFrontNeighbour(flowField_.SetGJ());
-	updateBackNeighbour(flowField_.SetGJ());
+	updateRightNeighbour3d(flowField_.g_j);
+	updateLeftNeighbour3d(flowField_.g_j);
+	updateFrontNeighbour3d(flowField_.g_j);
+	updateBackNeighbour3d(flowField_.g_j);
 
 }
 
 void CommunicationManager::communicteGK(){
 
-	updateRightNeighbour(flowField_.SetGK());
-	updateLeftNeighbour(flowField_.SetGK());
-	updateFrontNeighbour(flowField_.SetGK());
-	updateBackNeighbour(flowField_.SetGK());
+	updateRightNeighbour3d(flowField_.g_k);
+	updateLeftNeighbour3d(flowField_.g_k);
+	updateFrontNeighbour3d(flowField_.g_k);
+	updateBackNeighbour3d(flowField_.g_k);
 
 }
 
 void CommunicationManager::communicteZazi(){
 		
-	updateRightNeighbour(flowField_.SetZAZI());
-	updateLeftNeighbour(flowField_.SetZAZI());
-	updateFrontNeighbour(flowField_.SetZAZI());
-	updateBackNeighbour(flowField_.SetZAZI());
+	updateRightNeighbour2d(flowField_.zaz_i);
+	updateLeftNeighbour2d(flowField_.zaz_i);
+	updateFrontNeighbour2d(flowField_.zaz_i);
+	updateBackNeighbour2d(flowField_.zaz_i);
 
 }
 
 void CommunicationManager::communicteZazj(){
 
-	updateRightNeighbour(flowField_.SetZAZJ());
-	updateLeftNeighbour(flowField_.SetZAZJ());
-	updateFrontNeighbour(flowField_.SetZAZJ());
-	updateBackNeighbour(flowField_.SetZAZJ());
+	updateRightNeighbour2d(flowField_.zaz_j);
+	updateLeftNeighbour2d(flowField_.zaz_j);
+	updateFrontNeighbour2d(flowField_.zaz_j);
+	updateBackNeighbour2d(flowField_.zaz_j);
 
 }
 
 void CommunicationManager::communicteZagi(){
 
-	updateRightNeighbour(flowField_.SetZAGI());
-	updateLeftNeighbour(flowField_.SetZAGI());
-	updateFrontNeighbour(flowField_.SetZAGI());
-	updateBackNeighbour(flowField_.SetZAGI());
+	updateRightNeighbour2d(flowField_.zag_i);
+	updateLeftNeighbour2d(flowField_.zag_i);
+	updateFrontNeighbour2d(flowField_.zag_i);
+	updateBackNeighbour2d(flowField_.zag_i);
 
 }
 
 void CommunicationManager::communicteZagj(){
 
-	updateRightNeighbour(flowField_.SetZAGJ());
-	updateLeftNeighbour(flowField_.SetZAGJ());
-	updateFrontNeighbour(flowField_.SetZAGJ());
-	updateBackNeighbour(flowField_.SetZAGJ());
+	updateRightNeighbour2d(flowField_.zag_j);
+	updateLeftNeighbour2d(flowField_.zag_j);
+	updateFrontNeighbour2d(flowField_.zag_j);
+	updateBackNeighbour2d(flowField_.zag_j);
 
 }
 
 void CommunicationManager::communicteDelta(){
 
-	updateRightNeighbour(flowField_.SetDelta());
-	updateLeftNeighbour(flowField_.SetDelta());
-	updateFrontNeighbour(flowField_.SetDelta());
-	updateBackNeighbour(flowField_.SetDelta());
+	updateRightNeighbour2d(flowField_.delta);
+	updateLeftNeighbour2d(flowField_.delta);
+	updateFrontNeighbour2d(flowField_.delta);
+	updateBackNeighbour2d(flowField_.delta);
 
 }
 
-void CommunicationManager::updateRightNeighbour(DiscreteRectangle &field){
+void CommunicationManager::updateRightNeighbour2d(FLOAT* field){
 
 	if (parameters_.topology.right_id!=-1)  {
 		//fill the buffer
 		for (int i = 0; i < parameters_.get_num_cells(1)+2; i++) {
-			right_send_buffer_line[i]=field[parameters_.get_num_cells(0)][i];
+			right_send_buffer_line[i]=field[map(parameters_.get_num_cells(0),i)];
 		}
 		MPI::COMM_WORLD.Send(right_send_buffer_line, parameters_.get_num_cells(1)+2, MPI::DOUBLE, parameters_.topology.right_id, 0);
 	}
@@ -195,7 +195,7 @@ void CommunicationManager::updateRightNeighbour(DiscreteRectangle &field){
 		MPI::COMM_WORLD.Recv(left_recv_buffer_line, parameters_.get_num_cells(1)+2, MPI::DOUBLE, parameters_.topology.left_id, 0);
 		//read the buffer
 		for (int i = 0; i < parameters_.get_num_cells(1)+2; i++) {
-			field[0][i]=left_recv_buffer_line[i];
+			field[map(0,i)]=left_recv_buffer_line[i];
 		}
 	}
 
@@ -203,12 +203,12 @@ void CommunicationManager::updateRightNeighbour(DiscreteRectangle &field){
 
 }
 
-void CommunicationManager::updateLeftNeighbour(DiscreteRectangle &field){
+void CommunicationManager::updateLeftNeighbour2d(FLOAT* field){
 		
 	if (parameters_.topology.left_id!=-1)  {
 		//fill the buffer
 		for (int i = 0; i < parameters_.get_num_cells(1)+2; i++) {
-			left_send_buffer_line[i]=field[1][i];
+			left_send_buffer_line[i]=field[map(1,i)];
 		}
 		MPI::COMM_WORLD.Send(left_send_buffer_line, parameters_.get_num_cells(1)+2, MPI::DOUBLE, parameters_.topology.left_id, 0);
 	}
@@ -217,7 +217,7 @@ void CommunicationManager::updateLeftNeighbour(DiscreteRectangle &field){
 		MPI::COMM_WORLD.Recv(right_recv_buffer_line, parameters_.get_num_cells(1)+2, MPI::DOUBLE, parameters_.topology.right_id, 0);
 		//read the buffer
 		for (int i = 0; i < parameters_.get_num_cells(1)+2; i++) {
-			field[parameters_.get_num_cells(0)+1][i]=right_recv_buffer_line[i];
+			field[map(parameters_.get_num_cells(0)+1,i)]=right_recv_buffer_line[i];
 		}
 	}
 						
@@ -225,12 +225,12 @@ void CommunicationManager::updateLeftNeighbour(DiscreteRectangle &field){
 
 }
 
-void CommunicationManager::updateFrontNeighbour(DiscreteRectangle &field){
+void CommunicationManager::updateFrontNeighbour2d(FLOAT* field){
 
 	if (parameters_.topology.front_id!=-1)  {
 		//fill the buffer
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-			front_send_buffer_line[i]=field[i][parameters_.get_num_cells(1)];
+			front_send_buffer_line[i]=field[map(i,parameters_.get_num_cells(1))];
 		}
 		MPI::COMM_WORLD.Send(front_send_buffer_line, parameters_.get_num_cells(0)+2, MPI::DOUBLE, parameters_.topology.front_id, 0);
 	}
@@ -239,7 +239,7 @@ void CommunicationManager::updateFrontNeighbour(DiscreteRectangle &field){
 		MPI::COMM_WORLD.Recv(back_recv_buffer_line, parameters_.get_num_cells(0)+2, MPI::DOUBLE, parameters_.topology.back_id, 0);
 		//read the buffer
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-			field[i][0]=back_recv_buffer_line[i];
+			field[map(i,0)]=back_recv_buffer_line[i];
 		}
 	}
 	
@@ -247,12 +247,12 @@ void CommunicationManager::updateFrontNeighbour(DiscreteRectangle &field){
 
 }
 
-void CommunicationManager::updateBackNeighbour(DiscreteRectangle &field){
+void CommunicationManager::updateBackNeighbour2d(FLOAT* field){
 
 	if (parameters_.topology.back_id!=-1)  {
 		//fill the buffer
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-			back_send_buffer_line[i]=field[i][1];
+			back_send_buffer_line[i]=field[map(i,1)];
 		}
 		MPI::COMM_WORLD.Send(back_send_buffer_line, parameters_.get_num_cells(0)+2, MPI::DOUBLE, parameters_.topology.back_id, 0);
 	}
@@ -261,7 +261,7 @@ void CommunicationManager::updateBackNeighbour(DiscreteRectangle &field){
 		MPI::COMM_WORLD.Recv(front_recv_buffer_line, parameters_.get_num_cells(0)+2, MPI::DOUBLE, parameters_.topology.front_id, 0);
 		//read the buffer
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-			field[i][parameters_.get_num_cells(1)+1]=front_recv_buffer_line[i];
+			field[map(i,parameters_.get_num_cells(1)+1)]=front_recv_buffer_line[i];
 		}
 	}
 
@@ -270,13 +270,13 @@ void CommunicationManager::updateBackNeighbour(DiscreteRectangle &field){
 }
 
 
-void CommunicationManager::updateRightNeighbour(DiscreteCube &field){
+void CommunicationManager::updateRightNeighbour3d(FLOAT* field){
 
 	if (parameters_.topology.right_id!=-1)  {
 		//fill the buffer
 		for (int i = 0; i < parameters_.get_num_cells(1)+2; i++) {
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {
-				right_send_buffer_rectangle[i*parameters_.get_num_cells(2)+k]=field[parameters_.get_num_cells(0)][i][k];
+				right_send_buffer_rectangle[i*parameters_.get_num_cells(2)+k]=field[map(parameters_.get_num_cells(0),i,k)];
 			}
 		}
 		MPI::COMM_WORLD.Send(right_send_buffer_rectangle, (parameters_.get_num_cells(1)+2)*parameters_.get_num_cells(2), MPI::DOUBLE, parameters_.topology.right_id, 0);
@@ -287,7 +287,7 @@ void CommunicationManager::updateRightNeighbour(DiscreteCube &field){
 		//read the buffer
 		for (int i = 0; i < parameters_.get_num_cells(1)+2; i++) {
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {
-				field[0][i][k]=left_recv_buffer_rectangle[i*parameters_.get_num_cells(2)+k];
+				field[map(0,i,k)]=left_recv_buffer_rectangle[i*parameters_.get_num_cells(2)+k];
 			}
 		}
 	}
@@ -296,13 +296,13 @@ void CommunicationManager::updateRightNeighbour(DiscreteCube &field){
 
 }
 				
-void CommunicationManager::updateLeftNeighbour(DiscreteCube &field){
+void CommunicationManager::updateLeftNeighbour3d(FLOAT* field){
 	
 	if (parameters_.topology.left_id!=-1)  {
 		//fill the buffer
 		for (int i = 0; i < parameters_.get_num_cells(1)+2; i++) {
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {
-				left_send_buffer_rectangle[i*parameters_.get_num_cells(2)+k]=field[1][i][k];
+				left_send_buffer_rectangle[i*parameters_.get_num_cells(2)+k]=field[map(1,i,k)];
 			}
 		}
 		MPI::COMM_WORLD.Send(left_send_buffer_rectangle, (parameters_.get_num_cells(1)+2)*parameters_.get_num_cells(2), MPI::DOUBLE, parameters_.topology.left_id, 0);
@@ -313,7 +313,7 @@ void CommunicationManager::updateLeftNeighbour(DiscreteCube &field){
 		//read the buffer
 		for (int i = 0; i < parameters_.get_num_cells(1)+2; i++) {
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {
-				field[parameters_.get_num_cells(0)+1][i][k]=right_recv_buffer_rectangle[i*parameters_.get_num_cells(2)+k];
+				field[map(parameters_.get_num_cells(0)+1,i,k)]=right_recv_buffer_rectangle[i*parameters_.get_num_cells(2)+k];
 			}
 		}
 	}
@@ -322,13 +322,13 @@ void CommunicationManager::updateLeftNeighbour(DiscreteCube &field){
 
 }
 
-void CommunicationManager::updateFrontNeighbour(DiscreteCube &field){
+void CommunicationManager::updateFrontNeighbour3d(FLOAT* field){
 
 	if (parameters_.topology.front_id!=-1)  {
 		//fill the buffer
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {
-				front_send_buffer_rectangle[i*parameters_.get_num_cells(2)+k]=field[i][parameters_.get_num_cells(1)][k];
+				front_send_buffer_rectangle[i*parameters_.get_num_cells(2)+k]=field[map(i,parameters_.get_num_cells(1),k)];
 			}
 		}
 		MPI::COMM_WORLD.Send(front_send_buffer_rectangle, (parameters_.get_num_cells(0)+2)*parameters_.get_num_cells(2), MPI::DOUBLE, parameters_.topology.front_id, 0);
@@ -339,7 +339,7 @@ void CommunicationManager::updateFrontNeighbour(DiscreteCube &field){
 		//read the buffer
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {
-				field[i][0][k]=back_recv_buffer_rectangle[i*parameters_.get_num_cells(2)+k];
+				field[map(i,0,k)]=back_recv_buffer_rectangle[i*parameters_.get_num_cells(2)+k];
 			}
 		}
 	}
@@ -348,13 +348,13 @@ void CommunicationManager::updateFrontNeighbour(DiscreteCube &field){
 
 }
 
-void CommunicationManager::updateBackNeighbour(DiscreteCube &field){
+void CommunicationManager::updateBackNeighbour3d(FLOAT* field){
 
 	if (parameters_.topology.back_id!=-1)  {
 		//fill the buffer
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {
-				back_send_buffer_rectangle[i*parameters_.get_num_cells(2)+k]=field[i][1][k];
+				back_send_buffer_rectangle[i*parameters_.get_num_cells(2)+k]=field[map(i,1,k)];
 			}
 		}
 		MPI::COMM_WORLD.Send(back_send_buffer_rectangle, (parameters_.get_num_cells(0)+2)*parameters_.get_num_cells(2), MPI::DOUBLE, parameters_.topology.back_id, 0);
@@ -365,7 +365,7 @@ void CommunicationManager::updateBackNeighbour(DiscreteCube &field){
 		//read the buffer
 		for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {
-				field[i][parameters_.get_num_cells(1)+1][k]=front_recv_buffer_rectangle[i*parameters_.get_num_cells(2)+k];
+				field[map(i,parameters_.get_num_cells(1)+1,k)]=front_recv_buffer_rectangle[i*parameters_.get_num_cells(2)+k];
 			}
 		}
 	}

@@ -71,11 +71,11 @@ void JacobiSolverEtta::updateError(){
 
 void JacobiSolverEtta::iterate(){
 
-
 	updateDomain();
 	updateBoundary();
 	updateError();
 	swap(flowField_.etta,etta_old_);
+
 }
 void JacobiSolverEtta::solve(){
 

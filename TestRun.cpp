@@ -22,7 +22,6 @@ void Simulation::Run(){
 	communicationManager_.communicteV();
 	InitW();
 	communicationManager_.communicteW();
-	InitQ();
 	InitGI();
 	communicationManager_.communicteGI();
 	InitGJ();
@@ -34,7 +33,7 @@ void Simulation::Run(){
 		output.write(0, "./output/");
 	}
 
-	for (int i = 1; i < 50; i++) {
+	for (int i = 1; i < 100; i++) {
 		// print out to the log
 		if (parameters_.topology.id==0) {
 			std::cout << "Time Step: " << i << std::endl;
@@ -66,15 +65,15 @@ void Simulation::Run(){
 		communicationManager_.communicteZagj();
 		CalculateDelta();
 		communicationManager_.communicteDelta();
-		//FirstStepUpdateEtta();
-		ParallelFirstStepUpdateEtta();
-		//PetscFirstStepUpdateEtta();
+		//UpdateEtta();
+		ParallelUpdateEtta();
+		//PetscUpdateEtta();
 		communicationManager_.communicteEtta();
-		FirstStepUpdateU();
+		UpdateU();
 		communicationManager_.communicteU();
-		FirstStepUpdateV();
+		UpdateV();
 		communicationManager_.communicteV();
-		FirstStepUpdateW();
+		UpdateW();
 		communicationManager_.communicteW();
 
 		if (parameters_.GetOutputFlag()==1) {

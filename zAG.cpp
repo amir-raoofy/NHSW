@@ -54,7 +54,7 @@ void Simulation::CalculateZAGJ(){
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
 
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {
-				rhs[k] = flowField_.dz_j[map(i,j,k)];
+				rhs[k] = flowField_.g_j[map(i,j,k)];
 			}
 
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {

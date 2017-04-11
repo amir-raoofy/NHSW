@@ -1,6 +1,6 @@
 #include "Parameters.h"
 #include "FlowField.h"
-//#include "CommunicationManager.h"
+#include "CommunicationManager.h"
 #include "helper.h"
 #include <petscksp.h>
 
@@ -85,7 +85,7 @@ protected:
 	void updateError();
 	virtual void iterate();
 };
-/*
+
 class ParallelJacobiSolverEtta: public JacobiSolverEtta
 {
 public:
@@ -96,7 +96,7 @@ protected:
 private: 
 	CommunicationManager &communicationManager_;
 };
-*/
+
 class PetscSolver: public Solver
 {
 public:

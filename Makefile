@@ -24,7 +24,7 @@ obj_petsc= Main.o FlowField.o Simulation.o PetscZAZ.o PetscZAG.o Run.o Etta.o m.
 
 obj_petsc_test= Main.o FlowField.o Simulation.o PetscZAZ.o PetscZAG.o TestRun.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o ParallelJacobiSolverEtta.o PetscSolver.o Petsc1DSolver.o Petsc2DSolver.o  PetscSolverEtta.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
 
-obj_fix= main.o FlowField.o Parameters.o Topology.o Simulation.o Run.o Etta.o Delta.o m.o M.o U.o V.o W.o Dz.o Solver.o AI_Inv.o  AJ_Inv.o GI.o GJ.o GK.o zAz.o zAG.o JacobiSolverEtta.o output.o
+obj_fix= main.o FlowField.o Parameters.o Topology.o Simulation.o TestRun.o Etta.o Delta.o m.o M.o U.o V.o W.o Dz.o Solver.o AI_Inv.o  AJ_Inv.o GI.o GJ.o GK.o zAz.o zAG.o JacobiSolverEtta.o ParallelSolverEtta.o ParallelJacobiSolverEtta.o output.o CommunicationManager.o
 
 
 all: nhsw nhsw_petsc test test_petsc

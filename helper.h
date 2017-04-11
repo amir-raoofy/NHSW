@@ -1,3 +1,4 @@
+#pragma once
 #include "data_structure.h"
 
 inline void swap(FLOAT*& p1, FLOAT*& p2){

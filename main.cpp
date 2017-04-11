@@ -10,8 +10,8 @@ int main(int argc, char *argv[]){
 	//PetscInitialize(0, NULL,0,NULL);
 	FlowField flowField(parameters);
 
-	//CommunicationManager communicationManager (parameters,flowField);
-	Simulation simulation(parameters, flowField);
+	CommunicationManager communicationManager (parameters,flowField);
+	Simulation simulation(parameters, flowField, communicationManager);
 	simulation.Run();
 	
 	//PetscFinalize();

@@ -46,14 +46,17 @@ private:
 	FLOAT* front_recv_buffer_rectangle;
 	FLOAT* back_recv_buffer_rectangle;
 
-	void updateRightNeighbour(DiscreteRectangle &field);
-	void updateLeftNeighbour(DiscreteRectangle &field);
-	void updateFrontNeighbour(DiscreteRectangle &field);
-	void updateBackNeighbour(DiscreteRectangle &field);
+	void updateRightNeighbour2d(FLOAT* field);
+	void updateLeftNeighbour2d(FLOAT* field);
+	void updateFrontNeighbour2d(FLOAT* field);
+	void updateBackNeighbour2d(FLOAT* field);
 
-	void updateRightNeighbour(DiscreteCube &field);
-	void updateLeftNeighbour(DiscreteCube &field);
-	void updateFrontNeighbour(DiscreteCube &field);
-	void updateBackNeighbour(DiscreteCube &field);
+	void updateRightNeighbour3d(FLOAT* field);
+	void updateLeftNeighbour3d(FLOAT* field);
+	void updateFrontNeighbour3d(FLOAT* field);
+	void updateBackNeighbour3d(FLOAT* field);
+
+	inline int map(int i, int j) { return flowField_.map(i,j);}
+	inline int map(int i, int j, int k) { return flowField_.map(i,j,k);}
 
 };
