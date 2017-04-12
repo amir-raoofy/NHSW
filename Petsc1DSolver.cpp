@@ -33,7 +33,7 @@ Petsc1DSolver::Petsc1DSolver(const Parameters& parameters, FlowField& flowField,
 	KSPSetType(ksp,KSPCG);
 	KSPSetOperators(ksp,A,A);
 	KSPSetInitialGuessNonzero(ksp,PETSC_TRUE);
-	KSPSetTolerances(ksp,1.e-50,1.e-5,PETSC_DEFAULT,PETSC_DEFAULT);
+	KSPSetTolerances(ksp,1.e-3,1.e-4,PETSC_DEFAULT,PETSC_DEFAULT);
 	KSPSetFromOptions(ksp);
 }
 
@@ -64,7 +64,7 @@ void Petsc1DSolver::updateMat(){
 	}
   MatAssemblyBegin(A,MAT_FINAL_ASSEMBLY);
   MatAssemblyEnd(A,MAT_FINAL_ASSEMBLY);
-  MatSetOption(A,MAT_SYMMETRIC,PETSC_TRUE);
+  //MatSetOption(A,MAT_SYMMETRIC,PETSC_TRUE);
 	//MatView(A,PETSC_VIEWER_DRAW_WORLD);
 	//MatView(A,PETSC_VIEWER_STDOUT_WORLD);
 	//getchar();
@@ -73,8 +73,19 @@ void Petsc1DSolver::updateMat(){
 //DONE copy z to right handside
 void Petsc1DSolver::updateRHS(){
 
-	VecPlaceArray(b, RHS_+(map(i,j,0)));
-	
+	//VecPlaceArray(b, RHS_+(map(i,j,0)));
+	for (int k = 0; k < parameters_.get_num_cells(2); k++) {
+		VecSetValues(x,1,&k,RHS_+(map(i,j,k)),INSERT_VALUES);
+	}
+	for (int k = 0; k < parameters_.get_num_cells(2); k++) {
+		VecSetValues(b,1,&k,RHS_+(map(i,j,k)),INSERT_VALUES);
+	}
+
+	VecAssemblyBegin(b);
+	VecAssemblyEnd(b);
+	VecAssemblyBegin(x);
+	VecAssemblyEnd(x);
+
 	}
 
 void Petsc1DSolver::solve(){
@@ -83,11 +94,17 @@ void Petsc1DSolver::solve(){
 }
 
 void Petsc1DSolver::updateField(){
-	
-	VecDot(b,x,&v);
-	resultField_[map(i,j)]=v;
 
-	VecResetArray(b);
+	FLOAT s=0;
+	for (int k = 0; k < parameters_.get_num_cells(2); k++) {
+		VecGetValues(x,1,&k,&v);
+		s+=v*Dz_[map(i,j,k)];
+	}
+
+	//VecDot(b,x,&v);
+	resultField_[map(i,j)]=s;
+
+	//VecResetArray(b);
 }
 
 void Petsc1DSolver::setIndices(int i, int j){this->i=i; this->j=j;}
