@@ -65,7 +65,7 @@ Parameters::~Parameters(){}
 
 void Parameters::parse(int argc, char *argv[])  {
 
-	if (argc!=18){
+	if (argc!=19){
 		std::cout << "Warning: The default values for parameters are used." << std::endl;
 	}else{
 		_N[0]  	= atoi(argv[1]);
@@ -85,6 +85,8 @@ void Parameters::parse(int argc, char *argv[])  {
 		_gamma_b= atof(argv[15]);
 		_u_a		= atof(argv[16]);
 		_v_a		= atof(argv[17]);
+		_precipitation = atof(argv[18]);
+
 	}
 }
 
@@ -147,8 +149,12 @@ FLOAT Parameters::GetBlockSize2d() const{
 	return _block_size_2d;
 }
 
-FLOAT Parameters::GetOutputFlag() const{
+int Parameters::GetOutputFlag() const{
 	return _output_flag;
+}
+
+FLOAT Parameters::GetPrecipitation() const{
+	return _precipitation;
 }
 
 void Parameters::print_parameters(){
@@ -177,5 +183,6 @@ void Parameters::print_parameters(){
 				<< "friction constant		-> 	"	<< _gamma_b	<<	std::endl
 				<< "horizontal speed of wind	-> 	"	<< _u_a		<<	std::endl
 				<< "vertical speed of wind		-> 	"	<< _v_a		<<	std::endl
+				<< "precipitation rate		-> 	"	<< _precipitation << std::endl
 				<< "\033[1;31m==========================================\033[0m"  << std::endl;
 }

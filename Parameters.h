@@ -24,6 +24,7 @@ private:
 	FLOAT _height;  // free surface water height
 	FLOAT _block_size_2d;
 	FLOAT _output_flag;
+	FLOAT _precipitation;
 protected:
 	int _N[3]	;				// Number of cells in xyz directions
 	int _NGlobal[3]	;				// Number of cells in xyz directions
@@ -50,7 +51,8 @@ public:
 	FLOAT get_v_a() const;
 	FLOAT GetHeight() const;
 	FLOAT GetBlockSize2d() const;		// just used for the petsc parallel 2d solver in case of well distributed domains
-	FLOAT GetOutputFlag() const;
+	int	  GetOutputFlag() const;
+	FLOAT GetPrecipitation() const;
 
 	Topology& topology;
 };

@@ -2,6 +2,7 @@
 #include <numeric>
 
 void Simulation::CalculateDelta(){
+
 	FLOAT s1=0.0,s2=0.0,s3=0.0,s4=0.0;
 	// Domain
 	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
@@ -21,8 +22,11 @@ void Simulation::CalculateDelta(){
 			s3*=(1-parameters_.get_theta()) * parameters_.get_time_step() / parameters_.get_dxdydz(1);
 			s4*=(1-parameters_.get_theta()) * parameters_.get_time_step() / parameters_.get_dxdydz(1);
 			
-			flowField_.delta[map(i,j)] = flowField_.etta[map(i,j)]-(s1-s2+s3-s4);
+			flowField_.delta[map(i,j)] = flowField_.etta[map(i,j)]-(s1-s2+s3-s4) ;
+			// rain fall	
+			flowField_.delta[map(i,j)] += parameters_.GetPrecipitation() * parameters_.get_time_step() ;
 			
+				
 		}
 	}
 
