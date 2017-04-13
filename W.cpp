@@ -27,6 +27,8 @@ void Simulation::UpdateW(){
 			for(int k = flowField_.m[map(i,j)]+1; k <= flowField_.M[map(i,j)] ; k++){ //domain and the top boundary
 				flowField_.w[map(i,j,k)]=flowField_.w[map(i,j,k-1)] - (flowField_.u[map(i,j,k)]*flowField_.dz_i[map(i,j,k)]-flowField_.u[map(i-1,j,k)]*flowField_.dz_i[map(i-1,j,k)])/parameters_.get_dxdydz(0)				- (flowField_.v[map(i,j,k)]*flowField_.dz_j[map(i,j,k)]-flowField_.v[map(i,j-1,k)]*flowField_.dz_j[map(i,j-1,k)])/parameters_.get_dxdydz(1);
 			}
+			//considering the precipitation
+			flowField_.w[map(i,j,flowField_.M[map(i,j)])]+=parameters_.GetPrecipitation()*flowField_.dz_k[map(i,j,flowField_.M[map(i,j)])];		//top boundary
 			//flowField_.w[i][j][flowField_.M()[i][j]]=flowField_.w[i][j][flowField_.M()[i][j] -1];		//top boundary
 	
 
