@@ -7,20 +7,37 @@ void Simulation::InitDzI(){
 	// in the oscilation scenario b = height
 	// case m = M is not yet suppoerted.
 	// Domain
-	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
-		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-			flowField_.dz_i[map(i,j,flowField_.m[map(i,j)])]=(    parameters_.get_dxdydz(2) *
-				(  1-(  ceil(   ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)   )-
-					 				 		  ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)	 )  )    );
-			for (int k = flowField_.m[map(i,j)] + 1; k < flowField_.M[map(i,j)]; k++) {
-				flowField_.dz_i[map(i,j,k)]=parameters_.get_dxdydz(2);
+	
+	if (parameters_.get_num_cells(2)==1) {
+
+		for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+			for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+
+				flowField_.dz_i[map(i,j,flowField_.m[map(i,j)])]= (flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight(); 
+
 			}
-			flowField_.dz_i[map(i,j,flowField_.M[map(i,j)])]=(  	parameters_.get_dxdydz(2) *
-				(  1-  ceil( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
-				  				 ( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
-			 	)   );
-		 }
+		}
+		
+	}else{
+	
+		for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+			for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+				flowField_.dz_i[map(i,j,flowField_.m[map(i,j)])]=(    parameters_.get_dxdydz(2) *
+					(  1-(  ceil(   ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)   )-
+						 				 		  ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)	 )  )    );
+				for (int k = flowField_.m[map(i,j)] + 1; k < flowField_.M[map(i,j)]; k++) {
+					flowField_.dz_i[map(i,j,k)]=parameters_.get_dxdydz(2);
+				}
+				flowField_.dz_i[map(i,j,flowField_.M[map(i,j)])]=(  	parameters_.get_dxdydz(2) *
+					(  1-  ceil( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
+					  				 ( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
+				 	)   );
+			 }
+		}
+
 	}
+
+
 	// Boundary
 	//left
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
@@ -55,23 +72,41 @@ void Simulation::UpdateDzI(){
 	// in the oscilation scenario b = height
 	// case m = M is not yet suppoerted.
 	// Domain
-	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
-		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-			flowField_.dz_i[map(i,j,flowField_.m[map(i,j)])]=    parameters_.get_dxdydz(2) *
-				(  1-(  ceil(   ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)   )-
-					 				 		  ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)	 )  )    ;
-			for (int k = flowField_.m[map(i,j)]+1 ; k < flowField_.M[map(i,j)]; k++) {
-				flowField_.dz_i[map(i,j,k)]=parameters_.get_dxdydz(2);
-			}
-			flowField_.dz_i[map(i,j,flowField_.M[map(i,j)])]= 	parameters_.get_dxdydz(2) *
-				(  1-  ceil( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
-				  				 ( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
-				);
-			for (int k = flowField_.M[map(i,j)] + 1; k < parameters_.get_num_cells(2); k++) {
-				flowField_.dz_i[map(i,j,k)]=0.0;
+	
+	if (parameters_.get_num_cells(2)==1) {
+
+		for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+			for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+
+				flowField_.dz_i[map(i,j,flowField_.m[map(i,j)])]= (flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight(); 
+
 			}
 		}
+		
+	}else{
+
+		for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+			for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+				flowField_.dz_i[map(i,j,flowField_.m[map(i,j)])]=    parameters_.get_dxdydz(2) *
+					(  1-(  ceil(   ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)   )-
+						 				 		  ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)	 )  )    ;
+				for (int k = flowField_.m[map(i,j)]+1 ; k < flowField_.M[map(i,j)]; k++) {
+					flowField_.dz_i[map(i,j,k)]=parameters_.get_dxdydz(2);
+				}
+				flowField_.dz_i[map(i,j,flowField_.M[map(i,j)])]= 	parameters_.get_dxdydz(2) *
+					(  1-  ceil( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
+					  				 ( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
+					);
+				for (int k = flowField_.M[map(i,j)] + 1; k < parameters_.get_num_cells(2); k++) {
+					flowField_.dz_i[map(i,j,k)]=0.0;
+				}
+
+			}
+		}
+
 	}
+
+
 	// Boundary
 	//left
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
@@ -106,20 +141,37 @@ void Simulation::InitDzJ(){
 	// in the oscilation scenario b = height
 	// case m = M is not yet suppoerted.
 	// Domain
-	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
-		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-			flowField_.dz_j[map(i,j,flowField_.m[map(i,j)])]=(    parameters_.get_dxdydz(2) *
-				(  1-(  ceil(   ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)   )-
-					 				 		  ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)	 )  )    );
-			for (int k = flowField_.m[map(i,j)] + 1; k < flowField_.M[map(i,j)]; k++) {
-				flowField_.dz_j[map(i,j,k)] = parameters_.get_dxdydz(2);
+	
+	if (parameters_.get_num_cells(2)==1) {
+
+		for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+			for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+
+				flowField_.dz_j[map(i,j,flowField_.m[map(i,j)])]= (flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight(); 
+
 			}
-			flowField_.dz_j[map(i,j,flowField_.M[map(i,j)])]=  	parameters_.get_dxdydz(2) *
-				(  1-  ceil( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
-				  				 ( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
-			 	)   ;
 		}
+		
+	}else{
+
+		for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+			for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+				flowField_.dz_j[map(i,j,flowField_.m[map(i,j)])]=(    parameters_.get_dxdydz(2) *
+					(  1-(  ceil(   ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)   )-
+						 				 		  ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)	 )  )    );
+				for (int k = flowField_.m[map(i,j)] + 1; k < flowField_.M[map(i,j)]; k++) {
+					flowField_.dz_j[map(i,j,k)] = parameters_.get_dxdydz(2);
+				}
+				flowField_.dz_j[map(i,j,flowField_.M[map(i,j)])]=  	parameters_.get_dxdydz(2) *
+					(  1-  ceil( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
+					  				 ( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
+			 		)   ;
+			}
+		}
+
 	}
+
+
 	// Boundary
 	//left
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
@@ -154,23 +206,41 @@ void Simulation::UpdateDzJ(){
 	// in the oscilation scenario b = height
 	// case m = M is not yet suppoerted.
 	// Domain
-	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
-		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-			flowField_.dz_j[map(i,j,flowField_.M[map(i,j)])]=    parameters_.get_dxdydz(2) *
-				(  1-(  ceil(   ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)   )-
-					 				 		  ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)	 )  )    ;
-			for (int k = flowField_.m[map(i,j)]+1; k < flowField_.M[map(i,j)]; k++) {
-				flowField_.dz_j[map(i,j,k)]=parameters_.get_dxdydz(2);
-			}
-			flowField_.dz_j[map(i,j,flowField_.M[map(i,j)])]= 	parameters_.get_dxdydz(2) *
-				(  1-  ceil( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
-				  				 ( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
-				);
-			for (int k = flowField_.M[map(i,j)] + 1; k < parameters_.get_num_cells(2); k++) {
-				flowField_.dz_j[map(i,j,k)]=0.0;
+	
+	if (parameters_.get_num_cells(2)==1) {
+
+		for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+			for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+
+				flowField_.dz_j[map(i,j,flowField_.m[map(i,j)])]= (flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight(); 
+
 			}
 		}
+		
+	}else{
+
+		for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+			for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+				flowField_.dz_j[map(i,j,flowField_.M[map(i,j)])]=    parameters_.get_dxdydz(2) *
+					(  1-(  ceil(   ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)   )-
+						 				 		  ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)	 )  )    ;
+				for (int k = flowField_.m[map(i,j)]+1; k < flowField_.M[map(i,j)]; k++) {
+					flowField_.dz_j[map(i,j,k)]=parameters_.get_dxdydz(2);
+				}
+				flowField_.dz_j[map(i,j,flowField_.M[map(i,j)])]= 	parameters_.get_dxdydz(2) *
+					(  1-  ceil( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
+					  				 ( (  ( flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
+					);
+				for (int k = flowField_.M[map(i,j)] + 1; k < parameters_.get_num_cells(2); k++) {
+					flowField_.dz_j[map(i,j,k)]=0.0;
+				}
+
+			}
+		}
+
 	}
+
+
 	// Boundary
 	//left
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
@@ -205,19 +275,36 @@ void Simulation::InitDzK(){
 	// in the oscilation scenario b = height
 	// case m = M is not yet suppoerted.
 	// Domain
-	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
-		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-			flowField_.dz_k[map(i,j,flowField_.m[map(i,j)])]=  parameters_.get_dxdydz(2) *
-				(  1-(  ceil(   ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)   )-
-					 				 		  ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)	 )  );
-			for (int k = flowField_.m[map(i,j)] + 1; k < flowField_.M[map(i,j)]; k++) {
-				flowField_.dz_k[map(i,j,k)]=parameters_.get_dxdydz(2);
+	
+	if (parameters_.get_num_cells(2)==1) {
+
+		for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+			for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+
+				flowField_.dz_k[map(i,j,flowField_.m[map(i,j)])]= (flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight(); 
+
 			}
-			flowField_.dz_k[map(i,j,flowField_.M[map(i,j)])] =(  	parameters_.get_dxdydz(2) *
-				(  1-  ceil( (  flowField_.etta[map(i,j)]  + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
-				  				 ( (  flowField_.etta[map(i,j)]  + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
-			 	)   );
 		}
+		
+	}else{
+
+		for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+			for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+
+				flowField_.dz_k[map(i,j,flowField_.m[map(i,j)])]=  parameters_.get_dxdydz(2) *
+					(  1-(  ceil(   ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)   )-
+						 				 		  ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)	 )  );
+				for (int k = flowField_.m[map(i,j)] + 1; k < flowField_.M[map(i,j)]; k++) {
+					flowField_.dz_k[map(i,j,k)]=parameters_.get_dxdydz(2);
+				}
+				flowField_.dz_k[map(i,j,flowField_.M[map(i,j)])] =(  	parameters_.get_dxdydz(2) *
+					(  1-  ceil( (  flowField_.etta[map(i,j)]  + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
+				  					 ( (  flowField_.etta[map(i,j)]  + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
+				 	)   );
+
+			}
+		}
+
 	}
 	// Boundary
 	//left
@@ -253,23 +340,43 @@ void Simulation::UpdateDzK(){
 	// in the oscilation scenario b = height
 	// case m = M is not yet suppoerted.
 	// Domain
-	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
-		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-			flowField_.dz_k[map(i,j,flowField_.m[map(i,j)])]=    parameters_.get_dxdydz(2) *
-				(  1-(  ceil(   ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)   )-
-					 				 		  ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)	 )  )    ;
-			for (int k = flowField_.m[map(i,j)]+1; k < flowField_.M[map(i,j)]; k++) {
-				flowField_.dz_k[map(i,j,k)]=parameters_.get_dxdydz(2);
-			}
-			flowField_.dz_k[map(i,j,flowField_.M[map(i,j)])]= 	parameters_.get_dxdydz(2) *
-				(  1-  ceil( (  flowField_.etta[map(i,j)] + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
-				  				 ( (  flowField_.etta[map(i,j)] + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
-				);
-			for (int k = flowField_.M[map(i,j)] + 1; k < parameters_.get_num_cells(2); k++) {
-				flowField_.dz_k[map(i,j,k)]=0.0;
+	
+	if (parameters_.get_num_cells(2)==1) {
+
+		for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+			for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+
+				flowField_.dz_k[map(i,j,flowField_.m[map(i,j)])]= (flowField_.etta[map(i,j)] +flowField_.etta[map(i+1,j)])/2 + parameters_.GetHeight(); 
+
 			}
 		}
+		
+	}else{
+
+
+		for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
+			for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
+
+				flowField_.dz_k[map(i,j,flowField_.m[map(i,j)])]=    parameters_.get_dxdydz(2) *
+					(  1-(  ceil(   ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)   )-
+						 				 		  ( parameters_.GetHeight()-parameters_.GetHeight() ) / parameters_.get_dxdydz(2)	 )  )    ;
+				for (int k = flowField_.m[map(i,j)]+1; k < flowField_.M[map(i,j)]; k++) {
+					flowField_.dz_k[map(i,j,k)]=parameters_.get_dxdydz(2);
+				}
+				flowField_.dz_k[map(i,j,flowField_.M[map(i,j)])]= 	parameters_.get_dxdydz(2) *
+					(  1-  ceil( (  flowField_.etta[map(i,j)] + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )+
+					  				 ( (  flowField_.etta[map(i,j)] + parameters_.GetHeight() ) / parameters_.get_dxdydz(2) )
+					);
+				for (int k = flowField_.M[map(i,j)] + 1; k < parameters_.get_num_cells(2); k++) {
+					flowField_.dz_k[map(i,j,k)]=0.0;
+				}
+
+			}
+		}
+
 	}
+
+
 	// Boundary
 	//left
 	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
