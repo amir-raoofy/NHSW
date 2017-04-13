@@ -27,7 +27,7 @@ void Simulation::UpdateU(){
 				rhs[k] = flowField_.g_i[map(i,j,k)] - flowField_.dz_i[map(i,j,k)]
 						*(flowField_.etta[map(i+1,j)]-flowField_.etta[map(i,j)]) 
 						*parameters_.get_theta() * parameters_.get_g() 
-						* parameters_.get_time_step() / parameters_.get_dxdydz(0);
+						* time_step / parameters_.get_dxdydz(0);
 			}
 
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {

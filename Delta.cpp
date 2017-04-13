@@ -17,14 +17,14 @@ void Simulation::CalculateDelta(){
 				s4+=flowField_.dz_j[map(i,j-1,k)] * flowField_.v[map(i,j-1,k)];
 			}
 
-			s1*=(1-parameters_.get_theta()) * parameters_.get_time_step() / parameters_.get_dxdydz(0);
-			s2*=(1-parameters_.get_theta()) * parameters_.get_time_step() / parameters_.get_dxdydz(0);
-			s3*=(1-parameters_.get_theta()) * parameters_.get_time_step() / parameters_.get_dxdydz(1);
-			s4*=(1-parameters_.get_theta()) * parameters_.get_time_step() / parameters_.get_dxdydz(1);
+			s1*=(1-parameters_.get_theta()) * time_step / parameters_.get_dxdydz(0);
+			s2*=(1-parameters_.get_theta()) * time_step / parameters_.get_dxdydz(0);
+			s3*=(1-parameters_.get_theta()) * time_step / parameters_.get_dxdydz(1);
+			s4*=(1-parameters_.get_theta()) * time_step / parameters_.get_dxdydz(1);
 			
 			flowField_.delta[map(i,j)] = flowField_.etta[map(i,j)]-(s1-s2+s3-s4) ;
 			// rain fall	
-			flowField_.delta[map(i,j)] += parameters_.GetPrecipitation() * parameters_.get_time_step() ;
+			flowField_.delta[map(i,j)] += parameters_.GetPrecipitation() * time_step ;
 			
 				
 		}

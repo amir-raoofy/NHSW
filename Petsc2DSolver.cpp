@@ -44,12 +44,12 @@ void Petsc2DSolver::updateMat(){
 	FLOAT alpha =
 	parameters_.get_g()
 	 * (parameters_.get_theta() 	  * parameters_.get_theta()  		 	)
-	 * (parameters_.get_time_step() * parameters_.get_time_step()  	)
+	 * (time_step * time_step  	)
 	 / (parameters_.get_dxdydz(0) 	* parameters_.get_dxdydz(0)			);
 	FLOAT beta =
 	parameters_.get_g()
 	 * (parameters_.get_theta() 	  * parameters_.get_theta()  		 	)
-	 * (parameters_.get_time_step() * parameters_.get_time_step()  	)
+	 * (time_step * time_step  	)
 	 / (parameters_.get_dxdydz(1) 	* parameters_.get_dxdydz(1)			);
 	
 	//std::cout << "my rank is: " << parameters_.topology.id << ", I am writing my portion of global matrix, Istart: " << Istart << " ,Iend:" << Iend << std::endl;
@@ -147,11 +147,11 @@ void Petsc2DSolver::updateRHS(){
 	
 	FLOAT kappa =
 		parameters_.get_theta()
-	 * (parameters_.get_time_step() )
+	 * (time_step )
 	 / (parameters_.get_dxdydz(0) );
 	FLOAT lambda =
 		parameters_.get_theta()
-	 * (parameters_.get_time_step() )
+	 * (time_step )
 	 / (parameters_.get_dxdydz(1) );
 
 	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {

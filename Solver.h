@@ -10,12 +10,14 @@ class Solver
 public:
 	Solver(const Parameters& parameters, FlowField& flowField);
  	virtual	void solve()=0;
+	void set_time_step(FLOAT ts);
 
 protected:
 	const Parameters& parameters_;
 	FlowField& flowField_;
 	inline int map(int i, int j) { return flowField_.map(i,j);}
 	inline int map(int i, int j, int k) { return flowField_.map(i,j,k);}
+	FLOAT time_step=parameters_.get_time_step();
 
 };
 

@@ -38,7 +38,7 @@ void Simulation::Run(){
 		if (parameters_.topology.id==0) {
 			std::cout << "Time Step: " << i << std::endl;
 		}
-
+		UpdateSimulationTimeStep();
 		Updatem();	
 		UpdateM();	
 		UpdateDzI();

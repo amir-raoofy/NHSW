@@ -50,6 +50,8 @@ public:
 	void CalculateZAGI();
 	void CalculateZAGJ();
 
+	void UpdateSimulationTimeStep();
+
 	void Run();
 
 	inline int map(int i, int j) { return flowField_.map(i,j);}
@@ -59,5 +61,6 @@ private:
 	const Parameters& parameters_;
 	FlowField& flowField_;
 	CommunicationManager& communicationManager_;
+	FLOAT time_step;
 
 };
