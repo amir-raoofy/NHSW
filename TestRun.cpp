@@ -34,11 +34,14 @@ void Simulation::Run(){
 	}
 
 	for (int i = 1; i < 100; i++) {
+
 		// print out to the log
 		if (parameters_.topology.id==0) {
-			std::cout << "Time Step: " << i << std::endl;
+
+			std::cout << "Time Step: " << i << " ,dt= " << time_step << std::endl;
+
 		}
-		UpdateSimulationTimeStep();
+
 		Updatem();	
 		UpdateM();	
 		UpdateDzI();
@@ -74,6 +77,8 @@ void Simulation::Run(){
 		communicationManager_.communicteV();
 		UpdateW();
 		communicationManager_.communicteW();
+		
+		UpdateSimulationTimeStep();
 
 		if (parameters_.GetOutputFlag()==1) {
 			output.write(i, "./output/");	

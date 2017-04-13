@@ -65,7 +65,7 @@ Parameters::~Parameters(){}
 
 void Parameters::parse(int argc, char *argv[])  {
 
-	if (argc!=19){
+	if (argc!=20){
 		std::cout << "Warning: The default values for parameters are used." << std::endl;
 	}else{
 		_N[0]  	= atoi(argv[1]);
@@ -75,17 +75,18 @@ void Parameters::parse(int argc, char *argv[])  {
 		_dt  		= atof(argv[5]);
 		_output_flag= atof(argv[6]);
 		_theta 	= atof(argv[7]);
-		_L[0]		= atof(argv[8]);
-		_L[1]		= atof(argv[9]);
-		_L[2] 	= atof(argv[10]);
-		_height =	atof(argv[11]);
-		_g	 		= atof(argv[12]);
-		_nu			= atof(argv[13]);
-		_gamma_t= atof(argv[14]);
-		_gamma_b= atof(argv[15]);
-		_u_a		= atof(argv[16]);
-		_v_a		= atof(argv[17]);
-		_precipitation = atof(argv[18]);
+		_tau 	= atof(argv[8]);
+		_L[0]		= atof(argv[9]);
+		_L[1]		= atof(argv[10]);
+		_L[2] 	= atof(argv[11]);
+		_height =	atof(argv[12]);
+		_g	 		= atof(argv[13]);
+		_nu			= atof(argv[14]);
+		_gamma_t= atof(argv[15]);
+		_gamma_b= atof(argv[16]);
+		_u_a		= atof(argv[17]);
+		_v_a		= atof(argv[18]);
+		_precipitation = atof(argv[19]);
 
 	}
 }
@@ -156,13 +157,17 @@ int Parameters::GetOutputFlag() const{
 FLOAT Parameters::GetPrecipitation() const{
 	return _precipitation;
 }
+	
+FLOAT Parameters::get_tau() const{
+	return _tau;
+}
 
 void Parameters::print_parameters(){
 	
 	// print the header
 	std::cout 	<< std::endl 
 				<< "   ===================================="<< std::endl;
-	std::cout 	<< "  |" << "\033[1;31mNon-hydrostatic Shallow Water solver\033[0m"
+	std::cout 	<< "  |" << "\033[1;31m 3D hydrostatic Surface Flow solver\033[0m"
 				<< "|" 	 <<  std::endl;
 	std::cout 	<< "   ===================================="<< std::endl;
 	
@@ -174,6 +179,7 @@ void Parameters::print_parameters(){
 				<< "Time step			-> 	"			<< _dt		<<	std::endl
 				<< "Output flag			-> 	"			<< _output_flag	<<	std::endl
 				<< "theta in numerical scheme	-> 	"	<< _theta	<<	std::endl
+				<< "stability safety factor		-> 	"	<< _tau		<<	std::endl
 				<< "Length in x-direction		-> 	"	<< _L[0]	<<	std::endl
 				<< "Length in y-direction		-> 	"	<< _L[1]	<<	std::endl
 				<< "Length in z-direction		-> 	"	<< _L[2]	<<	std::endl
