@@ -6,6 +6,8 @@ void Simulation::Run(){
 
 	Output output(parameters_, flowField_);
 
+	scenario_ -> Init();
+	/*
 	InitEtta();
 	communicationManager_.communicteEtta();
 	Initm();
@@ -28,12 +30,13 @@ void Simulation::Run(){
 	communicationManager_.communicteGJ();
 	InitGK();
 	communicationManager_.communicteGK();
+	*/
 
 	if (parameters_.GetOutputFlag()==1) {
 		output.write(0, "./output/");
 	}
 
-	for (int i = 1; i < 10000; i++) {
+	for (int i = 1; i < 100; i++) {
 
 		// print out to the log
 		if (parameters_.topology.id==0) {

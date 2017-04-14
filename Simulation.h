@@ -1,5 +1,6 @@
 #include "Parameters.h"
 #include "FlowField.h"
+#include "Scenario.h"
 #include "CommunicationManager.h"
 
 class Simulation
@@ -60,6 +61,7 @@ public:
 private:
 	const Parameters& parameters_;
 	FlowField& flowField_;
+	Scenario* scenario_;
 	CommunicationManager& communicationManager_;
 	FLOAT time_step;
 
