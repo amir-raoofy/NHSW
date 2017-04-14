@@ -26,6 +26,7 @@ private:
 	FLOAT _block_size_2d;
 	FLOAT _output_flag;
 	FLOAT _precipitation;
+	FLOAT _dry_cell_error=0.001;
 protected:
 	int _N[3]	;				// Number of cells in xyz directions
 	int _NGlobal[3]	;				// Number of cells in xyz directions
@@ -55,6 +56,7 @@ public:
 	FLOAT GetBlockSize2d() const;		// just used for the petsc parallel 2d solver in case of well distributed domains
 	int	  GetOutputFlag() const;
 	FLOAT GetPrecipitation() const;
+	FLOAT GetDryCellError() const;
 
 	Topology& topology;
 };

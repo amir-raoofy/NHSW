@@ -65,7 +65,7 @@ Parameters::~Parameters(){}
 
 void Parameters::parse(int argc, char *argv[])  {
 
-	if (argc!=20){
+	if (argc!=21){
 		std::cout << "Warning: The default values for parameters are used." << std::endl;
 	}else{
 		_N[0]  	= atoi(argv[1]);
@@ -80,13 +80,14 @@ void Parameters::parse(int argc, char *argv[])  {
 		_L[1]		= atof(argv[10]);
 		_L[2] 	= atof(argv[11]);
 		_height =	atof(argv[12]);
-		_g	 		= atof(argv[13]);
-		_nu			= atof(argv[14]);
-		_gamma_t= atof(argv[15]);
-		_gamma_b= atof(argv[16]);
-		_u_a		= atof(argv[17]);
-		_v_a		= atof(argv[18]);
-		_precipitation = atof(argv[19]);
+		_dry_cell_error =	atof(argv[13]);
+		_g	 		= atof(argv[14]);
+		_nu			= atof(argv[15]);
+		_gamma_t= atof(argv[16]);
+		_gamma_b= atof(argv[17]);
+		_u_a		= atof(argv[18]);
+		_v_a		= atof(argv[19]);
+		_precipitation = atof(argv[20]);
 
 	}
 }
@@ -160,6 +161,10 @@ FLOAT Parameters::GetPrecipitation() const{
 	
 FLOAT Parameters::get_tau() const{
 	return _tau;
+}
+
+FLOAT Parameters::GetDryCellError() const{
+	return _dry_cell_error;
 }
 
 void Parameters::print_parameters(){
