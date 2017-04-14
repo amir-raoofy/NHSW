@@ -10,26 +10,6 @@ public:
 	Simulation(const Parameters& parameters, FlowField& flowField, CommunicationManager& communicationManager);
 	~Simulation();
 
-	void InitU();
-	void InitV();
-	void InitW();
-	void InitEtta();
-
-	void Initm();
-	void InitM();
-
-	void InitDzI();
-	void InitDzJ();
-	void InitDzK();
-	void InitGI();
-	void InitGJ();
-	void InitGK();
-	void InitDelta();	
-	void InitZAZI();
-	void InitZAZJ();
-	void InitZAGI();
-	void InitZAGJ();
-
 	void UpdateU();
 	void UpdateV();
 	void UpdateW();

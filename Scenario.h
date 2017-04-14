@@ -27,6 +27,8 @@ public:
 	virtual void InitGJ()=0;
 	virtual void InitGK()=0;
 
+	virtual void updateBoundariesm()=0;
+	virtual void updateBoundariesM()=0;
 	virtual void updateBoundariesDzI()=0;
 	virtual void updateBoundariesDzJ()=0;
 	virtual void updateBoundariesDzK()=0;
