@@ -47,6 +47,18 @@ void Simulation::UpdateU(){
 				flowField_.u[map(i,j,k)]=0.0;
 			}
 
+	//considering wet and drying cells
+	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+
+			if (flowField_.etta[map(i,j)] + parameters_.GetHeight()<0.001 ) {
+				flowField_.u[map(i,j,flowField_.m[map(i,j)])] = 0.0;
+			}
+
+		}
+	}
+
+
 		}
 	}
 	// Boundary

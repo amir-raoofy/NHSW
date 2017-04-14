@@ -26,8 +26,22 @@ void Simulation::InitEtta(){
 			//flowField_.etta[map(i,j)] = 0.1* exp( -( ( i - parameters_.get_num_cells(0)/2 ) *  ( i - parameters_.get_num_cells(0)/2 ) * parameters_.get_dxdydz(0) * parameters_.get_dxdydz(0) +( j - parameters_.get_num_cells(1)/2 ) *  ( j - parameters_.get_num_cells(1)/2 ) * parameters_.get_dxdydz(1) * parameters_.get_dxdydz(1) ) );
 
 			flowField_.etta[map(i,j)] = 0.1* exp( -( pow (parameters_.topology.id_x * (parameters_.GetCubeLength(0)) / parameters_.topology.npx + i * parameters_.get_dxdydz(0)  - parameters_.GetCubeLength(0)/2	,2) + pow (parameters_.topology.id_y * (parameters_.GetCubeLength(1)) / parameters_.topology.npy + j * parameters_.get_dxdydz(1)  - parameters_.GetCubeLength(1)/2	,2)	 ) );
+			//flowField_.etta[map(i,j)] = -1.0 + 2.0 * (i-0.5) * parameters_.get_dxdydz(0) / parameters_.GetCubeLength(0) ;		//works	for dry scenario with gamma_t=0.001
 		}
 	}
+
+			
+	//considering wet and drying cells
+	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+
+			if (flowField_.etta[map(i,j)] + parameters_.GetHeight()<0.001 ) {
+				flowField_.etta[map(i,j)] = -parameters_.GetHeight() +0.001;
+			}
+
+		}
+	}
+
 }
 
 void Simulation::UpdateEtta(){
@@ -35,4 +49,16 @@ void Simulation::UpdateEtta(){
 	etta_solver.SetParameters (0.00001,1000);
 	etta_solver.set_time_step(time_step);
 	etta_solver.solve();
+
+	//considering wet and drying cells
+	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
+		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
+
+			if (flowField_.etta[map(i,j)] + parameters_.GetHeight()<0.001 ) {
+				flowField_.etta[map(i,j)] = -parameters_.GetHeight() +0.001;
+			}
+
+		}
+	}
+
 }
