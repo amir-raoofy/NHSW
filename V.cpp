@@ -59,30 +59,6 @@ void Simulation::UpdateV(){
 		}
 	}
 
+	scenario_->updateBoundariesV();
 
-	// Boundary
-	//left
-	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.v[map(0,j,k)]=flowField_.v[map(1,j,k)];
-		}
-	}
-	//right
-	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.v[map(parameters_.get_num_cells(0)+1,j,k)]=flowField_.v[map(parameters_.get_num_cells(0),j,k)];
-		}
-	}
-	//back
-	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.v[map(i,0,k)]=0;
-		}
-	}
-	//front
-	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.v[map(i,parameters_.get_num_cells(1)+1,k)]=0;
-		}
-	}
 }

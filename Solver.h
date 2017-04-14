@@ -3,12 +3,12 @@
 #include "CommunicationManager.h"
 #include "helper.h"
 #include <petscksp.h>
-
+#include "Scenario.h"
 
 class Solver
 {
 public:
-	Solver(const Parameters& parameters, FlowField& flowField);
+	Solver(const Parameters& parameters, FlowField& flowField );
  	virtual	void solve()=0;
 	void set_time_step(FLOAT ts);
 
@@ -77,11 +77,12 @@ protected:
 class JacobiSolverEtta: public IterativeSolver
 {
 public:
-	JacobiSolverEtta(const Parameters& parameters, FlowField& flowField);
+	JacobiSolverEtta(const Parameters& parameters, FlowField& flowField, Scenario& scenario);
 	void solve();
 protected:
 	FLOAT* etta_old_;
 	FLOAT* error_;
+	Scenario& scenario_;
 	void updateDomain();
 	void updateBoundary();
 	void updateError();
@@ -91,7 +92,7 @@ protected:
 class ParallelJacobiSolverEtta: public JacobiSolverEtta
 {
 public:
-	ParallelJacobiSolverEtta(const Parameters& parameters, FlowField& flowField, CommunicationManager &communicationManager);
+	ParallelJacobiSolverEtta(const Parameters& parameters, FlowField& flowField, CommunicationManager &communicationManager, Scenario& scenario);
 protected:
 	void iterate();
 	void parallelUpdateError();

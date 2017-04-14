@@ -2,9 +2,10 @@
 #include <algorithm>
 #include <numeric>
 
-JacobiSolverEtta::JacobiSolverEtta(const Parameters& parameters, FlowField& flowField):
+JacobiSolverEtta::JacobiSolverEtta(const Parameters& parameters, FlowField& flowField, Scenario& scenario):
 	IterativeSolver(parameters, flowField),
-	etta_old_(new FLOAT [(parameters_.get_num_cells(0)+2) * (parameters_.get_num_cells(1)+2)]){
+	etta_old_(new FLOAT [(parameters_.get_num_cells(0)+2) * (parameters_.get_num_cells(1)+2)]),
+	scenario_(scenario){
 		//std::cout << "\033[1;31m====Jacobi solver for etta is invoked====\033[0m"	<< std::endl;
 	}
 
@@ -49,15 +50,9 @@ void JacobiSolverEtta::updateDomain(){
 }
 
 void JacobiSolverEtta::updateBoundary(){
-	// B
-	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-		flowField_.etta[map(0,j)]=flowField_.etta[map(1,j)];								//left
-		flowField_.etta[map(parameters_.get_num_cells(0)+1,j)]=flowField_.etta[map(parameters_.get_num_cells(0),j)];	//right
-	}
-	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		flowField_.etta[map(i,0)]=flowField_.etta[map(i,1)];								//back
-		flowField_.etta[map(i,parameters_.get_num_cells(1)+1)]=flowField_.etta[map(i,parameters_.get_num_cells(1))];	//front
-	}
+
+	scenario_.updateBoundariesEtta();
+
 }
 
 void JacobiSolverEtta::updateError(){

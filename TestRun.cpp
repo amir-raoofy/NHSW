@@ -7,30 +7,6 @@ void Simulation::Run(){
 	Output output(parameters_, flowField_);
 
 	scenario_ -> Init();
-	/*
-	InitEtta();
-	communicationManager_.communicteEtta();
-	Initm();
-	InitM();
-	InitDzI();
-	communicationManager_.communicteDzI();
-	InitDzJ();
-	communicationManager_.communicteDzJ();
-	InitDzK();
-	communicationManager_.communicteDzK();
-	InitU();
-	communicationManager_.communicteU();
-	InitV();
-	communicationManager_.communicteV();
-	InitW();
-	communicationManager_.communicteW();
-	InitGI();
-	communicationManager_.communicteGI();
-	InitGJ();
-	communicationManager_.communicteGJ();
-	InitGK();
-	communicationManager_.communicteGK();
-	*/
 
 	if (parameters_.GetOutputFlag()==1) {
 		output.write(0, "./output/");

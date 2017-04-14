@@ -21,4 +21,20 @@ public:
 	virtual void InitGJ();
 	virtual void InitGK();
 
+	virtual void updateBoundariesDzI();
+	virtual void updateBoundariesDzJ();
+	virtual void updateBoundariesDzK();
+	virtual void updateBoundariesGI();
+	virtual void updateBoundariesGJ();
+	virtual void updateBoundariesGK();
+	virtual void updateBoundariesZAZI();
+	virtual void updateBoundariesZAZJ();
+	virtual void updateBoundariesZAGI();
+	virtual void updateBoundariesZAGJ();
+	virtual void updateBoundariesDelta();
+	virtual void updateBoundariesEtta();
+	virtual void updateBoundariesU();
+	virtual void updateBoundariesV();
+	virtual void updateBoundariesW();
+
 };

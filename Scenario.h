@@ -9,6 +9,8 @@ public:
 
 	Scenario(const Parameters& parameters, FlowField& flowField, CommunicationManager& communicationManager);
 	virtual ~Scenario();
+	
+	void Init(); // driver method for initialization of the data
 
 	virtual void InitU()=0;
 	virtual void InitV()=0;
@@ -25,7 +27,22 @@ public:
 	virtual void InitGJ()=0;
 	virtual void InitGK()=0;
 
-	void Init();
+	virtual void updateBoundariesDzI()=0;
+	virtual void updateBoundariesDzJ()=0;
+	virtual void updateBoundariesDzK()=0;
+	virtual void updateBoundariesGI()=0;
+	virtual void updateBoundariesGJ()=0;
+	virtual void updateBoundariesGK()=0;
+	virtual void updateBoundariesZAZI()=0;
+	virtual void updateBoundariesZAZJ()=0;
+	virtual void updateBoundariesZAGI()=0;
+	virtual void updateBoundariesZAGJ()=0;
+	virtual void updateBoundariesDelta()=0;
+	virtual void updateBoundariesEtta()=0;
+	virtual void updateBoundariesU()=0;
+	virtual void updateBoundariesV()=0;
+	virtual void updateBoundariesW()=0;
+	
 
 	inline int map(int i, int j) { return flowField_.map(i,j);}
 	inline int map(int i, int j, int k) { return flowField_.map(i,j,k);}

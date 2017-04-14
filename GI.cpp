@@ -24,37 +24,9 @@ void Simulation::InitGI(){
 			flowField_.g_i[map(i,j,flowField_.M[map(i,j)])] += parameters_.get_gamma_t() * time_step * parameters_.get_u_a();
 		}
 	}
-	//TODO fix the lower boundary condition k=0 we have k-1 which is problematic
 
-	// Boundary
-	//left
-	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-//			flowField_.g_i[0][j].push_back(flowField_.g_i[map(1,j,k)]);
-			flowField_.g_i[map(0,j,k)]=0.0;
-		}
-	}
-	//right
-	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			//flowField_.g_i[parameters_.get_num_cells(0)+1][j].push_back(flowField_.g_i[map(parameters_.get_num_cells(0),j,k)]);
-			flowField_.g_i[map(parameters_.get_num_cells(0)+1,j,k)]=0.0;
-			//flowField_.g_i[parameters_.get_num_cells(0)  ][j][k]=0.0;
-			//flowField_.g_i[map(parameters_.get_num_cells(0)+1,j,k)]=flowField_.g_i[map(parameters_.get_num_cells(0),j,k)];
-		}
-	}
-	//bottom
-	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.g_i[map(i,0,k)]=flowField_.g_i[map(i,1,k)];
-		}
-	}
-	//top
-	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.g_i[map(i,parameters_.get_num_cells(1)+1,k)]=flowField_.g_i[map(i,parameters_.get_num_cells(1),k)];
-		}
-	}
+	scenario_->updateBoundariesGI();
+
 }
 
 void Simulation::UpdateGI(){
@@ -84,34 +56,7 @@ void Simulation::UpdateGI(){
 			}
 		}
 	}
-	//TODO fix the lower boundary condition k=0 we have k-1 which is problematic
+	
+	scenario_->updateBoundariesGI();
 
-	// Boundary
-	//left
-	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			//flowField_.g_i[map(0,j,k)]=flowField_.g_i[map(1,j,k)];
-			flowField_.g_i[map(0,j,k)]=0.0;
-		}
-	}
-	//right
-	for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
-		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			//flowField_.g_i[map(parameters_.get_num_cells(0)+1,j,k)]=flowField_.g_i[map(parameters_.get_num_cells(0),j,k)];
-			flowField_.g_i[map(parameters_.get_num_cells(0)+1,j,k)]=0.0;
-			//flowField_.g_i[parameters_.get_num_cells(0)  ][j][k]=0.0;
-		}
-	}
-	//bottom
-	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.g_i[map(i,0,k)]=flowField_.g_i[map(i,1,k)];
-		}
-	}
-	//top
-	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		for(int k = 0; k < parameters_.get_num_cells(2); k++){
-			flowField_.g_i[map(i,parameters_.get_num_cells(1)+1,k)]=flowField_.g_i[map(i,parameters_.get_num_cells(1),k)];
-		}
-	}
 }

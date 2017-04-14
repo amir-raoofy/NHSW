@@ -3,7 +3,7 @@
 #include <mpi.h>
 #include"helper.h"
 
-ParallelJacobiSolverEtta::ParallelJacobiSolverEtta(const Parameters& parameters, FlowField& flowField, CommunicationManager &communicationManager): JacobiSolverEtta(parameters, flowField), communicationManager_(communicationManager){}
+ParallelJacobiSolverEtta::ParallelJacobiSolverEtta(const Parameters& parameters, FlowField& flowField, CommunicationManager &communicationManager, Scenario& scenario): JacobiSolverEtta(parameters, flowField, scenario), communicationManager_(communicationManager){}
 
 void ParallelJacobiSolverEtta::iterate(){
 	

@@ -45,7 +45,7 @@ void Simulation::InitEtta(){
 }
 
 void Simulation::UpdateEtta(){
-	JacobiSolverEtta etta_solver(parameters_, flowField_);
+	JacobiSolverEtta etta_solver(parameters_, flowField_, *scenario_);
 	etta_solver.SetParameters (0.00001,1000);
 	etta_solver.set_time_step(time_step);
 	etta_solver.solve();
