@@ -5,16 +5,14 @@ void Simulation::UpdateV(){
 
 	//calculation
 	// Domain
-	Petsc1DSolverV solver(parameters_, flowField_);
-	solver.setParameters (0.00001,1000);
 	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
 		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
 
-			solver.setIndices(i,j);
-			solver.updateMat(flowField_.dz_j);
-			solver.updateRHS();
-			solver.solve();
-			solver.updateField(flowField_.v);
+			petsc_solver_1d_v_Aj_->setIndices(i,j);
+			petsc_solver_1d_v_Aj_->updateMat(flowField_.dz_j);
+			petsc_solver_1d_v_Aj_->updateRHS();
+			petsc_solver_1d_v_Aj_->solve();
+			petsc_solver_1d_v_Aj_->updateField(flowField_.v);
 
 			for (int k = flowField_.M[map(i,j)] + 1; k < parameters_.get_num_cells(2); k++) {
 				flowField_.v[map(i,j,k)]=0.0;
