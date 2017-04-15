@@ -1,7 +1,7 @@
 #include "Solver.h"
 
-Petsc1DSolver::Petsc1DSolver(const Parameters& parameters, FlowField& flowField, FLOAT* Dz, FLOAT* RHS, FLOAT* resultField):
-	PetscSolver(parameters, flowField),Dz_(Dz),RHS_(RHS), resultField_(resultField){
+Petsc1DSolver::Petsc1DSolver(const Parameters& parameters, FlowField& flowField):
+	PetscSolver(parameters, flowField){
 	
 	n=parameters_.get_num_cells(2);
 	//create matrix
@@ -41,22 +41,22 @@ Petsc1DSolver::~Petsc1DSolver(){
 }
 
 //DONE cheat from the iterate function
-void Petsc1DSolver::updateMat(){
+void Petsc1DSolver::updateMat(FLOAT* Dz){
 	FLOAT coeff = parameters_.get_vis() * parameters_.get_sim_time();
 
  	for (Ii=Istart; Ii<Iend; Ii++) {
 		if ( Ii>flowField_.m[map(i,j)] && Ii <flowField_.M[map(i,j)]) {
-			J=Ii-1; v = coeff / ( (Dz_[map(i,j,Ii)] + Dz_[map(i,j,Ii-1)])/2 ); MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
-			J=Ii+1; v = coeff / ( (Dz_[map(i,j,Ii)] + Dz_[map(i,j,Ii+1)])/2 ); MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
-			J=Ii  ; v = coeff / ( (Dz_[map(i,j,Ii)] + Dz_[map(i,j,Ii-1)])/2 ) + coeff / ( (Dz_[map(i,j,Ii)] + Dz_[map(i,j,Ii+1)])/2 ) + Dz_[map(i,j,Ii)]; MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
+			J=Ii-1; v = coeff / ( (Dz[map(i,j,Ii)] + Dz[map(i,j,Ii-1)])/2 ); MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
+			J=Ii+1; v = coeff / ( (Dz[map(i,j,Ii)] + Dz[map(i,j,Ii+1)])/2 ); MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
+			J=Ii  ; v = coeff / ( (Dz[map(i,j,Ii)] + Dz[map(i,j,Ii-1)])/2 ) + coeff / ( (Dz[map(i,j,Ii)] + Dz[map(i,j,Ii+1)])/2 ) + Dz[map(i,j,Ii)]; MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
 		}
 		else if(Ii==flowField_.m[map(i,j)]){
-			J=Ii+1; v = coeff / ( (Dz_[map(i,j,Ii)] + Dz_[map(i,j,Ii+1)])/2 ); MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
-			J=Ii  ; v = coeff / ( (Dz_[map(i,j,Ii)] + Dz_[map(i,j,Ii+1)])/2 )	+ Dz_[map(i,j,Ii)] + parameters_.get_gamma_b() * parameters_.get_sim_time(); MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
+			J=Ii+1; v = coeff / ( (Dz[map(i,j,Ii)] + Dz[map(i,j,Ii+1)])/2 ); MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
+			J=Ii  ; v = coeff / ( (Dz[map(i,j,Ii)] + Dz[map(i,j,Ii+1)])/2 )	+ Dz[map(i,j,Ii)] + parameters_.get_gamma_b() * parameters_.get_sim_time(); MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
 		}
 		else if(Ii==flowField_.M[map(i,j)]){
-			J=Ii-1; v = coeff / ( (Dz_[map(i,j,Ii)] + Dz_[map(i,j,Ii-1)])/2 ); MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
-			J=Ii  ; v = coeff / ( (Dz_[map(i,j,Ii)] + Dz_[map(i,j,Ii-1)])/2 )	+ Dz_[map(i,j,Ii)] + parameters_.get_gamma_b() * parameters_.get_sim_time(); MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
+			J=Ii-1; v = coeff / ( (Dz[map(i,j,Ii)] + Dz[map(i,j,Ii-1)])/2 ); MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
+			J=Ii  ; v = coeff / ( (Dz[map(i,j,Ii)] + Dz[map(i,j,Ii-1)])/2 )	+ Dz[map(i,j,Ii)] + parameters_.get_gamma_b() * parameters_.get_sim_time(); MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
 		}
 		else{
 			J=Ii;   v = 1.0; MatSetValues(A,1,&Ii,1,&J,&v,INSERT_VALUES); 
@@ -71,38 +71,38 @@ void Petsc1DSolver::updateMat(){
 }
 
 //DONE copy z to right handside
-void Petsc1DSolver::updateRHS(){
+void Petsc1DSolver::updateRHS(FLOAT* RHS){
 
 	//VecPlaceArray(b, RHS_+(map(i,j,0)));
 	for (int k = 0; k < parameters_.get_num_cells(2); k++) {
-		VecSetValues(x,1,&k,RHS_+(map(i,j,k)),INSERT_VALUES);
-	}
-	for (int k = 0; k < parameters_.get_num_cells(2); k++) {
-		VecSetValues(b,1,&k,RHS_+(map(i,j,k)),INSERT_VALUES);
+
+		VecSetValues(x,1,&k,RHS+k,INSERT_VALUES);
+        VecSetValues(b,1,&k,RHS+k,INSERT_VALUES);
+
 	}
 
-	VecAssemblyBegin(b);
-	VecAssemblyEnd(b);
 	VecAssemblyBegin(x);
+	VecAssemblyBegin(b);
 	VecAssemblyEnd(x);
+	VecAssemblyEnd(b);
 
-	}
+}
 
 void Petsc1DSolver::solve(){
 	KSPSolve(ksp,b,x);
 	KSPGetIterationNumber(ksp,&its);
 }
 
-void Petsc1DSolver::updateField(){
+void Petsc1DSolver::updateField(FLOAT* resultField, FLOAT* Dz){
 
 	FLOAT s=0;
 	for (int k = 0; k < parameters_.get_num_cells(2); k++) {
 		VecGetValues(x,1,&k,&v);
-		s+=v*Dz_[map(i,j,k)];
+		s+=v*Dz[map(i,j,k)];
 	}
 
 	//VecDot(b,x,&v);
-	resultField_[map(i,j)]=s;
+	resultField[map(i,j)]=s;
 
 	//VecResetArray(b);
 }

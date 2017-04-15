@@ -110,12 +110,9 @@ class PetscSolver: public Solver
 {
 public:
 	PetscSolver(const Parameters& parameters, FlowField& flowField);
-	~PetscSolver();
+	virtual ~PetscSolver();
 
-	virtual void updateMat() = 0;
-	virtual void updateRHS() = 0;
 	virtual	void solve() = 0;	
-	virtual void updateField() = 0;
 	void setParameters(FLOAT TOL, int MaxIt);
 
 protected:
@@ -128,30 +125,48 @@ protected:
 	int MaxIt_;
 };
 
-
 class Petsc1DSolver: public PetscSolver
 {
 public:
 
-	Petsc1DSolver(const Parameters& parameters, FlowField& flowField, FLOAT* Dz, FLOAT* RHS, FLOAT* resultField);
-	~Petsc1DSolver();
+	Petsc1DSolver(const Parameters& parameters, FlowField& flowField);
+	virtual ~Petsc1DSolver();
 	
-	void updateMat();
-	void updateRHS();
+	void updateMat(FLOAT* Dz);
+	void updateRHS(FLOAT* RHS);
 	void solve();	
-	void updateField();
+	void updateField(FLOAT* resultField, FLOAT* Dz);
 	void setIndices(int i, int j);
 
 protected:
 	PetscErrorCode ierr;
 	PetscScalar    v;
 
-	FLOAT* Dz_;
-	FLOAT* RHS_;
-	FLOAT* resultField_;
 	int i;
 	int j;
 };
+
+class Petsc1DSolverU: public Petsc1DSolver
+{
+public:
+	Petsc1DSolverU(const Parameters& parameters, FlowField& flowField);
+	virtual ~Petsc1DSolverU();
+	
+	void updateRHS();
+	void updateField(FLOAT* resultField);
+	
+};
+
+class Petsc1DSolverV: public Petsc1DSolverU
+{
+public:
+	Petsc1DSolverV(const Parameters& parameters, FlowField& flowField);
+	virtual ~Petsc1DSolverV();
+	
+	void updateRHS();
+	
+};
+
 
 class Petsc2DSolver: public PetscSolver
 {

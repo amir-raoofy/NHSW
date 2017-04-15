@@ -26,7 +26,7 @@ obj_petsc_test= Main.o FlowField.o Simulation.o PetscZAZ.o PetscZAG.o TestRun.o 
 
 obj_fix= main.o FlowField.o Parameters.o Topology.o Simulation.o TestRun.o Etta.o Delta.o m.o M.o U.o V.o W.o Dz.o Solver.o AI_Inv.o  AJ_Inv.o GI.o GJ.o GK.o zAz.o zAG.o JacobiSolverEtta.o ParallelSolverEtta.o ParallelJacobiSolverEtta.o output.o CommunicationManager.o TimeStep.o Scenario.o defaultScenario.o defaultScenarioInit.o defaultScenarioBoundaries.o
 
-obj_petsc_fix= main.o FlowField.o Parameters.o Topology.o Simulation.o TestRun.o Etta.o Delta.o m.o M.o U.o V.o W.o Dz.o Solver.o AI_Inv.o  AJ_Inv.o GI.o GJ.o GK.o PetscZAZ.o PetscZAG.o JacobiSolverEtta.o PetscSolverEtta.o ParallelJacobiSolverEtta.o output.o CommunicationManager.o PetscSolver.o Petsc1DSolver.o Petsc2DSolver.o TimeStep.o Scenario.o defaultScenario.o defaultScenarioInit.o defaultScenarioBoundaries.o
+obj_petsc_fix= main.o FlowField.o Parameters.o Topology.o Simulation.o TestRun.o Etta.o Delta.o m.o M.o Petsc1DSolverU.o Petsc1DSolverV.o PetscU.o PetscV.o W.o Dz.o Solver.o AI_Inv.o  AJ_Inv.o GI.o GJ.o GK.o PetscZAZ.o PetscZAG.o JacobiSolverEtta.o PetscSolverEtta.o ParallelJacobiSolverEtta.o output.o CommunicationManager.o PetscSolver.o Petsc1DSolver.o Petsc2DSolver.o TimeStep.o Scenario.o defaultScenario.o defaultScenarioInit.o defaultScenarioBoundaries.o
 
 
 all: nhsw nhsw_petsc test test_petsc
