@@ -1,7 +1,9 @@
 #include "Solver.h"
 
-JacobiSolverAJ::JacobiSolverAJ(const Parameters& parameters, FlowField& flowField, FLOAT* x, FLOAT* rhs):
-	JacobiSolverAI(parameters, flowField, x, rhs){}
+JacobiSolverAJ::JacobiSolverAJ(const Parameters& parameters, FlowField& flowField, FLOAT* rhs, FLOAT* x, FLOAT* x_old):
+	JacobiSolverAI(parameters, flowField, rhs, x, x_old){}
+
+JacobiSolverAJ::~JacobiSolverAJ(){}
 
 void JacobiSolverAJ::updateDomain(){
 	FLOAT coeff = parameters_.get_vis() * parameters_.get_sim_time();

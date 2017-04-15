@@ -1,5 +1,6 @@
 #include "Parameters.h"
 #include "FlowField.h"
+#include "Solver.h"
 #include "Scenario.h"
 #include "CommunicationManager.h"
 
@@ -44,5 +45,12 @@ private:
 	Scenario* scenario_;
 	CommunicationManager& communicationManager_;
 	FLOAT time_step;
+	
+	//1d solver buffers
+	FLOAT* rhs_;
+	FLOAT* x_;
+	FLOAT* x_old_;
+	JacobiIterativeSolver1D* solver_1d_Ai_;
+	JacobiIterativeSolver1D* solver_1d_Aj_;
 
 };

@@ -1,3 +1,4 @@
+#pragma once
 #include "Parameters.h"
 #include "FlowField.h"
 #include "CommunicationManager.h"
@@ -9,6 +10,7 @@ class Solver
 {
 public:
 	Solver(const Parameters& parameters, FlowField& flowField );
+	virtual ~Solver();
  	virtual	void solve()=0;
 	void set_time_step(FLOAT ts);
 
@@ -25,7 +27,9 @@ class IterativeSolver: public Solver
 {
 public:	
 	IterativeSolver(const Parameters& parameters, FlowField& flowField);
+	virtual ~IterativeSolver();
 	void SetParameters(FLOAT TOL, int MaxIt);
+
 protected:
 	FLOAT TOL_;
 	int MaxIt_;
@@ -37,21 +41,30 @@ private:
 	virtual void iterate()=0;
 };
 
-class JacobiSolverAI: public IterativeSolver
+class JacobiIterativeSolver1D: public IterativeSolver
 {
 public:
-	JacobiSolverAI(const Parameters& parameters, FlowField& flowField, FLOAT* x, FLOAT* rhs);
-	~JacobiSolverAI();
-	void solve();
+	JacobiIterativeSolver1D(const Parameters& parameters, FlowField& flowField, FLOAT* rhs, FLOAT* x, FLOAT* x_old);
+	virtual ~JacobiIterativeSolver1D();
+	void SetIndices(int i, int j);
 	void SetBuffer(FLOAT* x);
 	void SetRhs(FLOAT* rhs);
-	void SetIndices(int i, int j);
 protected:
 	int i;
 	int j;
 	FLOAT* rhs_;
 	FLOAT* x_;
 	FLOAT* x_old_;
+
+};
+
+class JacobiSolverAI: public JacobiIterativeSolver1D
+{
+public:
+	JacobiSolverAI(const Parameters& parameters, FlowField& flowField, FLOAT* rhs, FLOAT* x, FLOAT* x_old);
+	virtual ~JacobiSolverAI();
+	void solve();
+protected:
 	virtual void updateDomain();
 	virtual void updateBoundary();
 	virtual void updateError();
@@ -60,15 +73,8 @@ protected:
 
 class JacobiSolverAJ: public JacobiSolverAI{
 public:
-	JacobiSolverAJ(const Parameters& parameters, FlowField& flowField, FLOAT* x, FLOAT* rhs);
-protected:
-	void updateDomain();
-	void updateBoundary();
-};
-
-class JacobiSolverAK: public JacobiSolverAI{
-public:
-	JacobiSolverAK(const Parameters& parameters, FlowField& flowField, FLOAT* x, FLOAT* rhs);
+	JacobiSolverAJ(const Parameters& parameters, FlowField& flowField, FLOAT* rhs, FLOAT* x, FLOAT* x_old);
+	virtual ~JacobiSolverAJ();
 protected:
 	void updateDomain();
 	void updateBoundary();

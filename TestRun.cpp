@@ -8,6 +8,9 @@ void Simulation::Run(){
 
 	scenario_ -> Init();
 
+	solver_1d_Ai_ ->SetParameters (0.00001,1000);
+	solver_1d_Aj_ ->SetParameters (0.00001,1000);
+
 	if (parameters_.GetOutputFlag()==1) {
 		output.write(0, "./output/");
 	}

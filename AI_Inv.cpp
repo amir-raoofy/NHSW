@@ -1,15 +1,12 @@
 #include "Solver.h"
 
-JacobiSolverAI::JacobiSolverAI(const Parameters& parameters, FlowField& flowField, FLOAT* x, FLOAT* rhs):
-	IterativeSolver(parameters, flowField),
-	rhs_(rhs),
-	x_(x),
-	x_old_(new FLOAT [parameters_.get_num_cells(2)])
+JacobiSolverAI::JacobiSolverAI(const Parameters& parameters, FlowField& flowField, FLOAT* rhs, FLOAT* x, FLOAT* x_old):
+	JacobiIterativeSolver1D(parameters, flowField, rhs, x, x_old)
 	{
 		//std::cout << "\033[1;31m====Jacobi solver for inv [A(i,j)] is invoked====\033[0m"	<< std::endl;
 	}
 
-JacobiSolverAI::~JacobiSolverAI(){delete []x_old_;}
+JacobiSolverAI::~JacobiSolverAI(){}
 
 void JacobiSolverAI::updateDomain(){
 
@@ -69,6 +66,4 @@ void JacobiSolverAI::solve(){
 
 }
 
-void JacobiSolverAI::SetIndices(int i, int j){this->i=i; this->j=j;}
-void JacobiSolverAI::SetRhs(FLOAT* rhs){rhs_=rhs;}
-void JacobiSolverAI::SetBuffer(FLOAT* x){x_=x, x_old_=x;}
+

@@ -2,38 +2,33 @@
 #include "Solver.h"
 
 void Simulation::UpdateV(){
-	//calculation
-	FLOAT* rhs= new FLOAT [parameters_.get_num_cells(2)];
-	FLOAT* buffer= new FLOAT [parameters_.get_num_cells(2)];
-	JacobiSolverAJ solver(parameters_, flowField_, buffer, rhs);
-	solver.SetParameters (0.00001,1000);
 
+	//calculation
+	// Domain
 	for (int i = 1; i < parameters_.get_num_cells(0)+1; i++) {
 		for (int j = 1; j < parameters_.get_num_cells(1)+1; j++) {
 
+			solver_1d_Aj_->SetIndices(i,j);
+			solver_1d_Aj_->SetBuffer(flowField_.v);
+
+			//instead of set rhs
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {
-				rhs[k] = flowField_.g_j[map(i,j,k)] - flowField_.dz_j[map(i,j,k)]
+				rhs_[k] = flowField_.g_j[map(i,j,k)] - flowField_.dz_j[map(i,j,k)]
 						*(flowField_.etta[map(i,j+1)]-flowField_.etta[map(i,j)]) 
 						*parameters_.get_theta() * parameters_.get_g() 
 						* time_step / parameters_.get_dxdydz(1);
 			}
 
+			solver_1d_Aj_->solve();
+
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {
-				buffer[k] = flowField_.v[map(i,j,k)];
+				flowField_.v[map(i,j,k)] = x_[k] ;
 			}
-
-			solver.SetRhs(rhs);
-			solver.SetBuffer(buffer);
-			solver.SetIndices(i,j);
-			solver.solve();
-
-			for (int k = 0; k < parameters_.get_num_cells(2); k++) {		
-				flowField_.v[map(i,j,k)] = buffer[k] ;
-			}
-
+			
 			for (int k = flowField_.M[map(i,j)] + 1; k < parameters_.get_num_cells(2); k++) {
 				flowField_.v[map(i,j,k)]=0.0;
 			}
+
 		}
 	}
 
@@ -48,6 +43,7 @@ void Simulation::UpdateV(){
 		}
 	}
 
+	//Boundary
 	scenario_->updateBoundariesV();
 
 }
