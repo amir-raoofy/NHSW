@@ -1,3 +1,4 @@
+#pragma once
 #include "Parameters.h"
 #include "FlowField.h"
 #include "Solver.h"
@@ -9,13 +10,12 @@ class Simulation
 public:
 
 	Simulation(const Parameters& parameters, FlowField& flowField, CommunicationManager& communicationManager);
-	~Simulation();
+	virtual ~Simulation();
 
-	void UpdateU();
-	void UpdateV();
+	virtual void UpdateU()=0;
+	virtual void UpdateV()=0;
 	void UpdateW();
-	void UpdateEtta();
-	void ParallelUpdateEtta();
+	virtual void UpdateEtta()=0;
 	
 	void Updatem();
 	void UpdateM();
@@ -27,10 +27,10 @@ public:
 	void UpdateGJ();
 	void UpdateGK();
 	void CalculateDelta();	
-	void CalculateZAZI();
-	void CalculateZAZJ();
-	void CalculateZAGI();
-	void CalculateZAGJ();
+	virtual void CalculateZAZI()=0;
+	virtual void CalculateZAZJ()=0;
+	virtual void CalculateZAGI()=0;
+	virtual void CalculateZAGJ()=0;
 
 	void UpdateSimulationTimeStep();
 
@@ -39,23 +39,11 @@ public:
 	inline int map(int i, int j) { return flowField_.map(i,j);}
 	inline int map(int i, int j, int k) { return flowField_.map(i,j,k);}
 
-private:
+protected:
 	const Parameters& parameters_;
 	FlowField& flowField_;
 	Scenario* scenario_;
 	CommunicationManager& communicationManager_;
 	FLOAT time_step;
-	
-	//1d solver buffers
-	FLOAT* rhs_;
-	FLOAT* x_;
-	FLOAT* x_old_;
-	JacobiIterativeSolver1D* solver_1d_Ai_;
-	JacobiIterativeSolver1D* solver_1d_Aj_;
-
-	Petsc1DSolver* petsc_solver_1d_Ai_;
-	Petsc1DSolver* petsc_solver_1d_Aj_;
-	Petsc1DSolverU* petsc_solver_1d_u_Ai_;
-	Petsc1DSolverV* petsc_solver_1d_v_Aj_;
 
 };

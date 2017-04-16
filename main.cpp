@@ -1,5 +1,6 @@
 #include "FlowField.h"
-#include "Simulation.h"
+#include "PetscSimulation.h"
+#include "ParallelSimulation.h"
 #include "Topology.h"
 #include <petscksp.h>
 
@@ -11,7 +12,7 @@ int main(int argc, char *argv[]){
 	FlowField flowField(parameters);
 
 	CommunicationManager communicationManager (parameters,flowField);
-	Simulation simulation(parameters, flowField, communicationManager);
+	ParallelSimulation simulation(parameters, flowField, communicationManager);
 	simulation.Run();
 	
 	PetscFinalize();

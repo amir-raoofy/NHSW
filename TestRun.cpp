@@ -8,10 +8,6 @@ void Simulation::Run(){
 
 	scenario_ -> Init();
 
-	solver_1d_Ai_ ->SetParameters (0.00001,1000);
-	solver_1d_Aj_ ->SetParameters (0.00001,1000);
-	petsc_solver_1d_Ai_->setParameters (0.00001,1000);
-	petsc_solver_1d_Aj_->setParameters (0.00001,1000);
 
 	if (parameters_.GetOutputFlag()==1) {
 		output.write(0, "./output/");
@@ -52,7 +48,7 @@ void Simulation::Run(){
 		CalculateDelta();
 		communicationManager_.communicteDelta();
 		//UpdateEtta();
-		ParallelUpdateEtta();
+		UpdateEtta();
 		//PetscUpdateEtta();
 		communicationManager_.communicteEtta();
 		UpdateU();

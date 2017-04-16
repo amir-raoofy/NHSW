@@ -1,7 +1,7 @@
-#include "Simulation.h"
+#include "PetscSimulation.h"
 #include "Solver.h"
 
-void Simulation::UpdateV(){
+void PetscSimulation::UpdateV(){
 
 	//calculation
 	// Domain

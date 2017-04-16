@@ -1,7 +1,7 @@
-#include "Simulation.h"
+#include "ParallelSimulation.h"
 #include "Solver.h"
 
-void Simulation::CalculateZAZI(){
+void ParallelSimulation::CalculateZAZI(){
 
 	// (dz invA dz)	i+0.5
 	FLOAT s1=0;
@@ -24,7 +24,7 @@ void Simulation::CalculateZAZI(){
 	}
 
 }
-void Simulation::CalculateZAZJ(){
+void ParallelSimulation::CalculateZAZJ(){
 		
 	// (dz invA dz)	j+0.5
 	FLOAT s1=0;

@@ -1,7 +1,7 @@
-#include "Simulation.h"
+#include "ParallelSimulation.h"
 #include "Solver.h"
 
-void Simulation::UpdateU(){
+void ParallelSimulation::UpdateU(){
 
 	//calculation
 	// Domain

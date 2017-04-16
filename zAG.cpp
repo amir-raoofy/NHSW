@@ -1,7 +1,7 @@
-#include "Simulation.h"
+#include "ParallelSimulation.h"
 #include "Solver.h"
 
-void Simulation::CalculateZAGI(){
+void ParallelSimulation::CalculateZAGI(){
 
 	// (dz invA GI)	i+0.5
 	// Domain + boundaries
@@ -26,7 +26,7 @@ void Simulation::CalculateZAGI(){
 
 }
 
-void Simulation::CalculateZAGJ(){
+void ParallelSimulation::CalculateZAGJ(){
 	
 	// (dz invA GJ)	j+0.5
 	// Domain + boundaies

@@ -1,7 +1,7 @@
-#include "Simulation.h"
+#include "PetscSimulation.h"
 #include "Solver.h"
 
-void Simulation::CalculateZAGI(){
+void PetscSimulation::CalculateZAGI(){
 	// (dz invA dz)	i+0.5
 
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
@@ -18,7 +18,7 @@ void Simulation::CalculateZAGI(){
 
 }
 
-void Simulation::CalculateZAGJ(){
+void PetscSimulation::CalculateZAGJ(){
 	// (dz invA dz)	j+0.5
 
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {

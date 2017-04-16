@@ -75,7 +75,7 @@ FLOAT* FlowField::mem_allocate_3d_float(){
 }
 
 void FlowField::init_field_2d_int(int* field){
-	#pragma omp parallel for schedule(static)
+	//#pragma omp parallel for schedule(static)
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for (int j = 0; j <parameters_.get_num_cells(1)+2	; j++) {
 			field[map(i,j)]=0;
@@ -86,7 +86,7 @@ void FlowField::init_field_2d_int(int* field){
 
 void FlowField::init_field_2d_float(FLOAT* field){
 
-	#pragma omp parallel for schedule(static)
+	//#pragma omp parallel for schedule(static)
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for (int j = 0; j <parameters_.get_num_cells(1)+2	; j++) {
 			field[map(i,j)]=0.0;
@@ -97,7 +97,7 @@ void FlowField::init_field_2d_float(FLOAT* field){
 
 void FlowField::init_field_3d_float(FLOAT* field){
 
-	#pragma omp parallel for schedule(static)
+	//#pragma omp parallel for schedule(static)
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for (int j = 0; j <parameters_.get_num_cells(1)+2	; j++) {
 			for (int k = 0; k < parameters_.get_num_cells(2); k++) {

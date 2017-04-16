@@ -4,7 +4,7 @@ class defaultScenario: public Scenario
 {
 public:
 	defaultScenario(const Parameters& parameters, FlowField& flowField, CommunicationManager& communicationManager);
-	~defaultScenario();
+	virtual ~defaultScenario();
 
 	virtual void InitU();
 	virtual void InitV();
