@@ -113,16 +113,13 @@ public:
 	virtual ~PetscSolver();
 
 	virtual	void solve() = 0;	
-	void setParameters(FLOAT TOL, int MaxIt);
 
 protected:
 	Vec            x,b;  
 	Mat            A;      
 	KSP            ksp;    
 	PetscInt       i,j,Ii,J,Istart,Iend,m,n,its;
-
-	FLOAT TOL_;
-	int MaxIt_;
+	
 };
 
 class Petsc1DSolver: public PetscSolver

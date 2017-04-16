@@ -10,9 +10,9 @@ ParallelSimulation::ParallelSimulation(const Parameters& parameters, FlowField& 
 		solver_1d_Ai_ = new JacobiSolverAI(parameters_, flowField_, rhs_, x_, x_old_);
 		solver_1d_Aj_ = new JacobiSolverAI(parameters_, flowField_, rhs_, x_, x_old_);
 		etta_solver_ = new ParallelJacobiSolverEtta(parameters_, flowField_, communicationManager_ , *scenario_);
-		solver_1d_Ai_ ->SetParameters (0.00001,1000);
-		solver_1d_Aj_ ->SetParameters (0.00001,1000);
-		etta_solver_  ->SetParameters (0.00001,1000);
+		solver_1d_Ai_ ->SetParameters (parameters_.get_tol_1d(),parameters_.get_max_it_1d());
+		solver_1d_Aj_ ->SetParameters (parameters_.get_tol_1d(),parameters_.get_max_it_1d());
+		etta_solver_  ->SetParameters (parameters_.get_tol_2d(),parameters_.get_max_it_2d());
 
 }
 

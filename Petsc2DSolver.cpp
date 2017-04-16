@@ -33,7 +33,7 @@ Petsc2DSolver::Petsc2DSolver(const Parameters& parameters, FlowField& flowField)
 	KSPSetType(ksp,KSPCG);
 	KSPSetOperators(ksp,A,A);
 	KSPSetInitialGuessNonzero(ksp,PETSC_TRUE);
-	KSPSetTolerances(ksp,1.e-50,1.e-5,PETSC_DEFAULT,PETSC_DEFAULT);
+	KSPSetTolerances(ksp, parameters_.get_tol_2d(), parameters_.get_tol_2d(),PETSC_DEFAULT, parameters_.get_max_it_2d());
 	KSPSetFromOptions(ksp);
 }
 

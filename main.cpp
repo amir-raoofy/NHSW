@@ -8,13 +8,18 @@ int main(int argc, char *argv[]){
 
 	Topology topology(argc,argv);
 	Parameters parameters(argc, argv, topology);
-	PetscInitialize(0, NULL,0,NULL);
 	FlowField flowField(parameters);
 
 	CommunicationManager communicationManager (parameters,flowField);
-	ParallelSimulation simulation(parameters, flowField, communicationManager);
-	simulation.Run();
+
+	Simulation* simulation=NULL;
 	
-	PetscFinalize();
+	if (parameters.get_solver_type() == "PARALLEL") 
+		simulation = new ParallelSimulation (parameters, flowField, communicationManager);
+	else if (parameters.get_solver_type() == "PETSC") 
+		simulation = new PetscSimulation (parameters, flowField, communicationManager);
+
+	simulation->Run();
+	
 	return EXIT_SUCCESS;
 }

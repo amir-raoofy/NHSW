@@ -23,10 +23,16 @@ private:
 	FLOAT _u_a;			// wind speed in x direction
 	FLOAT _v_a;			// wind speed in y direction
 	FLOAT _height;  // free surface water height
-	FLOAT _block_size_2d;
-	FLOAT _output_flag;
+	int _block_size_2d;
+	std::string _solver = "PARALLEL";
+	int _output_flag;
 	FLOAT _precipitation;
-	FLOAT _dry_cell_error=0.001;
+	FLOAT _dry_cell_error = 0.001;
+	FLOAT _tol_1d;
+	FLOAT _tol_2d;
+	int _max_it_1d;
+	int _max_it_2d;
+
 protected:
 	int _N[3]	;				// Number of cells in xyz directions
 	int _NGlobal[3]	;				// Number of cells in xyz directions
@@ -53,10 +59,15 @@ public:
 	FLOAT get_u_a() const;
 	FLOAT get_v_a() const;
 	FLOAT GetHeight() const;
-	FLOAT GetBlockSize2d() const;		// just used for the petsc parallel 2d solver in case of well distributed domains
+	int GetBlockSize2d() const;		// just used for the petsc parallel 2d solver in case of well distributed domains
 	int	  GetOutputFlag() const;
 	FLOAT GetPrecipitation() const;
 	FLOAT GetDryCellError() const;
+	FLOAT get_tol_1d() const;
+	FLOAT get_tol_2d() const;
+	int get_max_it_1d() const;
+	int get_max_it_2d() const;
+	std::string get_solver_type() const;
 
 	Topology& topology;
 };
