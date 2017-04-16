@@ -45,5 +45,6 @@ protected:
 	Scenario* scenario_;
 	CommunicationManager& communicationManager_;
 	FLOAT time_step;
+	FLOAT time=0.0;
 
 };

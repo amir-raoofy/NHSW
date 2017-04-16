@@ -8,18 +8,14 @@ void Simulation::Run(){
 
 	scenario_ -> Init();
 
-
 	if (parameters_.GetOutputFlag()==1) {
 		output.write(0, "./output/");
 	}
-
-	for (int i = 1; i < 100; i++) {
-
+	for (int i=1; time <= parameters_.get_sim_time() && i< parameters_.get_max_ts(); i++) {
+			
 		// print out to the log
 		if (parameters_.topology.id==0) {
-
-			std::cout << "Time Step: " << i << " ,dt= " << time_step << std::endl;
-
+			std::cout << "Time Step: " << i << " ,simulation time:" << time+time_step << " ,dt= " << time_step << std::endl;
 		}
 
 		Updatem();	
@@ -57,27 +53,11 @@ void Simulation::Run(){
 		communicationManager_.communicteW();
 		
 		UpdateSimulationTimeStep();
+		time+=time_step;
 
 		if (parameters_.GetOutputFlag()==1) {
 			output.write(i, "./output/");	
 		}
 	}
-	//parameters_.topology.print();
 
-/*	
-	MPI_Barrier(parameters_.topology.communicator);
-	for (int i = 0; i < parameters_.topology.np; i++) {
-			MPI_Barrier(parameters_.topology.communicator);
-			if (parameters_.topology.id == i)	
-				flowField_.printGI(1);
-	}
-	MPI_Barrier(parameters_.topology.communicator);
-*/
-/*
-	for (int i = 0; i < parameters_.topology.np; i++) {
-		MPI_Barrier(parameters_.topology.communicator);
-		if (parameters_.topology.id == i) {
-						std::cout << "rank: " << i << std::endl;
-		}
-*/
 }

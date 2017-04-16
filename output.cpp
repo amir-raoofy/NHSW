@@ -12,7 +12,8 @@ Output::~Output () {
 void Output::write (int timeStep, std::string foldername ) {
 
 	if (parameters_.topology.id==0) {
-		std::cout << "=== Writing VTK Output ===" << std::endl;
+		if (timeStep%parameters_.GetOutFreq()==0) 	
+			std::cout << "=== Writing VTK Output ===" << std::endl;
 	}
 	// Open the file and set precision
 	outputFile_.open(this->getFilename(timeStep, foldername).c_str());

@@ -12,7 +12,8 @@ class Parameters
 private:
 	
 	// simulation parameters and default values //
-	FLOAT _T				=3.0;			// Time span of the simulation (s)
+	FLOAT _T				=1.0;			// Time span of the simulation (s)
+	int _mat_ts				=200;			// Maxium number of allowed time steps
 	FLOAT _dt				=0.01;			// Time-step of the numerical schemen (s)
 	FLOAT _tau				=0.5;			// tau safety factor for stability in time stepping ( tau << 1)
 	FLOAT _theta			=0.5;			// theta in the numerical scheme (0.5< \theta <=1)
@@ -32,7 +33,7 @@ private:
 	FLOAT _tol_2d			=0.001;			// solver tolerance (2d)
 	int _max_it_2d			=1000;			// maximum number of iterations for 2d solvers
 	int _output_flag 		=1;				// whether or not ro create output files
-	FLOAT _out_flag_time_step=_dt;			// time step for printing output flag
+	int _out_freq			=1;				// print VTK output every N time steps
 	std::string _solver 	="PARALLEL";	// simulation type -> "PARALLEL" or "PETSC"
 	int _block_size_2d;
 
@@ -48,6 +49,7 @@ public:
 
 	//getters
 	FLOAT get_sim_time() const;
+	int get_max_ts() const;
 	FLOAT GetCubeLength(int dim) const;
 	FLOAT get_time_step() const;
 	FLOAT get_tau() const;
@@ -63,7 +65,8 @@ public:
 	FLOAT get_v_a() const;
 	FLOAT GetHeight() const;
 	int GetBlockSize2d() const;		// just used for the petsc parallel 2d solver in case of well distributed domains
-	int	  GetOutputFlag() const;
+	int	GetOutputFlag() const;
+	int	GetOutFreq() const;
 	FLOAT GetPrecipitation() const;
 	FLOAT GetDryCellError() const;
 	FLOAT get_tol_1d() const;
