@@ -26,6 +26,6 @@ protected:
 	Petsc1DSolver* petsc_solver_1d_Ai_;
 	Petsc1DSolver* petsc_solver_1d_Aj_;
 	Petsc1DSolverU* petsc_solver_1d_u_Ai_;
-	Petsc1DSolverV* petsc_solver_1d_v_Aj_;
+	Petsc1DSolverU* petsc_solver_1d_v_Aj_;
 
 };

@@ -16,9 +16,9 @@ ParallelSimulation::ParallelSimulation(const Parameters& parameters, FlowField& 
 
 ParallelSimulation::~ParallelSimulation(){
 
-	//delete [] rhs_;
-	//delete [] x_;
-	//delete [] x_old_;
-	//delete solver_1d_Ai_;
-	//delete solver_1d_Aj_;
+	delete [] rhs_;
+	delete [] x_;
+	delete [] x_old_;
+	delete solver_1d_Ai_;
+	delete solver_1d_Aj_;
 }

@@ -13,7 +13,7 @@ void Simulation::Run(){
 		output.write(0, "./output/");
 	}
 
-	for (int i = 1; i < 100; i++) {
+	for (int i = 1; i < 10; i++) {
 
 		// print out to the log
 		if (parameters_.topology.id==0) {

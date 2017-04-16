@@ -12,7 +12,7 @@ int main(int argc, char *argv[]){
 	FlowField flowField(parameters);
 
 	CommunicationManager communicationManager (parameters,flowField);
-	ParallelSimulation simulation(parameters, flowField, communicationManager);
+	PetscSimulation simulation(parameters, flowField, communicationManager);
 	simulation.Run();
 	
 	PetscFinalize();

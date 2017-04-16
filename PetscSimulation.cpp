@@ -19,9 +19,9 @@ PetscSimulation::PetscSimulation(const Parameters& parameters, FlowField& flowFi
 
 PetscSimulation::~PetscSimulation(){
 
-	//delete petsc_solver_1d_Ai_;
-	//delete petsc_solver_1d_Aj_;
-	//delete petsc_solver_1d_u_Ai_;
-	//delete petsc_solver_1d_v_Aj_;
+	delete petsc_solver_1d_Ai_;
+	delete petsc_solver_1d_Aj_;
+	delete petsc_solver_1d_u_Ai_;
+	delete petsc_solver_1d_v_Aj_;
 
 }

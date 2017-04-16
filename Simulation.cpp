@@ -12,5 +12,5 @@ Simulation::Simulation(const Parameters& parameters, FlowField& flowField, Commu
 
 
 Simulation::~Simulation(){
-	//delete scenario_;
+	delete scenario_;
 }
