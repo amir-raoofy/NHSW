@@ -192,15 +192,6 @@ void Petsc2DSolver::updateField(){
 		}
 	}
 
-	// B
-	for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
-		flowField_.etta[map(0,j)]=flowField_.etta[map(1,j)];								//left
-		flowField_.etta[map(parameters_.get_num_cells(0)+1,j)]=flowField_.etta[map(parameters_.get_num_cells(0),j)];	//right
-	}
-	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
-		flowField_.etta[map(i,0)]=flowField_.etta[map(i,1)];								//back
-		flowField_.etta[map(i,parameters_.get_num_cells(1)+1)]=flowField_.etta[map(i,parameters_.get_num_cells(1))];	//front
-	}
 
 	//VecResetArray(b);
 
