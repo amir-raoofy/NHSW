@@ -7,7 +7,6 @@ Petsc1DSolverU::~Petsc1DSolverU(){}
 
 //DONE copy z to right handside
 void Petsc1DSolverU::updateRHS(){
-
 	//VecPlaceArray(b, RHS_+(map(i,j,0)));
 	for (int k = 0; k < parameters_.get_num_cells(2); k++) {
 		

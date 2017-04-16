@@ -202,6 +202,6 @@ void Petsc2DSolver::updateField(){
 		flowField_.etta[map(i,parameters_.get_num_cells(1)+1)]=flowField_.etta[map(i,parameters_.get_num_cells(1))];	//front
 	}
 
-	VecResetArray(b);
+	//VecResetArray(b);
 
 }

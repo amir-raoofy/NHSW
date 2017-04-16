@@ -2,10 +2,8 @@
 #include "Solver.h"
 
 void ParallelSimulation::UpdateEtta(){
-	ParallelJacobiSolverEtta etta_solver(parameters_, flowField_, communicationManager_ , *scenario_);
-	etta_solver.SetParameters (0.00001,1000);
-	etta_solver.set_time_step(time_step);
-	etta_solver.solve();
+	etta_solver_->set_time_step(time_step);
+	etta_solver_->solve();
 
 	//considering wet and drying cells
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {

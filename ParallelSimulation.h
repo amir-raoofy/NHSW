@@ -29,5 +29,5 @@ private:
 	FLOAT* x_old_;
 	JacobiIterativeSolver1D* solver_1d_Ai_;
 	JacobiIterativeSolver1D* solver_1d_Aj_;
-	
+	ParallelJacobiSolverEtta* etta_solver_;
 };

@@ -9,8 +9,10 @@ ParallelSimulation::ParallelSimulation(const Parameters& parameters, FlowField& 
 		x_old_= new FLOAT [parameters_.get_num_cells(2)];
 		solver_1d_Ai_ = new JacobiSolverAI(parameters_, flowField_, rhs_, x_, x_old_);
 		solver_1d_Aj_ = new JacobiSolverAI(parameters_, flowField_, rhs_, x_, x_old_);
+		etta_solver_ = new ParallelJacobiSolverEtta(parameters_, flowField_, communicationManager_ , *scenario_);
 		solver_1d_Ai_ ->SetParameters (0.00001,1000);
 		solver_1d_Aj_ ->SetParameters (0.00001,1000);
+		etta_solver_  ->SetParameters (0.00001,1000);
 
 }
 
@@ -21,4 +23,6 @@ ParallelSimulation::~ParallelSimulation(){
 	delete [] x_old_;
 	delete solver_1d_Ai_;
 	delete solver_1d_Aj_;
+	delete etta_solver_;
+
 }
