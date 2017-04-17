@@ -18,7 +18,7 @@ void Simulation::Run(){
 		// print out to the log
 		if (parameters_.topology.id==0) {
 			if (parameters_.GetOutputFlag()==1) 
-				std::cout << "Time Step: " << i << " ,simulation time:" << time+time_step << " ,dt= " << time_step << std::endl;
+				std::cout << "Time Step:" << i << ", simulation time:" << time+time_step << ", dt:" << time_step << std::endl;
 		}
 
 		Updatem();	

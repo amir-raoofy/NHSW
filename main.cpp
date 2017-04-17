@@ -20,6 +20,7 @@ int main(int argc, char *argv[]){
 		simulation = new PetscSimulation (parameters, flowField, communicationManager);
 
 	simulation->Run();
-	
+
+	delete simulation;
 	return EXIT_SUCCESS;
 }

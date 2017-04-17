@@ -193,39 +193,39 @@ void Parameters::print_parameters(){
 	std::cout 	<< " ==============================================================="<< std::endl;
 	
 	//print the parameters
-	std::cout	<< "|Number of Processors 				-> "			<< topology.np		<< std::endl
-				<< "|Number of Processors in x direction		-> "	<< topology.npx		<< std::endl
-				<< "|Number of Processors in y direction		-> "	<< topology.npy		<< std::endl
-				<< "|Number of cells in x-direction			-> "		<< _NGlobal[0]		<< std::endl
-				<< "|Number of cells in y-direction			-> "		<< _NGlobal[1]		<< std::endl
-				<< "|Number of cells in z-direction			-> "		<< _NGlobal[2]		<< std::endl
-				<< "|Local Number of cells (x) in each processor	-> "<< _N[0]			<< std::endl
-				<< "|Local Number of cells (y) in each processor	-> "<< _N[1]			<< std::endl
-				<< "|Local Number of cells (z) in each processor	-> "<< _N[2]			<< std::endl
-				<< "|Simulation time 				-> "				<< _T				<< std::endl
-				<< "|Max number of time steps			-> "			<< _mat_ts			<< std::endl
-				<< "|Time step					-> "					<< _dt				<< std::endl
-				<< "|Stability safety factor			-> "			<< _tau				<< std::endl
-				<< "|Theta in numerical scheme			-> "			<< _theta			<< std::endl
-				<< "|Length in x-direction				-> "			<< _L[0]			<< std::endl
-				<< "|Length in y-direction				-> "			<< _L[1]			<< std::endl
-				<< "|Length in z-direction				-> "			<< _L[2]			<< std::endl
-				<< "|Free surface water height			-> "			<< _height			<< std::endl
-				<< "|Gravitational constant				-> "			<< _g				<< std::endl
-				<< "|Kinematic viscosity				-> "			<< _nu				<< std::endl
-				<< "|Wind constant					-> "				<< _gamma_t			<< std::endl
-				<< "|Friction constant				-> "				<< _gamma_b			<< std::endl
-				<< "|Horizontal speed of wind			-> "			<< _u_a				<< std::endl
-				<< "|Vertical speed of wind				-> "			<< _v_a				<< std::endl
-				<< "|Precipitation rate				-> "				<< _precipitation	<< std::endl
-				<< "|Error in modeling dry cells			-> "		<< _dry_cell_error	<< std::endl
-				<< "|Solver type					-> "				<< _solver 			<< std::endl
-				<< "|Maximum tolerance for 1d solvers		-> "		<< _tol_1d 			<< std::endl
-				<< "|Maximum iteration number for 1d solvers	-> "	<< _max_it_1d 		<< std::endl
-				<< "|Maximum tolerance for 2d solvers		-> "		<< _tol_2d 			<< std::endl
-				<< "|Maximum iteration number for 2d solvers	-> "	<< _max_it_2d 		<< std::endl
-				<< "|VTK Output flag				-> "				<< _output_flag		<< std::endl
-				<< "|VTK Output time step				-> "			<< _out_freq		<< std::endl
+	std::cout	<< "|Number of Processors 				-> "			<< std::setw(10) << topology.np		<< "   |" << std::endl
+				<< "|Number of Processors in x direction		-> "	<< std::setw(10) << topology.npx	<< "   |" << std::endl
+				<< "|Number of Processors in y direction		-> "	<< std::setw(10) << topology.npy	<< "   |" << std::endl
+				<< "|Number of cells in x-direction			-> "		<< std::setw(10) << _NGlobal[0]		<< "   |" << std::endl
+				<< "|Number of cells in y-direction			-> "		<< std::setw(10) << _NGlobal[1]		<< "   |" << std::endl
+				<< "|Number of cells in z-direction			-> "		<< std::setw(10) << _NGlobal[2]		<< "   |" << std::endl
+				<< "|Local Number of cells (x) in each processor	-> "<< std::setw(10) << _N[0]			<< "   |" << std::endl
+				<< "|Local Number of cells (y) in each processor	-> "<< std::setw(10) << _N[1]			<< "   |" << std::endl
+				<< "|Local Number of cells (z) in each processor	-> "<< std::setw(10) << _N[2]			<< "   |" << std::endl
+				<< "|Simulation time 				-> "				<< std::setw(10) << _T				<< "   |" << std::endl
+				<< "|Max number of time steps			-> "			<< std::setw(10) << _mat_ts			<< "   |" << std::endl
+				<< "|Time step					-> "					<< std::setw(10) << _dt				<< "   |" << std::endl
+				<< "|Stability safety factor			-> "			<< std::setw(10) << _tau			<< "   |" << std::endl
+				<< "|Theta in numerical scheme			-> "			<< std::setw(10) << _theta			<< "   |" << std::endl
+				<< "|Length in x-direction				-> "			<< std::setw(10) << _L[0]			<< "   |" << std::endl
+				<< "|Length in y-direction				-> "			<< std::setw(10) << _L[1]			<< "   |" << std::endl
+				<< "|Length in z-direction				-> "			<< std::setw(10) << _L[2]			<< "   |" << std::endl
+				<< "|Free surface water height			-> "			<< std::setw(10) << _height			<< "   |" << std::endl
+				<< "|Gravitational constant				-> "			<< std::setw(10) << _g				<< "   |" << std::endl
+				<< "|Kinematic viscosity				-> "			<< std::setw(10) << _nu				<< "   |" << std::endl
+				<< "|Wind constant					-> "				<< std::setw(10) << _gamma_t		<< "   |" << std::endl
+				<< "|Friction constant				-> "				<< std::setw(10) << _gamma_b		<< "   |" << std::endl
+				<< "|Horizontal speed of wind			-> "			<< std::setw(10) << _u_a			<< "   |" << std::endl
+				<< "|Vertical speed of wind				-> "			<< std::setw(10) << _v_a			<< "   |" << std::endl
+				<< "|Precipitation rate				-> "				<< std::setw(10) << _precipitation	<< "   |" << std::endl
+				<< "|Error in modeling dry cells			-> "		<< std::setw(10) << _dry_cell_error	<< "   |" << std::endl
+				<< "|Solver type					-> "				<< std::setw(10) << _solver 		<< "   |" << std::endl
+				<< "|Maximum tolerance for 1d solvers		-> "		<< std::setw(10) << _tol_1d 		<< "   |" << std::endl
+				<< "|Maximum iteration number for 1d solvers	-> "	<< std::setw(10) << _max_it_1d 		<< "   |" << std::endl
+				<< "|Maximum tolerance for 2d solvers		-> "		<< std::setw(10) << _tol_2d 		<< "   |" << std::endl
+				<< "|Maximum iteration number for 2d solvers	-> "	<< std::setw(10) << _max_it_2d 		<< "   |" << std::endl
+				<< "|VTK Output flag				-> "				<< std::setw(10) << _output_flag	<< "   |" << std::endl
+				<< "|VTK Output time step				-> "			<< std::setw(10) << _out_freq		<< "   |" << std::endl
 				<< "\033[1;31m =============================================================== \033[0m"   	<< std::endl;
 
 }

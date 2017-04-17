@@ -10,7 +10,10 @@ Simulation::Simulation(const Parameters& parameters, FlowField& flowField, Commu
 		scenario_ = new defaultScenario(parameters,flowField, communicationManager);
 	}
 
-
 Simulation::~Simulation(){
 	delete scenario_;
 }
+
+void Simulation::printTimeMeasurements(){
+}
+
