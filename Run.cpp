@@ -12,13 +12,15 @@ void Simulation::Run(){
 		output.write(0, "./output/");
 	}
 
+	FLOAT start=MPI::Wtime(); //time measurement
+
 	//main loop -> proceed in time 
-	for (int i=1; time <= parameters_.get_sim_time() && i< parameters_.get_max_ts(); i++) {
+	for (it0_=1; time <= parameters_.get_sim_time() && it0_< parameters_.get_max_ts(); it0_++) {
 			
 		// print out to the log
 		if (parameters_.topology.id==0) {
 			if (parameters_.GetOutputFlag()==1) 
-				std::cout << "Time Step:" << i << ", simulation time:" << time+time_step << ", dt:" << time_step << std::endl;
+				std::cout << "Time Step:" << it0_ << ", simulation time:" << time+time_step << ", dt:" << time_step << std::endl;
 		}
 
 		Updatem();	
@@ -46,6 +48,7 @@ void Simulation::Run(){
 		communicationManager_.communicteZagj();
 		CalculateDelta();
 		communicationManager_.communicteDelta();
+
 		UpdateEtta();
 		communicationManager_.communicteEtta();
 		UpdateU();
@@ -59,9 +62,17 @@ void Simulation::Run(){
 		time+=time_step;
 
 		if (parameters_.GetOutputFlag()==1) {
-			if (i%parameters_.GetOutFreq()==0) 	
-				output.write(i, "./output/");	
+			if (it0_%parameters_.GetOutFreq()==0) 	
+				output.write(it0_, "./output/");	
 		}
+
 	}
+	
+	T0_+=MPI::Wtime()-start;
+
+	if (parameters_.topology.id==0) {
+		printTimeMeasurements();
+	}
+
 
 }

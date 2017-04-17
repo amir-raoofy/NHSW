@@ -21,6 +21,9 @@ public:
 	void CalculateZAGI();
 	void CalculateZAGJ();
 
+	//measurments
+	void setMeasuredData();
+
 private:
 	
 	//1d solver buffers

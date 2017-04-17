@@ -1,4 +1,5 @@
 #include "Solver.h"
+#include <mpi.h>
 
 JacobiSolverAI::JacobiSolverAI(const Parameters& parameters, FlowField& flowField, FLOAT* rhs, FLOAT* x, FLOAT* x_old):
 	JacobiIterativeSolver1D(parameters, flowField, rhs, x, x_old)
@@ -53,10 +54,16 @@ void JacobiSolverAI::solve(){
 	FLOAT* temp = x_;
 	int i=0;
 	err_ = 1;
+	FLOAT start=MPI::Wtime(); //time measurement
+
 	while (err_>TOL_*TOL_ && i<MaxIt_){
 		iterate();
 		i++;
 	}
+	
+	time_+=MPI::Wtime()-start;
+	it_+=i;
+
 	swap(x_,temp);
 
 	if (i==MaxIt_)

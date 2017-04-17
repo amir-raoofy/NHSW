@@ -36,6 +36,7 @@ public:
 
 	void Run();
 
+	virtual void setMeasuredData()=0;
 	void printTimeMeasurements();
 
 	inline int map(int i, int j) { return flowField_.map(i,j);}
@@ -50,6 +51,7 @@ protected:
 	FLOAT time_step;
 	FLOAT time=0.0;
 	//measurements
-	FLOAT T1=0.0,T2=0.0,T3=0.0,T4=0.0,T5=0.0;
+	FLOAT T0_=0.0,T1_=0.0,T2_=0.0;
+	int it0_=0,it1_=0,it2_ =0;
 
 };

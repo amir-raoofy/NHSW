@@ -77,6 +77,8 @@ void JacobiSolverEtta::solve(){
 	FLOAT* temp = flowField_.etta;
 	int i=0;
 	err_ = 1;
+	FLOAT start=MPI::Wtime(); //time measurement
+
 	for (int i = 0; i < (parameters_.get_num_cells(0)+2) * (parameters_.get_num_cells(1)+2); i++) {
 		etta_old_[i]=flowField_.etta[i];
 	}
@@ -84,6 +86,10 @@ void JacobiSolverEtta::solve(){
 		iterate();
 		i++;
 	}
+	
+	time_+=MPI::Wtime()-start; //time measurment
+	it_+=i;
+	
 	swap(flowField_.etta,temp);
 
 	if (i==MaxIt_)

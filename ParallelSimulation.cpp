@@ -26,3 +26,13 @@ ParallelSimulation::~ParallelSimulation(){
 	delete etta_solver_;
 
 }
+
+void ParallelSimulation::setMeasuredData(){
+
+	it1_= (solver_1d_Ai_ -> get_iterations() ) + ( solver_1d_Aj_ -> get_iterations() );
+	it2_= etta_solver_ -> get_iterations();
+
+	T1_= (solver_1d_Ai_ -> get_spent_time() ) + ( solver_1d_Aj_ -> get_spent_time() );
+	T2_= etta_solver_ -> get_spent_time();
+
+}

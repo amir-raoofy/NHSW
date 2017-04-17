@@ -13,7 +13,6 @@ PetscSimulation::PetscSimulation(const Parameters& parameters, FlowField& flowFi
 
 }
 
-
 PetscSimulation::~PetscSimulation(){
 
 	delete petsc_solver_1d_Ai_;
@@ -22,5 +21,17 @@ PetscSimulation::~PetscSimulation(){
 	delete petsc_solver_1d_v_Aj_;
 	delete etta_solver_;
 	PetscFinalize();
+
+}
+
+void PetscSimulation::setMeasuredData(){
+
+	it1_= (petsc_solver_1d_Ai_  ->  get_iterations() ) + ( petsc_solver_1d_Aj_   -> get_iterations() )+
+		(petsc_solver_1d_u_Ai_->  get_iterations() ) + ( petsc_solver_1d_v_Aj_ -> get_iterations() );
+	it2_= etta_solver_ -> get_iterations();
+
+	T1_= (petsc_solver_1d_Ai_  ->  get_spent_time() ) + ( petsc_solver_1d_Aj_   -> get_spent_time() )+
+		(petsc_solver_1d_u_Ai_->  get_spent_time() ) + ( petsc_solver_1d_v_Aj_ -> get_spent_time() );
+	T2_= etta_solver_ -> get_spent_time();
 
 }

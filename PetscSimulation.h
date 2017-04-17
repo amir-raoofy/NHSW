@@ -21,6 +21,8 @@ public:
 	void CalculateZAGI();
 	void CalculateZAGJ();
 
+	void setMeasuredData();
+
 protected:
 	
 	Petsc1DSolver* 	petsc_solver_1d_Ai_;

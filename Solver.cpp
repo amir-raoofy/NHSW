@@ -9,6 +9,15 @@ Solver::~Solver(){}
 
 void Solver::set_time_step(FLOAT ts){ time_step = ts;}
 
+FLOAT Solver::get_spent_time() const{
+	return time_;	
+}
+
+int Solver::get_iterations() const{
+	return it_;
+}
+
+
 //Iterative solver
 IterativeSolver::IterativeSolver(const Parameters& parameters, FlowField& flowField):
 	Solver(parameters, flowField){}

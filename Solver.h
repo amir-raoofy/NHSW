@@ -13,6 +13,8 @@ public:
 	virtual ~Solver();
  	virtual	void solve()=0;
 	void set_time_step(FLOAT ts);
+	FLOAT get_spent_time() const;
+	int get_iterations() const;
 
 protected:
 	const Parameters& parameters_;
@@ -20,6 +22,8 @@ protected:
 	inline int map(int i, int j) { return flowField_.map(i,j);}
 	inline int map(int i, int j, int k) { return flowField_.map(i,j,k);}
 	FLOAT time_step=parameters_.get_time_step();
+	FLOAT time_=0;
+	FLOAT it_=0;
 
 };
 

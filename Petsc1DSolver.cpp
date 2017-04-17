@@ -89,8 +89,16 @@ void Petsc1DSolver::updateRHS(FLOAT* RHS){
 }
 
 void Petsc1DSolver::solve(){
+
+	FLOAT start=MPI::Wtime(); //time measurement
+	
 	KSPSolve(ksp,b,x);
+
+	time_+=MPI::Wtime()-start;// time measurment
+
 	KSPGetIterationNumber(ksp,&its);
+	it_+=its;
+
 }
 
 void Petsc1DSolver::updateField(FLOAT* resultField, FLOAT* Dz){

@@ -176,9 +176,14 @@ void Petsc2DSolver::updateRHS(){
 
 void Petsc2DSolver::solve(){
 	
+	FLOAT start=MPI::Wtime(); //time measurement	
+	
 	KSPSolve(ksp,b,x);
+
+	time_+=MPI::Wtime()-start;// time measurment
+
 	KSPGetIterationNumber(ksp,&its);
-	//std::cout << "iteration numbers: " << its << std::endl;
+	it_+=its;
 
 }
 
