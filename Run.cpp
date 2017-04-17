@@ -2,50 +2,66 @@
 #include "Solver.h"
 #include "output.h"
 
-// TODO check the implementation of each function -> are the results correct?
-//
 void Simulation::Run(){
 
 	Output output(parameters_, flowField_);
-	InitEtta();
-	Initm();									//DONE TESTED
-	InitM();									//DONE TESTED
-	InitDzI();								//DONE TESTED
-	InitDzJ();								//DONE TESTED
-	InitDzK();								//TODO test
-	InitU();									//DONE TESTED
-	InitV();									//DONE TESTED
-	InitW();									//DONE TESTED
-	InitGI();									//DONE TESTED
-	InitGJ();									//DONE TESTED
-	InitGK();									//TODO test
-	//initialization is finished
-	//time step
-	output.write(0, "./output/");
-	
-	for (int i = 0; i < 100; i++) {
-		std::cout << "here" << std::endl;
-		Updatem();					//redundant for the very first time step
-		UpdateM();					//redundant for the very first time step
-		UpdateDzI();						//TODO test
-		UpdateDzJ();						//TODO test
-		UpdateDzK();						//TODO test
-		UpdateGI();							//TODO test
-		UpdateGJ();							//TODO test
-		UpdateGK();							//TODO test
-		
 
-		CalculateZAZI();
-		CalculateZAZJ();
-		CalculateZAGI();
-		CalculateZAGJ();
-		CalculateDelta();
-		flowField_.PrintDelta();
-		UpdateEtta();
-		UpdateU();
-		UpdateV();
-		UpdateW();		//TODO test
+	scenario_ -> Init();
 
-		output.write(i+1, "./output/");
+	if (parameters_.GetOutputFlag()==1) {
+		output.write(0, "./output/");
 	}
+
+	//main loop -> proceed in time 
+	for (int i=1; time <= parameters_.get_sim_time() && i< parameters_.get_max_ts(); i++) {
+			
+		// print out to the log
+		if (parameters_.topology.id==0) {
+			if (parameters_.GetOutputFlag()==1) 
+				std::cout << "Time Step: " << i << " ,simulation time:" << time+time_step << " ,dt= " << time_step << std::endl;
+		}
+
+		Updatem();	
+		UpdateM();	
+		UpdateDzI();
+		communicationManager_.communicteDzI();
+		UpdateDzJ();
+		communicationManager_.communicteDzJ();
+		UpdateDzK();
+		communicationManager_.communicteDzK();
+		UpdateGI();
+		communicationManager_.communicteGI();
+		UpdateGJ();
+		communicationManager_.communicteGJ();
+		UpdateGK();
+		communicationManager_.communicteGK();
+	
+		CalculateZAZI();
+		communicationManager_.communicteZazi();
+		CalculateZAZJ();
+		communicationManager_.communicteZazj();
+		CalculateZAGI();
+		communicationManager_.communicteZagi();
+		CalculateZAGJ();
+		communicationManager_.communicteZagj();
+		CalculateDelta();
+		communicationManager_.communicteDelta();
+		UpdateEtta();
+		communicationManager_.communicteEtta();
+		UpdateU();
+		communicationManager_.communicteU();
+		UpdateV();
+		communicationManager_.communicteV();
+		UpdateW();
+		communicationManager_.communicteW();
+		
+		UpdateSimulationTimeStep();
+		time+=time_step;
+
+		if (parameters_.GetOutputFlag()==1) {
+			if (i%parameters_.GetOutFreq()==0) 	
+				output.write(i, "./output/");	
+		}
+	}
+
 }

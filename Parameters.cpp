@@ -47,7 +47,6 @@ void Parameters::parse(int argc, char *argv[])  {
 	if (argc!=28){
 		if (topology.id==0) {
 			std::cout << "Warning: The default values for parameters are used." << std::endl;
-			std::cout << argc << std::endl;
 		}
 	}else{
 
@@ -191,7 +190,7 @@ void Parameters::print_parameters(){
 	std::cout 	<< " ==============================================================="<< std::endl;
 	std::cout 	<< "|" << "\033[1;31m                3D hydrostatic Surface Flow solver             \033[0m"
 				<< "|" 	 <<  std::endl;
-	std::cout 	<< "|===============================================================|"<< std::endl;
+	std::cout 	<< " ==============================================================="<< std::endl;
 	
 	//print the parameters
 	std::cout	<< "|Number of Processors 				-> "			<< topology.np		<< std::endl

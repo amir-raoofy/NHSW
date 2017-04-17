@@ -1,4 +1,3 @@
-.PHONY: clean
 #CXX = g++
 CXX = mpicxx
 #CXX = mpiCC
@@ -16,76 +15,26 @@ CXXFLAGS = -Wall -std=c++11 -fopenmp
 INC = -I. $(PETSC_INC) ${PETSC_CC_INCLUDES}
 LIB = $(PETSC_LIB)
 
-obj= Main.o FlowField.o Simulation.o zAz.o zAG.o Run.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o ParallelJacobiSolverEtta.o  ParallelSolverEtta.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
-
-obj_test= Main.o FlowField.o Simulation.o zAz.o zAG.o TestRun.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o ParallelJacobiSolverEtta.o ParallelSolverEtta.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
-
-obj_petsc= Main.o FlowField.o Simulation.o PetscZAZ.o PetscZAG.o Run.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o ParallelJacobiSolverEtta.o PetscSolver.o Petsc1DSolver.o Petsc2DSolver.o PetscSolverEtta.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
-
-obj_petsc_test= Main.o FlowField.o Simulation.o PetscZAZ.o PetscZAG.o TestRun.o Etta.o m.o M.o Dz.o Parameters.o AI_Inv.o AJ_Inv.o AK_Inv.o Solver.o JacobiSolverEtta.o ParallelJacobiSolverEtta.o PetscSolver.o Petsc1DSolver.o Petsc2DSolver.o  PetscSolverEtta.o GI.o GJ.o GK.o U.o V.o W.o Q.o JacobiSolverQ.o Delta.o output.o Topology.o CommunicationManager.o
-
-obj_fix= main.o FlowField.o Parameters.o Topology.o Simulation.o TestRun.o Etta.o Delta.o m.o M.o U.o V.o W.o Dz.o Solver.o AI_Inv.o  AJ_Inv.o GI.o GJ.o GK.o zAz.o zAG.o JacobiSolverEtta.o ParallelSolverEtta.o ParallelJacobiSolverEtta.o output.o CommunicationManager.o TimeStep.o Scenario.o defaultScenario.o defaultScenarioInit.o defaultScenarioBoundaries.o
-
-obj_petsc_fix= main.o FlowField.o Parameters.o Topology.o Simulation.o ParallelSimulation.o PetscSimulation.o TestRun.o Etta.o Delta.o m.o M.o Petsc1DSolverU.o Petsc1DSolverV.o PetscU.o PetscV.o U.o V.o W.o Dz.o Solver.o AI_Inv.o  AJ_Inv.o GI.o GJ.o GK.o zAz.o zAG.o PetscZAZ.o PetscZAG.o JacobiSolverEtta.o ParallelSolverEtta.o PetscSolverEtta.o ParallelJacobiSolverEtta.o output.o CommunicationManager.o PetscSolver.o Petsc1DSolver.o Petsc2DSolver.o TimeStep.o Scenario.o defaultScenario.o defaultScenarioInit.o defaultScenarioBoundaries.o
+obj= main.o FlowField.o Parameters.o Topology.o Simulation.o ParallelSimulation.o PetscSimulation.o Run.o Etta.o Delta.o m.o M.o Petsc1DSolverU.o Petsc1DSolverV.o PetscU.o PetscV.o U.o V.o W.o Dz.o Solver.o AI_Inv.o  AJ_Inv.o GI.o GJ.o GK.o zAz.o zAG.o PetscZAZ.o PetscZAG.o JacobiSolverEtta.o ParallelSolverEtta.o PetscSolverEtta.o ParallelJacobiSolverEtta.o output.o CommunicationManager.o PetscSolver.o Petsc1DSolver.o Petsc2DSolver.o TimeStep.o Scenario.o defaultScenario.o defaultScenarioInit.o defaultScenarioBoundaries.o
 
 
-all: nhsw nhsw_petsc test test_petsc
+all: hsfs
+	
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INC) $(LIB) -c -o $@ $<
 
-fix: $(obj_fix)
+hsfs: $(obj)
 	$(CXX) $(CXXFLAGS) $(INC)  -o $@ $+ $(LIB)
 	mkdir -p output
-
-petsc_fix: $(obj_petsc_fix)
-	$(CXX) $(CXXFLAGS) $(INC)  -o $@ $+ $(LIB)
-	mkdir -p output
-
-nhsw: $(obj)
-	$(CXX) $(CXXFLAGS) $(INC)  -o $@ $+ $(LIB)
-	mkdir -p output
-
-nhsw_petsc: $(obj_petsc)
-	$(CXX) $(CXXFLAGS) $(INC)  -o $@ $+ $(LIB)
-	mkdir -p output
-
-test: $(obj_test)
-	$(CXX) $(CXXFLAGS) $(INC)  -o $@ $+ $(LIB)
-	mkdir -p output
-
-test_petsc: $(obj_petsc_test)
-	$(CXX) $(CXXFLAGS) $(INC)  -o $@ $+ $(LIB)
-	mkdir -p output
-
-test_run:
-	rm -f output/*
-	mpirun -n 4 ./test 10 10 6 3.5 0.01 1 0.5 0.5 10.0 10.0 12.0 10.0 0.001 9.81 0.000001787 0 0 0 0 0 > output/log
-
-test_run_petsc:
-	rm -f output/*
-	mpirun -n 4 ./test_petsc 10 10 6 3.5 0.01 1 0.5 0.5 10.0 10.0 0.001 12.0 10.0 9.81 0.000001787 0 0 0 0 0 > output/log
 
 run:
-	rm -f output/*
-	./nhsw 10 10 12 3.5 0.1 1 0.5 0.5 10.0 10.0 12.0 10.0 0.001 9.81 0.000001787 0 0 0 0 0 > output/log
-struct:
-	rm -f output/*
-	./nhsw 2 2 2 3.5 0.1 1 0.5 0.5 2.0 2.0 2.0 2.0 0.001 9.81 0.000001787 0 0 0 0 0 > output/log
-oscilation:
-	rm -f output/*
-	./nhsw 20 20 24 3.5 0.01 1 0.5 0.5 10.0 10.0 12.0 10.0 0.001 9.81 0.000001787 0 0 0 0 0 > output/log
-
-dev: all
-	rm -f output/*
-	mpirun -n 1 ./test 4 4 6 3.5 0.01 1 0.5 0.5 10.0 10.0 12.0 10.0 0.001 9.81 0.000001787 0 0 0 0 0
-	rm -f output/*
-	mpirun -n 2 ./test 4 4 6 3.5 0.01 1 0.5 0.5 10.0 10.0 12.0 10.0 0.001 9.81 0.000001787 0 0 0 0 0
-
+	mpiexec -n 14 ./hsfs 28 28 10 1.0 200 0.005 0.5 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 0 0.01 PARALLEL 0.001 1000 0.001 1000 1 2 > output/log.$(shell date +'%Y.%m.%d.%H.%M.%S')
 
 clean:
 	rm -f *.o core.*
-	rm -f nhsw nhsw_petsc test test_petsc fix petsc_fix
+	rm -f hsfs
 	rm -rf output
+
 clear:
 	rm -f output/*
