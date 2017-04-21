@@ -78,10 +78,11 @@ void JacobiSolverEtta::solve(){
 	int i=0;
 	err_ = 1;
 	FLOAT start=MPI::Wtime(); //time measurement
-
+	
 	for (int i = 0; i < (parameters_.get_num_cells(0)+2) * (parameters_.get_num_cells(1)+2); i++) {
 		etta_old_[i]=flowField_.etta[i];
 	}
+
 	while (err_>TOL_*TOL_ && i<MaxIt_){
 		iterate();
 		i++;
@@ -90,7 +91,7 @@ void JacobiSolverEtta::solve(){
 	time_+=MPI::Wtime()-start; //time measurment
 	it_+=i;
 	
-	swap(flowField_.etta,temp);
+//	swap(flowField_.etta,temp);
 
 	if (i==MaxIt_)
 		std::cout << "\033[1;31mWARNING\033[0m: solver did not converge; maximum number of iterations was reached." << std::endl;
