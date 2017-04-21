@@ -38,9 +38,14 @@ void JacobiSolverAI::updateBoundary(){
 
 void JacobiSolverAI::updateError(){
 	err_=0;
+	FLOAT norm_x=0;
+
 	for (int k = 0; k < parameters_.get_num_cells(2); k++) {
 		err_+=(x_[k]-x_old_[k])*(x_[k]-x_old_[k]);
+		norm_x+= x_[k]*x_[k];
 	}
+
+	err_/=norm_x;
 }
 
 void JacobiSolverAI::iterate(){

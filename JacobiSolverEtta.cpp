@@ -56,11 +56,15 @@ void JacobiSolverEtta::updateBoundary(){
 }
 
 void JacobiSolverEtta::updateError(){
-		
 	err_=0;
+	FLOAT etta_norm =0.0;
+		
 	for (int i = 0; i < (parameters_.get_num_cells(0)+2) * (parameters_.get_num_cells(1)+2); i++) {
 		err_+=(flowField_.etta[i]-etta_old_[i])*(flowField_.etta[i]-etta_old_[i]);
+		etta_norm+=flowField_.etta[i]*flowField_.etta[i];
 	}
+
+	err_/=etta_norm;
 
 }
 
@@ -74,9 +78,10 @@ void JacobiSolverEtta::iterate(){
 }
 void JacobiSolverEtta::solve(){
 
-	FLOAT* temp = flowField_.etta;
+	//FLOAT* temp = flowField_.etta;
 	int i=0;
 	err_ = 1;
+
 	FLOAT start=MPI::Wtime(); //time measurement
 	
 	for (int i = 0; i < (parameters_.get_num_cells(0)+2) * (parameters_.get_num_cells(1)+2); i++) {

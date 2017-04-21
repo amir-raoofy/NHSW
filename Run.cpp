@@ -16,6 +16,8 @@ void Simulation::Run(){
 
 	//main loop -> proceed in time 
 	for (it0_=1; time <= parameters_.get_sim_time() && it0_< parameters_.get_max_ts(); it0_++) {
+		
+		UpdateSimulationTimeStep();
 			
 		// print out to the log
 		if (parameters_.topology.id==0) {
@@ -58,7 +60,6 @@ void Simulation::Run(){
 		UpdateW();
 		communicationManager_.communicteW();
 		
-		UpdateSimulationTimeStep();
 		time+=time_step;
 
 		if (parameters_.GetOutputFlag()==1) {
