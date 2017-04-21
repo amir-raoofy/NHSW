@@ -97,13 +97,10 @@ FLOAT Parameters::get_time_step() const{
 	return this->_dt;
 }
 
-int Parameters::get_num_cells(int dim) const{
-	return _N[dim];
-}
-
 FLOAT Parameters::get_dxdydz(int dim) const{
 	return _dX[dim];
 }
+
 FLOAT Parameters::get_vis() const{
 	return _nu;
 }

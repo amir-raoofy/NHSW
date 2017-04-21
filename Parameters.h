@@ -53,7 +53,7 @@ public:
 	FLOAT GetCubeLength(int dim) const;
 	FLOAT get_time_step() const;
 	FLOAT get_tau() const;
-	int   get_num_cells(int dim) const;
+	inline const int& get_num_cells(int dim) const{return _N[dim];}
 	FLOAT get_dxdydz(int dim) const;
 	FLOAT get_vis() const;
 	FLOAT get_gamma_b() const;

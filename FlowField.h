@@ -40,9 +40,8 @@ public:
 	void init_field_2d_float(FLOAT* field);
 	void init_field_3d_float(FLOAT* field);
 
-
-	inline int map(int i, int j){return j+i*(parameters_.get_num_cells(1)+2);}
-	inline int map(int i, int j, int k){return k+j*parameters_.get_num_cells(2)
+	inline int map(const int& i, const int& j) const {return j+i*(parameters_.get_num_cells(1)+2);}
+	inline int map(const int& i, const int& j, const int& k) const {return k+j*parameters_.get_num_cells(2)
 										        +i*(parameters_.get_num_cells(1)+2)*parameters_.get_num_cells(2);}
 
 	// velocity

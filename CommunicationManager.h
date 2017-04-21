@@ -56,7 +56,7 @@ private:
 	void updateFrontNeighbour3d(FLOAT* field);
 	void updateBackNeighbour3d(FLOAT* field);
 
-	inline int map(int i, int j) { return flowField_.map(i,j);}
-	inline int map(int i, int j, int k) { return flowField_.map(i,j,k);}
+	inline int map(const int& i, const int& j) const { return flowField_.map(i,j);}
+	inline int map(const int& i, const int& j, const int& k) const  { return flowField_.map(i,j,k);}
 
 };

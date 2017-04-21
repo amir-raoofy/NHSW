@@ -1,7 +1,7 @@
 #CXX = g++
 CXX = mpicxx
 #CXX = mpiCC
-CXXFLAGS = -Wall -std=c++11 -fopenmp
+CXXFLAGS = -Wall -std=c++11 -O3 -march=native -fopenmp
 #CXXFLAGS = -g -O2 -qopt-report -Wall -std=c++11
 
 #INC =-I.

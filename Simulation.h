@@ -39,8 +39,8 @@ public:
 	virtual void setMeasuredData()=0;
 	void printTimeMeasurements();
 
-	inline int map(int i, int j) { return flowField_.map(i,j);}
-	inline int map(int i, int j, int k) { return flowField_.map(i,j,k);}
+	inline int map(const int& i, const int& j) const { return flowField_.map(i,j);}
+	inline int map(const int& i, const int& j, const int& k) const  { return flowField_.map(i,j,k);}
 
 protected:
 
