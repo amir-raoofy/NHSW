@@ -36,6 +36,6 @@ void Simulation::UpdateW(){
 		}
 	}
 
-	scenario_->updateBoundariesV();
+	scenario_->updateBoundariesW();
 
 }

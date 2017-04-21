@@ -51,7 +51,7 @@ void JacobiSolverAI::iterate(){
 }
 
 void JacobiSolverAI::solve(){
-	FLOAT* temp = x_;
+	//FLOAT* temp = x_;
 	int i=0;
 	err_ = 1;
 	FLOAT start=MPI::Wtime(); //time measurement
@@ -64,7 +64,7 @@ void JacobiSolverAI::solve(){
 	time_+=MPI::Wtime()-start;
 	it_+=i;
 
-	swap(x_,temp);
+	//swap(x_,temp);
 
 	if (i==MaxIt_)
 		std::cout << "\033[1;31mWARNING\033[0m: solver did not converge; maximum number of iterations was reached." << std::endl;
