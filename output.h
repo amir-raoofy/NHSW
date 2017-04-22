@@ -21,14 +21,26 @@ public:
 	~Output ();
 
 	void write (int timeStep, std::string folderName);
+	void write2d (int timeStep, std::string folderName);
+	void write2d_height (int timeStep, std::string folderName);
+	void write2d_bathymetry (int timeStep, std::string folderName);
 
 	std::string getFilename(int timeStep, std::string folderName);
+	std::string getFilename_volume(int timeStep, std::string folderName);
+	std::string getFilename_bathymetry(int timeStep, std::string folderName);
+	std::string getFilename_height(int timeStep, std::string folderName);
     void writeFileHeader();
-    void writeGrid ();
+    void writeGrid2d();
+    void writeGrid2d_height();
+    void writeGrid2d_bathymetry();
+    void writeGrid3d();
     void writePressure();
     void writeVelocity();
     void writeHeight();
+    void writeHeight2d();
+    void writeHeight2d_2();
 	void writeBathymetry();
+	void writeBathymetry_2();
     void writeQ();
     void clearStringStreams();
     //@ Debug

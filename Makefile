@@ -31,6 +31,9 @@ hsfs: $(obj)
 run:
 	mpiexec -n 14 ./hsfs 28 28 10 1.0 200 0.005 0.5 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 0 0.01 PARALLEL 0.001 1000 0.001 1000 1 2 > output/log.$(shell date +'%Y.%m.%d.%H.%M.%S')
 
+test:
+	mpiexec -n 14 ./hsfs 14 14 10 1.0 100 0.01 0.5 0.5 10.0 10.0 12.0 10.0 9.81 0.000001787 0 0 0 0 0 0.01 PARALLEL 0.001 1000 0.001 1000 1 2 > output/log.$(shell date +'%Y.%m.%d.%H.%M.%S')
+
 clean:
 	rm -f *.o core.*
 	rm -f hsfs

@@ -10,6 +10,9 @@ void Simulation::Run(){
 
 	if (parameters_.GetOutputFlag()==1) {
 		output.write(0, "./output/");
+		output.write2d(0, "./output/");
+		output.write2d_height(0, "./output/");
+		output.write2d_bathymetry(0, "./output/");
 	}
 
 	FLOAT start=MPI::Wtime(); //time measurement
@@ -65,6 +68,9 @@ void Simulation::Run(){
 		if (parameters_.GetOutputFlag()==1) {
 			if (it0_%parameters_.GetOutFreq()==0) 	
 				output.write(it0_, "./output/");	
+				output.write2d(it0_, "./output/");
+				output.write2d_height(it0_, "./output/");
+				output.write2d_bathymetry(it0_, "./output/");
 		}
 
 	}
