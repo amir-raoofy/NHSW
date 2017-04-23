@@ -31,6 +31,9 @@ void Simulation::UpdateSimulationTimeStep(){
 	(2*1000*parameters_.get_viscosity())*( 1/(parameters_.get_dxdydz(0)*parameters_.get_dxdydz(0))+
 	1/(parameters_.get_dxdydz(1)*parameters_.get_dxdydz(1))) ) ,parameters_.get_time_step());
 
+	//end exaclty at the final time
+	time_step=std::min(time_step, parameters_.get_sim_time()-time);
+
 	MPI_Barrier(parameters_.topology.communicator);
 
 }

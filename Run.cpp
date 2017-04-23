@@ -18,7 +18,7 @@ void Simulation::Run(){
 	FLOAT start=MPI::Wtime(); //time measurement
 
 	//main loop -> proceed in time 
-	for (it0_=1; time <= parameters_.get_sim_time() && it0_< parameters_.get_max_ts(); it0_++) {
+	for (it0_=1; time < parameters_.get_sim_time() && it0_< parameters_.get_max_ts(); it0_++) {
 		
 		UpdateSimulationTimeStep();
 			
