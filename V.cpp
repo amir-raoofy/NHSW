@@ -32,6 +32,7 @@ void ParallelSimulation::UpdateV(){
 		}
 	}
 
+	/*
 	//considering wet and drying cells
 	for (int i = 0; i < parameters_.get_num_cells(0)+2; i++) {
 		for (int j = 0; j < parameters_.get_num_cells(1)+2; j++) {
@@ -42,6 +43,7 @@ void ParallelSimulation::UpdateV(){
 
 		}
 	}
+*/
 
 	//Boundary
 	scenario_->updateBoundariesV();
